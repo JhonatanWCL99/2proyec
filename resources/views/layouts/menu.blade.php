@@ -55,7 +55,8 @@
         <li class="nav-item{{ $activePage == 'contratos' ? ' active' : '' }}"><a class="nav-link " href="{{ route('contratos.index') }}">Contratos</a></li> 
         <li class="nav-item{{ $activePage == 'personales' ? ' active' : '' }}"><a class="nav-link " href="{{ route('personales.index') }}">Personales</a></li> 
         <li><a class="nav-link" href="errors-404.html">Vacaciones</a></li> 
-        <li><a class="nav-link" href="errors-500.html">Bonos</a></li> 
+        <li><a class="nav-link" href="{{ route('bonos.index') }}">Bonos</a></li> 
+        <li><a class="nav-link" href="{{ route('descuentos.index') }}">Descuentos</a></li> 
         <li><a class="nav-link" href="errors-500.html">Costo Mano de Obra</a></li> 
         <li><a class="nav-link" href="{{ route('sanciones.index')}}">Sanciones</a></li> 
         

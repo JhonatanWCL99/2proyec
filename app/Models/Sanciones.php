@@ -14,7 +14,7 @@ class Sanciones extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function sancion(){
+    public function categoriaSancion(){
         return $this->belongsTo(CategoriaSancion::class);
     }
     public function sucursal(){

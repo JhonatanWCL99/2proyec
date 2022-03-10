@@ -56,7 +56,7 @@ class SancionesController extends Controller
         $datos = new Sanciones();
         if($request->hasFile('imagen')){
             $file= $request->file(('imagen'));
-            $destinationPath ='img/sanciones';
+            $destinationPath ='img/sanciones/';
             $filename = time() .'-'. $file->getClientOriginalName();
             $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
             $datos->imagen = $destinationPath.$filename;
@@ -109,7 +109,7 @@ class SancionesController extends Controller
         $sanciones = Sanciones::findOrFail($id);
         if($request->hasFile('imagen')){
             $file= $request->file(('imagen'));
-            $destinationPath ='img/sanciones';
+            $destinationPath ='img/sanciones/';
             $filename = time() .'-'. $file->getClientOriginalName();
             $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
             $sanciones->imagen = $destinationPath.$filename;
@@ -130,6 +130,6 @@ class SancionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

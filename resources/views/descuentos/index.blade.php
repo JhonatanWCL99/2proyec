@@ -103,9 +103,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-
-
+                <form action="{{ route('descuentos.store') }}" method="POST" class="form-horizontal">
+                    @csrf
                     <div class="form-group">
                         <label for="usuario_id">Seleccione al usuario <span class="required">*</span></label>
                         <div class="selectric-hide-select">
@@ -117,25 +116,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Monto a descontar</label>
-                        <input type="number" class="form-control" id="recipient-name">
+                        <label for="monto" class="col-form-label">Monto a descontar</label>
+                        <input type="number" class="form-control" id="monto">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Fecha</label>
-                        <input type="date" class="form-control" id="recipient-name">
+                        <label for="fecha" class="col-form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha">
                     </div>
 
 
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Motivo del descuento:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label for="motivo" class="col-form-label">Motivo del descuento:</label>
+                        <textarea class="form-control" id="motivo"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
                 <a href="{{ route('descuentos.store') }}" class="btn btn-warning">Descontar</a>
+                
             </div>
+        </form>
         </div>
     </div>
 @endsection

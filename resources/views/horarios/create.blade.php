@@ -68,10 +68,8 @@
                                                 <label for="turno">Turno<span class="required">*</span></label>
                                                 <div class="selectric-hide-select">
                                                     <select name="turno" class="form-control selectric">
-
                                                         <option>AM</option>
                                                         <option>PM</option>
-
                                                     </select>
                                                 </div>
                                             </div>
@@ -82,7 +80,7 @@
                                                         class="required">*</span></label>
                                                 <div class="selectric-hide-select">
                                                     <select name="sucursal_id" id="_sucursal"
-                                                        class="form-control selectric ">
+                                                        class="form-control selectric">
                                                         @foreach ($sucursales as $sucursal)
                                                             <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}
                                                             </option>
@@ -96,8 +94,12 @@
                                                 <label for="encargado_id">Encargado<span
                                                         class="required">*</span></label>
                                                 <div class="selectric-hide-select">
-                                                    <select name="" id="_funcionarios"
-                                                        class="form-control selectric "></select>
+                                                    <select name="encargado_id" id="_encargado"
+                                                        class="form-control selectric">
+                                                    @foreach ($encargados as $encargado )
+                                                        <option value="{{$encargado->id}}"{{$encargado->nombre}}></option>                                                        
+                                                    @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

@@ -11,7 +11,7 @@ class CategoriaSancion extends Model
     protected $table='categoria_sancion';
     protected $fillable=['nombre'];
 
-    public function sancion(){
+    public function sanciones(){
         return $this->hasMany(Sanciones::class);
     }
 }

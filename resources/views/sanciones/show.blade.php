@@ -40,6 +40,10 @@
                                 <th>Sucursal</th>
                                 <td>{{$sancion->sucursal->nombre}}</td>
                             </tr>
+                            <tr>
+                                <th>Tipo sancion</th>
+                                <td>{{ $sancion->categoriaSancion->nombre }}</td>
+                            </tr>
                             
                         </tbody>
                     </table>
