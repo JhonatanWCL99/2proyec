@@ -8,7 +8,6 @@
 <section class="section">
     <div class="section-header">
         <h3 class="page__heading">Sanciones</h3>
-
     </div>
     <div class="section-body">
         <div class="row">
@@ -32,30 +31,28 @@
                                 <td>{{$sancion->fecha}}</td>
                                 <td>{{$sancion->user->name}}</td>
                                 <td>{{$sancion->sucursal->nombre}} <br></td>
-                                <td>{{$sancion->sanciones->nombre}}</td>
+                                <td>{{$sancion->categoriaSancion->nombre}}</td>
                                 <td>
                                 <div class="badge badge-warning">
                                 <a href="{{route('sanciones.show', $sancion->id)}}" value="{{$sancion->id}}" class="dato"> Detalles </a>
                                 </div>
-                                
                                 </td>    
                                 <td>
-                                <div class="dropdown" style="position: absolute;">
-                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item " href="{{route('sanciones.edit', $sancion->id)}}">Editar</a></li>
-                                            <li>
-                                                        <form action="#" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
+                                    <div class="dropdown" style="position: absolute;">
+                                        <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item " href="{{route('sanciones.edit', $sancion->id)}}">Editar</a></li>
+                                                <li>
+                                                    <form action="#" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
                                                             @csrf
                                                             @method('Delete')
-                                                            <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                </div>
-                                           
+                                                        <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
+                                                    </form>
+                                            </li>
+                                        </ul>
+                                    </div>                                      
                                 </td>
                                 </tr>
                                 @endforeach                                    
@@ -103,9 +100,9 @@ $('#table').DataTable({
         columnDefs: [
             {
                 orderable: false,
-                targets: 3
+                targets: 5
             },
-            { className: 'text-center', targets: [0,1,2,3] },
+            { className: 'text-center', targets: [0,1,2,3,4] },
         ]
 });
 </script>
@@ -114,24 +111,24 @@ $('#table').DataTable({
 @section('page_css')
 <style>
 a:link {
-  color: rgb(0, 0, 0);
-  background-color: transparent;
-  text-decoration: none;
+    color: rgb(0, 0, 0);
+    background-color: transparent;
+    text-decoration: none;
 }
 .dato:visited {
-  color: rgb(255, 255, 255);
-  background-color: transparent;
-  text-decoration: none;
+    color: rgb(255, 255, 255);
+    background-color: transparent;
+    text-decoration: none;
 }
 a:hover {
-  color: red;
-  background-color: transparent;
-  text-decoration: underline;
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
 }
 a:active {
-  color: yellow;
-  background-color: transparent;
-  text-decoration: underline;
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
 }
 </style>
 @endsection
