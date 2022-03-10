@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ContratoSeeder::class);
         $this->call(TurnoSeeder::class);
+        $this->call(CategoriaSancion::class);
         // \App\Models\User::factory(10)->create();
     }
 }

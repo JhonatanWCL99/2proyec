@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
+use App\Models\CategoriaSancion;
 use App\Models\Sanciones;
 use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SancionesController extends Controller
 {
@@ -30,8 +33,9 @@ class SancionesController extends Controller
     {
         $usuarios= User::all();
         $sucursales = Sucursal::all();
+        $sanciones = CategoriaSancion::all();
         //dd($usuarios);
-        return view('sanciones.create', compact('usuarios', 'sucursales'));
+        return view('sanciones.create', compact('usuarios', 'sucursales', 'sanciones'));
     }
 
     /**
@@ -52,13 +56,14 @@ class SancionesController extends Controller
         $datos = new Sanciones();
         if($request->hasFile('imagen')){
             $file= $request->file(('imagen'));
-            $destinationPath ='img/';
+            $destinationPath ='img/sanciones';
             $filename = time() .'-'. $file->getClientOriginalName();
             $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
             $datos->imagen = $destinationPath.$filename;
         }
         $datos->fecha = $request->fecha;
         $datos->descripcion = $request->descripcion;
+        $datos->categoria_sancion_id = $request->categoria_sancion_id;
         $datos->sucursal_id = $request->sucursal_id;
         $datos->user_id = $request->user_id;
         $datos->save();
@@ -85,7 +90,11 @@ class SancionesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sancion =  Sanciones::find($id);
+        $sucursales = Sucursal::all();
+        $categoria_sanciones = CategoriaSancion::all();
+        $users = User::all();
+        return view('sanciones.edit', compact('sancion' , 'sucursales', 'users', 'categoria_sanciones'));
     }
 
     /**
@@ -97,7 +106,20 @@ class SancionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sanciones = Sanciones::findOrFail($id);
+        if($request->hasFile('imagen')){
+            $file= $request->file(('imagen'));
+            $destinationPath ='img/sanciones';
+            $filename = time() .'-'. $file->getClientOriginalName();
+            $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
+            $sanciones->imagen = $destinationPath.$filename;
+        }
+        $sanciones->fecha = $request->fecha;
+        $sanciones->descripcion = $request->descripcion;
+        $sanciones->sucursal_id = $request->sucursal_id;
+        $sanciones->user_id = $request->user_id;
+        $sanciones->save();
+        return redirect()->route('sanciones.index');
     }
 
     /**

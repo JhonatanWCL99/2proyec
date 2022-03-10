@@ -144,6 +144,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/sanciones/create', [App\Http\Controllers\SancionesController::class, 'create'])->name('sanciones.create');
     Route::post('/sanciones', [App\Http\Controllers\SancionesController::class, 'store'])->name('sanciones.store');
     Route::get('/sanciones/show/{id}', [App\Http\Controllers\SancionesController::class, 'show'])->name('sanciones.show');
+    Route::get('/sanciones/edit/{id}', [App\Http\Controllers\SancionesController::class, 'edit'])->name('sanciones.edit');
+    Route::post('/sanciones/{id}', [App\Http\Controllers\SancionesController::class, 'update'])->name('sanciones.update');
 });
 /*Ruta Horarios */
 
@@ -160,6 +162,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bonos', [App\Http\Controllers\BonoController::class, 'index'])->name('bonos.index');
         Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
         Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
+    });
+
+    /*Rutas descuentos */
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/descuentos', [App\Http\Controllers\DescuentoController::class, 'index'])->name('descuentos.index');
+        Route::get('/descuentos/create', [App\Http\Controllers\DescuentoController::class, 'create'])->name('descuentos.create');
+         Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
+       
     });
 
 

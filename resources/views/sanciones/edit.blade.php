@@ -2,16 +2,16 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Agregar una Sancion</h3>
+        <h3 class="page__heading">Agregar una ewqeqw</h3>
     </div>
     <div class="section-body">
     <div class="card">
         <div class="card-body">
         <div align="center">
-            <img  id="imagenPrevisualizacion" src="{{url('img/no-image.jpeg')}}"  width="150" height="130"/>
+            <img  id="imagenPrevisualizacion" src="{{url($sancion->imagen) }}"  width="150" height="130"/>
         </div>
-        <form method="POST" action="{{route('sanciones.store')}}" enctype="multipart/form-data">
-          @csrf 
+        <form method="POST" action="{{route('sanciones.update', $sancion->id)}}" enctype="multipart/form-data">
+            @csrf 
             <div class="mb-3">
                 <h6><label for="exampleFormControlInput1" class="form-label">Imagen</label></h6>
                 <input type="file"  id="seleccionArchivos" class="form-control @error('descripcion') is-invalid @enderror" name="imagen">
@@ -23,7 +23,7 @@
             </div>
             <div class="mb-3">
                 <h6><label for="exampleFormControlInput1" class="form-label">Fecha</label></h6>
-                <input type="date" class="form-control @error('descripcion') is-invalid @enderror" id="exampleFormControlInput1" name="fecha">
+                <input type="date" class="form-control @error('descripcion') is-invalid @enderror" id="exampleFormControlInput1" name="fecha" value="{{$sancion->fecha}}">
                     @error('fecha')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -33,8 +33,12 @@
             <div class="mb-3">
                     <h6 class="card-title">Usuario</h6>
                     <select class="form-select" aria-label="Default select example" name="user_id">
-                        @foreach($usuarios as $usuario)
-                            <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                        @foreach($users as $user)
+                            @if($user->id==$sancion->user_id)
+                                <option value="{{$user->id}}" selected>{{$user->name}}</option>
+                            @else
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endif
                         @endforeach
                     </select>
             </div> 
@@ -42,28 +46,24 @@
                     <h6 class="card-title">Sucursal</h6>
                     <select class="form-select" aria-label="Default select example" name="sucursal_id">
                         @foreach($sucursales as $sucursal)
-                            <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
-                        @endforeach
-                    </select>
-            </div>
-            <div class="mb-3">
-                    <h6 class="card-title">Tipo de sancion</h6>
-                    <select class="form-select" aria-label="Default select example" name="categoria_sancion_id">
-                        @foreach($sanciones as $sancion)
-                            <option value="{{$sancion->id}}">{{$sancion->nombre}}</option>
+                            @if($sucursal->id==$sancion->sucursal_id)
+                                <option value="{{$sucursal->id}}" selected>{{$sucursal->nombre}}</option>
+                            @else
+                                <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                            @endif
                         @endforeach
                     </select>
             </div>            
             <div class="mb-3">
                 <h6><label for="exampleFormControlInput1" class="form-label">Descripcion</label></h6>
-                <textarea   class="form-control @error('descripcion') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Inserte una descripción de la sancion" name="descripcion"></textarea>
+                <textarea   class="form-control @error('descripcion') is-invalid @enderror" id="exampleFormControlInput1" name="descripcion">{{$sancion->descripcion}}</textarea>
                     @error('descripcion')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
             </div> <br>           
-            <input type="submit" class="btn btn-success" value="Registrar">
+            <input type="submit" class="btn btn-success" value="Actualizar">
             <a href="{{route('sanciones.index')}}" class="btn btn-danger btn-xs">Volver</a>
         </form>
         </div>

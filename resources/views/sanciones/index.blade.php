@@ -22,6 +22,7 @@
                                     <th>Fecha</th>
                                     <th>Nombre</th>
                                     <th>Sucursal</th>
+                                    <th>Tipo de sanción</th>
                                     <th>Detalles</th>      
                                     <th></th>
                                 </thead>
@@ -31,9 +32,12 @@
                                 <td>{{$sancion->fecha}}</td>
                                 <td>{{$sancion->user->name}}</td>
                                 <td>{{$sancion->sucursal->nombre}} <br></td>
+                                <td>{{$sancion->sanciones->nombre}}</td>
                                 <td>
-                                <div class="badge badge-warning">Active</div>
-                                <a href="{{route('sanciones.show', $sancion->id)}}" value="{{$sancion->id}}">{{$sancion->descripcion}} </a>
+                                <div class="badge badge-warning">
+                                <a href="{{route('sanciones.show', $sancion->id)}}" value="{{$sancion->id}}" class="dato"> Detalles </a>
+                                </div>
+                                
                                 </td>    
                                 <td>
                                 <div class="dropdown" style="position: absolute;">
@@ -41,7 +45,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item " href="#">Editar</a></li>
+                                        <li><a class="dropdown-item " href="{{route('sanciones.edit', $sancion->id)}}">Editar</a></li>
                                             <li>
                                                         <form action="#" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
                                                             @csrf
@@ -107,7 +111,27 @@ $('#table').DataTable({
 </script>
 @endsection
 @endsection
-@section('css')
-
-
+@section('page_css')
+<style>
+a:link {
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  text-decoration: none;
+}
+.dato:visited {
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+</style>
 @endsection

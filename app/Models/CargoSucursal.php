@@ -10,14 +10,6 @@ class CargoSucursal extends Model
 {
     use HasFactory;
     protected $table = 'cargos_sucursal';
-    protected $fillable =['cargo_id','sucursal_id'];
-
-    public function cargo(){
-        return $this->belongsTo(Cargo::class);
-    }
-
+    protected $fillable =['nombre_cargo','descripcion'];
     
-    public function sucursal(){
-        return $this->belongsTo(Sucursal::class);
-    }
 }

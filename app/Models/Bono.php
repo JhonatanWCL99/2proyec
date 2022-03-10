@@ -11,7 +11,7 @@ class Bono extends Model
     protected $table = 'bonos';
     protected $fillable =['monto','motivo','fecha','usuario_id'];
 
-    public function usuarios (){
+    public function usuario(){
         return $this->belongsTo(User::class);
     }
 }

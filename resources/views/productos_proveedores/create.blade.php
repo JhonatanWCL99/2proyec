@@ -30,7 +30,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="precio">Fecha<span class="required">*</span></label>
-                                            <input type="date" class="form-control  @error('fecha') is-invalid @enderror" name="fecha" value="{{$fecha_act}}" disabled>
+                                            <input type="date" class="form-control  @error('fecha') is-invalid @enderror" name="fecha" value="{{$fecha_act}}" readonly>
                                             @error('fecha')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

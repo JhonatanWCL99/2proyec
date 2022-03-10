@@ -8,14 +8,14 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 4.1.1 -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/modules/fontawesome/css/all.min.css">
+   {{--  <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css"> --}}
+  {{--   <link rel="stylesheet" href="assets/modules/fontawesome/css/all.min.css"> --}}
 
     
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="assets/modules/datatables/datatables.min.css">
-    <link rel="stylesheet" href="assets/modules/datatables/dataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+    {{-- <link rel="stylesheet" href="assets/modules/datatables/datatables.min.css"> --}}
+   {{--  <link rel="stylesheet" href="assets/modules/datatables/dataTables-1.10.16/css/dataTables.bootstrap4.min.css"> --}}
+   {{--  <link rel="stylesheet" href="assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css"> --}}
 
 
     <!-- Bootstrap 4 CSS -->

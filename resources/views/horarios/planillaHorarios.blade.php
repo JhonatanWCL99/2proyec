@@ -11,41 +11,24 @@
     <div class="section-body">
         <div class="row">
             <div class="card">
+                <div class="card-header">
+                    <h4 style="text-align: center;font-size:large">Seleccione la Sucursal</h4>
+                </div>
                 <div class="card-body">
-                    <div class="table-responsive" style="overflow-x: hidden">
-                        <form action="{{ route('horarios.cargarHorarios') }}" method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="input-daterange input-group" id="datepicker">
-                                        <span class="input-group-addon "><strong>Fecha De:</strong> </span>
-                                        <input type="date" id="fechaini" class="input-sm form-control" name="fecha_inicial"
-                                            value="" />
-                                        <span class="input-group-addon">A</span>
-                                        <input type="date" id="fechamax" class="input-sm form-control" name="fecha_final"
-                                            value="" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-control" id="select_sucursal" name="sucursal_id">
-                                        @foreach ($sucursales as $sucursal)
-                                            <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-control  btn btn-primary" type="submit" value="filtrar"
-                                        id="filtrar" name="filtrar">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <select name="" id="" class="form-select">
+                        @foreach ($sucursales as $sucursal)
+                        <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">
+                    <h4 style="text-align: center;font-size:large">Sucursal Bajio</h4>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <h3 style="text-align: center;font-size:large">TURNO MAÑANA</h3>
+                        <h5 style="text-align: center;font-size:large">Turno Mañana</h5>
                         <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -78,7 +61,7 @@
                             </tbody>
                         </table>
                         <br></br>
-                        <h3 style="text-align: center;font-size:large">TURNO TARDE</h3>
+                        <h5 style="text-align: center;font-size:large">Turno Tarde</h5>
                         <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -94,6 +77,31 @@
                                 </tr>
                             </thead>
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow-x: hidden">
+                        <form action="{{ route('horarios.cargarHorarios') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <span class="input-group-addon "><strong>Fecha De:</strong> </span>
+                                        <input type="date" id="fechaini" class="input-sm form-control"
+                                            name="fecha_inicial" value="" />
+                                        <span class="input-group-addon">A</span>
+                                        <input type="date" id="fechamax" class="input-sm form-control"
+                                            name="fecha_final" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control btn btn-primary" type="submit" value="Generar Planilla"
+                                        id="filtrar" name="filtrar">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

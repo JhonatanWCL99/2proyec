@@ -20,7 +20,7 @@ class CreateDetalleHorariosSemanalesTable extends Migration
             $table->unsignedBigInteger('horario_semanale_id');
             $table->unsignedBigInteger('usuario_id');
             $table->timestamps();
-
+            
             $table->foreign('horario_semanale_id')->on('horarios_semanales')->references('id');
             $table->foreign('usuario_id')->on('users')->references('id');
         });

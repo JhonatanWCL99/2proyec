@@ -19,7 +19,8 @@ class CreateSancionesTable extends Migration
             $table->date('fecha');
             $table->string('descripcion')->nullable();
             $table->unsignedBigInteger('sucursal_id'); 
-            $table->unsignedBigInteger('user_id');   
+            $table->unsignedBigInteger('user_id'); 
+            $table->unsignedBigInteger('categoria_sancion_id');     
             $table->timestamps();
         });
         Schema::table('sanciones', function (Blueprint $table) {
@@ -31,6 +32,11 @@ class CreateSancionesTable extends Migration
             $table->foreign('user_id')
             ->references('id')
             ->on('users');
+        });
+        Schema::table('sanciones', function (Blueprint $table) {
+            $table->foreign('categoria_sancion_id')
+            ->references('id')
+            ->on('categoria_sancion');
         });
     }
 

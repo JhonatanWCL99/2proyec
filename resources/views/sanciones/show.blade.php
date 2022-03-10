@@ -51,7 +51,7 @@
                     </div>
                     <div class="button-container ">
                         <a href="{{ route('sanciones.index') }}" class="btn btn-warning  btn-twitter mr-2"> Volver </a>
-                        <a href="#" class="btn btn-info btn-twitter"> Editar </a>
+                        <a href="{{route('sanciones.edit', $sancion->id)}}" class="btn btn-info btn-twitter"> Editar </a>
                     </div>
                 </div>
                 <div>

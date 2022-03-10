@@ -36,7 +36,7 @@
                                     @foreach ($bonos as $bono)
                                     <tr>
                                        
-                                        <td>{{$bono->usuario->nombre}}</td>
+                                        <td>{{$bono->usuario->name}}</td>
                                         <td>{{$bono->monto}}</td>
                                         <td>{{$bono->motivo}}</td>
                                         <td>{{$bono->fecha}}</td>

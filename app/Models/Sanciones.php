@@ -9,10 +9,13 @@ class Sanciones extends Model
 {
     use HasFactory;
     protected $table='sanciones';
-    protected $fillable=['imagen','fecha','descripcion','sucursal_id', 'user_id'];
+    protected $fillable=['imagen','fecha','descripcion','sucursal_id','categoria_sancion_id', 'user_id'];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function sancion(){
+        return $this->belongsTo(CategoriaSancion::class);
     }
     public function sucursal(){
         return $this->belongsTo(Sucursal::class);
