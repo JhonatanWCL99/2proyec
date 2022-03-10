@@ -16,27 +16,24 @@
                 <div class="card">
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{route('sanciones.create')}}">Agregar sanción</a><br><br>
-                        <div class="table-responsive">
-                            <table class="table table-striped mt-15" id="table">
-                                <thead style="background-color: #6777ef;">
-                                    <th style="color: #fff;">Fecha</th>
-                                    <th style="color: #fff;">Nombre</th>
-                                    <th style="color: #fff;">Sucursal</th>
-                                    <th style="color: #fff;">Cant. Sanciones</th>      
+                        <div class="table-resposive">
+                            <table class="table table-bordered table-md" id="table">
+                                <thead>
+                                    <th>Fecha</th>
+                                    <th>Nombre</th>
+                                    <th>Sucursal</th>
+                                    <th>Detalles</th>      
                                     <th></th>
                                 </thead>
                                 <tbody>
                                 @foreach ($sanciones as $sancion)
                                 <tr>
                                 <td>{{$sancion->fecha}}</td>
-                                <td>
-                                    @foreach($sancion->users as $user)
-                                        {{$user->name}} <br>
-                                    @endforeach
-                                </td>
+                                <td>{{$sancion->user->name}}</td>
                                 <td>{{$sancion->sucursal->nombre}} <br></td>
                                 <td>
-                                <a href="#" value="{{$sancion->id}}">{{$sancion->id}} </a>
+                                <div class="badge badge-warning">Active</div>
+                                <a href="{{route('sanciones.show', $sancion->id)}}" value="{{$sancion->id}}">{{$sancion->descripcion}} </a>
                                 </td>    
                                 <td>
                                 <div class="dropdown" style="position: absolute;">

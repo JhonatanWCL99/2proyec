@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrato;
+use App\Models\DetalleContrato;
 use App\Models\ExperienciaLaboral;
 use App\Models\Habilidad;
 use App\Models\Sucursal;
@@ -27,13 +28,15 @@ class UserController extends Controller
     public function showDetalleContrato($id){
         $user=User::find($id);
         $habilidades=Habilidad::where('usuario_id',$user->id);
+        $detalleContratos=DetalleContrato::where('usuario_id',$id)->get(); 
         $experienciaLaboral=ExperienciaLaboral::where('usuario_id',$user->id);
 
-        return view('personales.show',compact('user','habilidades','experienciaLaboral'));
+        return view('personales.show',compact('user','habilidades','experienciaLaboral','detalleContratos'));
     }
 
     public function contratar(Request $request)
-    {
+    {   
+       /*  dd($request); */
         $request->validate([
             'email' => 'required',
             'nombre' => 'required',
@@ -44,14 +47,15 @@ class UserController extends Controller
             'zona' => 'required',
             'nro_celular_personal' => 'required',
             'nro_celular_referencia' => 'required',
-            'foto' => 'required',
             'codigo_usuario' => 'required',
-            'nombre_empresas[]' => 'required',
-            'cargos[]' => 'required',
-            'fecha_inicios[]' => 'required',
-            'fecha_fines[]' => 'required',
-            'descripciones[]' => 'required',
-            'habilidades[]' => 'required',
+            'nombre_empresas' => 'required',
+            'cargos' => 'required',
+            'fecha_inicios' => 'required',
+            'fecha_fines' => 'required',
+            'descripciones' => 'required',
+            'habilidades' => 'required',
+            'fecha_inicio_contrato' =>'required',
+            'fecha_fin_contrato' =>'required',
         ]);
         /* dd($request->habilidades[1]); */
         $contratar_personal = new User();
@@ -98,13 +102,26 @@ class UserController extends Controller
             }
 
             if ($habilidad && $experienciaLaboral) {
-
+                DetalleContrato::create([
+                    'fecha_inicio_contrato' => $request->fecha_inicio_contrato,
+                    'fecha_fin_contrato' => $request->fecha_fin_contrato,
+                    'disponibilidad' => $request->disponibilidad,
+                    'contrato_id' => $request->contrato_id,
+                    'usuario_id' =>  $contratar_personal->id,
+                ]);
             }
         }
         return redirect()->route('personales.index')->with('success', 'Personal contratado correctamente');
     }
 
-    public function actualizarContrato(){
+    public function actualizarContratoUser(Request $request){
+        dd($request);
+    }
 
+    public function editContratoUser($id){
+        $contratos=Contrato::all();
+        $usuario=User::find($id);
+        $detalleContratos=DetalleContrato::where('usuario_id',$id)->get();
+        return view('personales.editContratoUser',compact('contratos','detalleContratos','usuario')); 
     }
 }

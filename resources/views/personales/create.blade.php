@@ -161,12 +161,6 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
-                                                                    {{-- <div class="form-group col-md-6">
-                                                                        <label for="estudios">ESTUDIOS</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="estudios" name="estudios"
-                                                                            placeholder="Estudios...">
-                                                                    </div> --}}
                                                                     <div class="form-group col-md-6">
                                                                         <label for="foto">FOTO</label>
                                                                         <input type="file" class="form-control"
@@ -259,12 +253,6 @@
                                                                             +</button>
                                                                     </div>
                                                                 </div>
-                                                                {{-- <div class="form-row">
-                                                                    <div class="col-md-12 text-center">
-                                                                        <button class="btn btn-primary"
-                                                                            id="agregar_experiencia">Agregar campo +</button>
-                                                                    </div>
-                                                                </div> --}}
                                                             </div>
                                                             <button type="button" name="previous"
                                                                 class="btn btn-primary previous">Anterior</button>
@@ -317,8 +305,8 @@
                                                                             CONTRATO</label>
                                                                         <input type="date"
                                                                             class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                                                            id="fecha_inicio" name="fecha_inicio">
-                                                                        @error('fecha_inicio')
+                                                                            id="fecha_inicio_contrato" name="fecha_inicio_contrato">
+                                                                        @error('fecha_inicio_contrato')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -329,8 +317,8 @@
                                                                             CONTRATO</label>
                                                                         <input type="date"
                                                                             class="form-control @error('fecha_fin') is-invalid @enderror"
-                                                                            id="fecha_fin" name="fecha_fin">
-                                                                        @error('fecha_fin')
+                                                                            id="fecha_fin_contrato" name="fecha_fin_contrato">
+                                                                        @error('fecha_fin_contrato')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -426,6 +414,7 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         let remover_ocutar = contenido_habilidad.lastChild.childNodes[1].querySelectorAll('span');
         remover_ocutar[0].classList.remove('ocultar_habilidad');
     });
+    
 
     contenido_habilidad.addEventListener('click', e => {
         e.preventDefault();

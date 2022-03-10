@@ -15,15 +15,22 @@ class CreateSancionesTable extends Migration
     {
         Schema::create('sanciones', function (Blueprint $table) {
             $table->id();
+            $table->string('imagen')->nullable();
             $table->date('fecha');
-            $table->integer('cantidad');
+            $table->string('descripcion')->nullable();
             $table->unsignedBigInteger('sucursal_id'); 
+            $table->unsignedBigInteger('user_id');   
             $table->timestamps();
         });
         Schema::table('sanciones', function (Blueprint $table) {
             $table->foreign('sucursal_id')
             ->references('id')
             ->on('sucursals');
+        });
+        Schema::table('sanciones', function (Blueprint $table) {
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users');
         });
     }
 

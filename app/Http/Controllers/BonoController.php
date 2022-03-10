@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sanciones;
-use App\Models\Sucursal;
+use App\Models\Bono;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SancionesController extends Controller
+class BonoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,8 @@ class SancionesController extends Controller
      */
     public function index()
     {
-        $sanciones = Sanciones::all();
-        //dd($sanciones);
-        return view('sanciones.index', compact('sanciones'));
+        $bonos = Bono::all();
+        return view('bonos.index')->with('bonos',$bonos);
     }
 
     /**
@@ -28,10 +26,9 @@ class SancionesController extends Controller
      */
     public function create()
     {
+        
         $usuarios= User::all();
-        $sucursales = Sucursal::all();
-        //dd($usuarios);
-        return view('sanciones.create', compact('usuarios', 'sucursales'));
+        return view('bonos.create')->with('usuarios',$usuarios);
     }
 
     /**
@@ -43,28 +40,22 @@ class SancionesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'imagen'=>'required',
+            'monto'=>'required',
+            'motivo'=>'required',
             'fecha'=>'required',
-            'user_id'=>'required',
-            'sucursal_id'=>'required',
-            'descripcion'=>'required',         
+           
         ]);
-        $datos = new Sanciones();
-        if($request->hasFile('imagen')){
-            $file= $request->file(('imagen'));
-            $destinationPath ='img/';
-            $filename = time() .'-'. $file->getClientOriginalName();
-            $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
-            $datos->imagen = $destinationPath.$filename;
-        }
-        $datos->fecha = $request->fecha;
-        $datos->descripcion = $request->descripcion;
-        $datos->sucursal_id = $request->sucursal_id;
-        $datos->user_id = $request->user_id;
-        $datos->save();
-        return redirect()->route('sanciones.index');
 
-    } 
+        $bono= new Bono();
+        $bono->monto =$request->get('monto');
+        $bono->motivo =$request->get('motivo');
+        $bono->fecha =$request->get('fecha');
+        $bono->usuario_id =$request->get('usuario_id');
+       
+        $bono->save();
+        return redirect()->route('bonos.index');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -73,8 +64,7 @@ class SancionesController extends Controller
      */
     public function show($id)
     {
-        $sancion =  Sanciones::find($id);
-        return view('sanciones.show', ['sancion'=>$sancion]);
+        //
     }
 
     /**

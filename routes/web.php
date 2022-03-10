@@ -124,7 +124,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/personales', [App\Http\Controllers\UserController::class, 'contratar'])->name('personales.contratar');
     Route::get('/personales/show/{id}', [App\Http\Controllers\UserController::class, 'showDetalleContrato'])->name('personales.showDetalleContrato');
     Route::delete('/personales/{id}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('personales.destroy');
-    Route::get('/personales/editarContrato/{id}', [App\Http\Controllers\UserController::class, 'actualizarContrato'])->name('personales.actualizarContrato');
+    Route::get('/personales/editContratoUser/{id}', [App\Http\Controllers\UserController::class, 'editContratoUser'])->name('personales.editContratoUser');
+    Route::post('/personales/editContratoUser', [App\Http\Controllers\UserController::class, 'actualizarContratoUser'])->name('personales.actualizarContratoUser');
 });
 
 
@@ -141,6 +142,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/sanciones', [App\Http\Controllers\SancionesController::class, 'index'])->name('sanciones.index');
     Route::get('/sanciones/create', [App\Http\Controllers\SancionesController::class, 'create'])->name('sanciones.create');
+    Route::post('/sanciones', [App\Http\Controllers\SancionesController::class, 'store'])->name('sanciones.store');
+    Route::get('/sanciones/show/{id}', [App\Http\Controllers\SancionesController::class, 'show'])->name('sanciones.show');
 });
 /*Ruta Horarios */
 
@@ -152,6 +155,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
     Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios');
 
+    /*Rutas Bonos */
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/bonos', [App\Http\Controllers\BonoController::class, 'index'])->name('bonos.index');
+        Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
+        Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
+    });
 
 
 /* Route::post('/login', function () {

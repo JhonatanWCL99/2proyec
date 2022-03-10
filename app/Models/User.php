@@ -71,13 +71,22 @@ class User extends Authenticatable
         return $this->hasMany(Horario::class);
     }*/
 
-    public function sanciones()
-    {
-        return $this->belongsToMany(Sanciones::class);
+    public function sanciones(){
+        return $this->hasMany(Sanciones::class);
     }
 
     public function turnos(){
         return $this->hasMany(Turno::class);
     }
 
+    public function detalleContratos(){
+        return $this->hasMany(DetalleContrato::class);
+    }
+    public function bonos(){
+        return $this->hasMany(Bono::class);
+    }
+
+    public function descuentos(){
+        return $this->hasMany(Descuento::class);
+    }
 }

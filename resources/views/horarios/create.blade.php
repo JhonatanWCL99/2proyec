@@ -15,18 +15,7 @@
                                 <form action="{{ route('horarios.store') }}" method="POST" class="form-horizontal">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="fecha">Fecha<span class="required">*</span></label>
-                                                <input type="date"
-                                                    class="form-control  @error('fecha') is-invalid @enderror" name="fecha">
-                                                @error('fecha')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                        
 
                                         <div class="col-md-6">
                                             <div class="form-group">

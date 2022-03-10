@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="card card-primary">
                             <br>
-                            <form action="{{ route('productos.store') }}" method="POST" class="form-horizontal">
+                            <form action="{{ route('bonos.store') }}" method="POST" class="form-horizontal">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
-                                    <a class="btn btn-danger" href="{{route('productos.index')}}">Volver</a>
+                                    <a class="btn btn-danger" href="{{route('bonos.index')}}">Volver</a>
                                 </div>
                             </form>
                         </div>

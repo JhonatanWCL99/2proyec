@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sanciones;
-use App\Models\Sucursal;
+use App\Models\Turno;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SancionesController extends Controller
+class TurnoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,8 @@ class SancionesController extends Controller
      */
     public function index()
     {
-        $sanciones = Sanciones::all();
-        //dd($sanciones);
-        return view('sanciones.index', compact('sanciones'));
+        $turnos = Turno::all();
+        return view('turnos.index')->with('turnos',$turnos);
     }
 
     /**
@@ -29,9 +27,7 @@ class SancionesController extends Controller
     public function create()
     {
         $usuarios= User::all();
-        $sucursales = Sucursal::all();
-        //dd($usuarios);
-        return view('sanciones.create', compact('usuarios', 'sucursales'));
+        return view('turnos.create')->with('usuarios',$usuarios);
     }
 
     /**
@@ -43,28 +39,23 @@ class SancionesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'imagen'=>'required',
-            'fecha'=>'required',
-            'user_id'=>'required',
-            'sucursal_id'=>'required',
-            'descripcion'=>'required',         
+            'turno'=>'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+           
         ]);
-        $datos = new Sanciones();
-        if($request->hasFile('imagen')){
-            $file= $request->file(('imagen'));
-            $destinationPath ='img/';
-            $filename = time() .'-'. $file->getClientOriginalName();
-            $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
-            $datos->imagen = $destinationPath.$filename;
-        }
-        $datos->fecha = $request->fecha;
-        $datos->descripcion = $request->descripcion;
-        $datos->sucursal_id = $request->sucursal_id;
-        $datos->user_id = $request->user_id;
-        $datos->save();
-        return redirect()->route('sanciones.index');
 
-    } 
+        $turno= new Turno();
+        $turno->turno =$request->get('turno');
+        $turno->hora_inicio =$request->get('hora_inicio');
+        $turno->hora_fin =$request->get('hora_fin');
+        $turno->usuario_id =$request->get('usuario_id');
+    
+        $turno->save();
+       
+        return redirect()->route('turnos.index');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -73,8 +64,7 @@ class SancionesController extends Controller
      */
     public function show($id)
     {
-        $sancion =  Sanciones::find($id);
-        return view('sanciones.show', ['sancion'=>$sancion]);
+        //
     }
 
     /**
@@ -85,7 +75,9 @@ class SancionesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuarios= User::all();
+        $turno = Turno::find($id);
+        return view ('turnos.edit',compact('turno','usuarios'));
     }
 
     /**
@@ -97,7 +89,14 @@ class SancionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $turno= Turno::find($id);
+        $turno->turno =$request->get('turno');
+        $turno->hora_inicio =$request->get('hora_inicio');
+        $turno->hora_fin =$request->get('hora_fin');
+     
+        $turno->categoria_id =$request->get('usuario_id');
+        $turno->save();
+        return redirect()->route('turnos.index');
     }
 
     /**
@@ -108,6 +107,8 @@ class SancionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $turno= Turno::find($id);
+        $turno->delete();
+        return redirect()->route('turnos.index')->with('eliminar','ok');
     }
 }

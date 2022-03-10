@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoUsuarioSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ContratoSeeder::class);
+        $this->call(TurnoSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }
