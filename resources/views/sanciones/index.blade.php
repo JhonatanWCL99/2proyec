@@ -5,9 +5,10 @@
 @section('css')
 
 @endsection
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Sanciones</h3>
+    <h3 class="page__heading">Sanciones</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -44,13 +45,7 @@
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             <li><a class="dropdown-item " href="{{route('sanciones.edit', $sancion->id)}}">Editar</a></li>
-                                                <li>
-                                                    <form action="#" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
-                                                            @csrf
-                                                            @method('Delete')
-                                                        <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                    </form>
-                                            </li>
+                                            <li><a href="#" class="dropdown-item" data-id="{{$sancion->id}}" onclick="deleteItem(this)">Eliminar</a></li>
                                         </ul>
                                     </div>                                      
                                 </td>
@@ -67,9 +62,7 @@
 </section>
 @endsection
 @section('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
 @section('page_js')
 <script>
 $('#table').DataTable({
@@ -105,6 +98,68 @@ $('#table').DataTable({
             { className: 'text-center', targets: [0,1,2,3,4] },
         ]
 });
+</script>
+ <script type="application/javascript">
+
+function deleteItem(e){
+
+    let id = e.getAttribute('data-id');
+
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: true
+    });
+
+    swalWithBootstrapButtons.fire({
+        title: 'Esta seguro de que desea eliminar este registro?',
+        text: "Este cambio no se puede revertir!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, Eliminar!',
+        cancelButtonText: 'No, Cancelar!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.value) {
+            if (result.isConfirmed){
+                let id = e.getAttribute('data-id');
+                $.ajax({
+                    type:'DELETE',
+                    url: '{{ route('sanciones.destroy', '') }}/'+id,
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success:function(data) {
+                        if (data.success){
+                            swalWithBootstrapButtons.fire(
+                                'Eliminado!',
+                                'El registro ha sido eliminado.',
+                                "success",
+                            ).then(function() {
+                                window.location = "sanciones";
+                            });}
+
+                    }
+                });
+
+            }
+
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'No se registro la eliminación',
+                'error'
+            );
+        }
+    });
+
+}
+
 </script>
 @endsection
 @endsection

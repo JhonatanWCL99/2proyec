@@ -80,7 +80,7 @@
                                 </div> 
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
-                                    <a class="btn btn-danger" href="{{route('personales.create')}}">Volver</a>
+                                    <a class="btn btn-danger" href="{{route('personales.index')}}">Volver</a>
                                 </div>
                             </form>
                         </div>

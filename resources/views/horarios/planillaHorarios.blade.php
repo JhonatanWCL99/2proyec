@@ -17,14 +17,14 @@
                 <div class="card-body">
                     <select name="" id="" class="form-select">
                         @foreach ($sucursales as $sucursal)
-                        <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                            <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 style="text-align: center;font-size:large">Sucursal Bajio</h4>
+                    <h4 style="text-align: center;font-size:large">Sucursal 3 Pasos</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -44,23 +44,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($encargados))
-                                    <tr>
-                                        <td>
-                                            <select name="" class="form-control selectric">
-                                                @foreach ($sucursales as $sucursal)
-                                                    <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-
-                                    </tr>
+                                @if (isset($cargos_sucursales))
+                                    @foreach ($cargos_sucursales as $cargo_sucursal)
+                                        <tr>
+                                            <td>
+                                                {{ $cargo_sucursal->nombre_cargo }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endif
-
                             </tbody>
                         </table>
-                        <br></br>
+                        <br>
                         <h5 style="text-align: center;font-size:large">Turno Tarde</h5>
                         <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             <thead>
@@ -76,6 +71,26 @@
                                     <th>Domingo</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @if (isset($cargos_sucursales))
+                                    @foreach ($cargos_sucursales as $cargo_sucursal)
+                                        <tr>
+                                            <td>
+                                                {{ $cargo_sucursal->nombre_cargo }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                @if (isset($cargos_sucursales))
+                                @foreach ($cargos_sucursales->users as $user)
+                                    <tr>
+                                        <td>
+                                            {{ $user->name }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            </tbody>
                         </table>
                     </div>
                 </div>

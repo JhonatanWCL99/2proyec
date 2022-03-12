@@ -89,4 +89,8 @@ class User extends Authenticatable
     public function descuentos(){
         return $this->hasMany(Descuento::class);
     }
+
+    public function cargosucursals(){
+        return $this->belongsToMany(CargoSucursal::class);
+    }
 }

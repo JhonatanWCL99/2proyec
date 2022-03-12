@@ -130,6 +130,7 @@ class SancionesController extends Controller
      */
     public function destroy($id)
     {
-        
+        Sanciones::destroy($id);
+        return response()->json(['success' => true],200);
     }
 }

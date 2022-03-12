@@ -17,8 +17,7 @@ class CreateExperienciasLaboralesTable extends Migration
             $table->id();
             $table->string('cargo');
             $table->string('nombre_empresa');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+          
             $table->string('descripcion');
             $table->timestamps();
         });

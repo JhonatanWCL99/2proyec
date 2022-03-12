@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCargosDepartamentoTable extends Migration
+class CreateCargoDepartamentoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateCargosDepartamentoTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargos_departamento', function (Blueprint $table) {
+        Schema::create('cargo_departamento', function (Blueprint $table) {
             $table->id();
-
             $table->unsignedBigInteger('cargo_id');
             $table->unsignedBigInteger('departamento_id');
 

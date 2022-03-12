@@ -13,14 +13,18 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    
+
     public function index()
     {
+      
         $personales = User::all();
         return view('personales.index', compact('personales'));
     }
 
     public function create()
     {
+        /*$user_cod = rand(1, 15);*/
         $sucursales = Sucursal::all();
         $contratos = Contrato::all();
         return view('personales.create', compact('sucursales', 'contratos'));
@@ -33,6 +37,9 @@ class UserController extends Controller
 
         return view('personales.show',compact('user','habilidades','experienciaLaboral','detalleContratos'));
     }
+
+    
+    
 
     public function contratar(Request $request)
     {   
@@ -50,13 +57,12 @@ class UserController extends Controller
             'codigo_usuario' => 'required',
             'nombre_empresas' => 'required',
             'cargos' => 'required',
-            'fecha_inicios' => 'required',
-            'fecha_fines' => 'required',
             'descripciones' => 'required',
             'habilidades' => 'required',
             'fecha_inicio_contrato' =>'required',
             'fecha_fin_contrato' =>'required',
         ]);
+   
         /* dd($request->habilidades[1]); */
         $contratar_personal = new User();
         $contratar_personal->email = $request->get('email');
@@ -94,8 +100,6 @@ class UserController extends Controller
                 $experienciaLaboral = ExperienciaLaboral::create([
                     'cargo' => $request->cargos[$j],
                     'nombre_empresa' => $request->nombre_empresas[$j],
-                    'fecha_inicio' => $request->fecha_inicios[$j],
-                    'fecha_fin' => $request->fecha_fines[$j],
                     'descripcion' => $request->descripciones[$j],
                     'usuario_id' => $contratar_personal->id,
                 ]);

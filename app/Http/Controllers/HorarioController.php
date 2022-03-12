@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CargoSucursal;
 use App\Models\Encargado;
 use App\Models\Horario;
 use App\Models\Sucursal;
@@ -131,7 +132,10 @@ class HorarioController extends Controller
     public function planillaHorarios()
     {   
         $sucursales=Sucursal::all();
-        return view('horarios.planillaHorarios',compact('sucursales'));
+        $cargosucursales=CargoSucursal::all();
+        $users=User::find(1);
+        dd($users->cargosucursals);
+        return view('horarios.planillaHorarios',compact('sucursales','cargos_sucursales'));
     }
 
     public function cargarHorarios(Request $request){

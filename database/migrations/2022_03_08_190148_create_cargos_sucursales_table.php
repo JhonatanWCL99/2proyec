@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCargosSucursalTable extends Migration
+class CreateCargosSucursalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCargosSucursalTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargos_sucursal', function (Blueprint $table) {
+        Schema::create('cargos_sucursales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cargo_id');
-            $table->unsignedBigInteger('sucursal_id');
-
-            $table->foreign('cargo_id')->on('cargos')->references('id');
-            $table->foreign('sucursal_id')->on('sucursals')->references('id');
+            $table->string('nombre_cargo');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }

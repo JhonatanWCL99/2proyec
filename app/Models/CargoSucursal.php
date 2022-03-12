@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class CargoSucursal extends Model
 {
     use HasFactory;
-    protected $table = 'cargos_sucursal';
+    protected $table = 'cargos_sucursales';
     protected $fillable =['nombre_cargo','descripcion'];
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
     
 }

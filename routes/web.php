@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/sanciones/show/{id}', [App\Http\Controllers\SancionesController::class, 'show'])->name('sanciones.show');
     Route::get('/sanciones/edit/{id}', [App\Http\Controllers\SancionesController::class, 'edit'])->name('sanciones.edit');
     Route::post('/sanciones/{id}', [App\Http\Controllers\SancionesController::class, 'update'])->name('sanciones.update');
+    Route::delete('/sanciones/{id}', [\App\Http\Controllers\SancionesController::class, 'destroy'])->name('sanciones.destroy');
 });
 /*Ruta Horarios */
 

@@ -19,8 +19,8 @@
                         <p class="card-text">
                         <div class="author">
                             {{-- <a href="#"> --}}
-                            <img src="http://localhost/eerpwebv2/public/img/contratos/{{ $user->foto }}" alt="image"
-                                class="avatar">
+                            <img src="http://192.168.0.54/eerpwebv2/public/img/contratos/{{ $user->foto }}" alt="image"
+                                class="rounded-circle" width="125px" height="125px" >
                             <h5 class="title mt-3">{{ $user->name }} {{ $user->apellido }}</h5>
                             {{-- </a> --}}
                             <p class="description">
@@ -130,3 +130,17 @@
         </div>
 </section>
 @endsection
+<style>
+    .avatar2 {
+    /* cambia estos dos valores para definir el tamaño de tu círculo */
+    height: 200px;
+    width: 150px;
+    /* los siguientes valores son independientes del tamaño del círculo */
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+    background-size: 100% auto;
+    shape-image-threshold: linear-gradient(50deg, rgb(77, 26, 103), transparent 80%,
+                transparent);
+}
+</style>

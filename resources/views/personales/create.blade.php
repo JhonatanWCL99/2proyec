@@ -201,7 +201,7 @@
                                                                             </span>
                                                                         @enderror
                                                                     </div>
-                                                                    <div class="form-group col-md-6">
+                                                                    <!--<div class="form-group col-md-6">
                                                                         <label for="fecha_inicio">FECHA INICIO DEL
                                                                             TRABAJO</label>
                                                                         <input type="date"
@@ -212,8 +212,8 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
+                                                                    </div>-->
+                                                                   <!-- <div class="form-group col-md-6">
                                                                         <label for="fecha_fin">FECHA FIN DEL
                                                                             TRABAJO</label>
                                                                         <input type="date"
@@ -224,7 +224,7 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
-                                                                    </div>
+                                                                    </div>-->
                                                                     <div class="form-group col-md-6">
                                                                         <label for="descripcion">DESCRIPCION DEL
                                                                             TRABAJO</label>
