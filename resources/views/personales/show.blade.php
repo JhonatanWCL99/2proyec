@@ -6,7 +6,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Vista detallada del contrato del usuario: {{ $user->name }}</h3>
+        <h3 class="page__heading">Datos del empleado: {{ $user->name }}</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -38,21 +38,18 @@
                             aliquid provident placeat.
                         </div> --}}
                     </div>
-                    <div class="card-footer">
-                        <div class="button-container">
-                            <button class="btn btn-sm btn-primary">Editar</button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
-
-            <div class="col-md-5">
+  
+            <div class="col-md-8">
+                
                 <div class="card ">
                     <div class="card-header">
                         <h4>Datos en la Empresa</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered table-striped ">
+                        <table class="table table-bordered table-md">
                             <tbody>
                                 <tr>
                                     <th>Codigo</th>
@@ -84,51 +81,138 @@
                                     <th>Fecha Nacimiento</th>
                                     <td>{!! $user->fecha_nacimiento !!}</td>
                                 </tr>
+                                <th>Tipo de contrato </th>
+                                    @foreach ($detalleContratos as $detallecontrato)
+                                        <td>{{$detallecontrato->contrato->tipo_contrato}} </td>
+                                    @endforeach
+                                </tr>
+                                <th>Duracion de contrato </th>
+                                    @foreach ($detalleContratos as $detallecontrato)
+                                        <td>{{$detallecontrato->contrato->duracion_contrato}}</td>
+                                    @endforeach
+                                </tr>                               
+                                <tr>
+                                    <th>Fecha Inicio</th>
+                                        @foreach ($detalleContratos as $detallecontrato)
+                                            <td>{{$detallecontrato->fecha_inicio_contrato}}</td>
+                                        @endforeach
+                                    </tr>
                             </tbody>
                         </table>
-                        <div class="button-container ">
-                            <a href="{{ route('personales.index') }}" class="btn btn-warning  btn-twitter mr-2">
-                                Volver
-                            </a>
-                        </div>
                     </div>
                 </div>
 
-            </div>
-
-            <div class="col-md-3">
+            </div>   
+            
+            <div class="col-md-12">
                 <div class="card card-user">
                     <div class="card-header ">
-                        <h4>Contratos de {{ $user->name }}</h4>
+                        <h4>Bonos  de {{ $user->name }}</h4>
+                    </div>
+                    <div class="card-body">
+                    <table class="table table-bordered table-md">
+                            <thead >
+                                <tr>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Monto</th>
+                                    <th scope="col" class="text-center">Motivo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($user->bonos as $bono)
+                                    <tr>
+                                        <td class="text-center">
+                                        <a href="{{route('bono.show', $user->id)}}" value="{{$user->id}}" class="dato"  target="_blank"> {{$bono->fecha }} </a></td>
+                                        <td class="text-center">{{$bono->monto}}</td>
+                                        <td class="text-center">{{$bono->motivo }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                   
+                </div>
+            </div> 
+            <div class="col-md-12">
+                <div class="card card-user">
+                    <div class="card-header ">
+                        <h4>Sanciones  de {{ $user->name }}</h4>
+                        <a  data-bs-toggle="collapse" href="#collapseSanciones" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fas fa-angle-down"></i>
+                        </a>
                     </div>
                     <div class="card-body">
 
-                        <p class="description">
-                            @foreach ($detalleContratos as $detalleContrato)
-                                <h6>{{ $detalleContrato->contrato->tipo_contrato }}</h6>
-                                fecha Inicio del Contrato : {{ $detalleContrato->fecha_inicio_contrato }} <br>
-                                fecha Final del Contrato : {{ $detalleContrato->fecha_fin_contrato }} <br>
-                                Disponibilidad : {{ $detalleContrato->disponibilidad }} <br>
-                            @endforeach
-
-
-                        </p>
-
-                    </div>
-                    <div class="card-footer">
-                        <div class="button-container">
-                            <a href="{{ route('personales.editContratoUser',$user->id) }}" class="btn btn-sm btn-primary mr-3"> Actualizar Contrato
-                            </a>
-                            {{-- <button class="btn btn-sm btn-primary">Actualizar Contrato</button> --}}
-                        </div>
+                        <table class="table table-bordered table-md">
+                            <thead >
+                                <tr>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Tipo Sancion</th>
+                                    <th scope="col" class="text-center">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                  
+                                @foreach ($user->sanciones as $sancion)
+                                    <tr>
+                                        <td class="text-center">
+                                        <a href="{{route('sanciones.show', $sancion->id)}}" value="{{$sancion->id}}" class="dato"  target="_blank"> {{$sancion->fecha }} </a></td>
+                                        <td class="text-center">{{$sancion->categoriaSancion->nombre }}</td>
+                                        <td class="text-center">{{$sancion->descripcion }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                           
+                        </table>
                     </div>
                 </div>
             </div>
-            <!--end card user 2-->
-
-
+            
+            <div class="col-md-12">
+                <div class="card card-user">
+                    <div class="card-header">
+                        <h4>Descuentos  de {{ $user->name }}</h4>
+                        <a  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <table class="table table-bordered table-md">
+                                <thead >
+                                    <tr>
+                                        <th scope="col" class="text-center">Fecha</th>
+                                        <th scope="col" class="text-center">Monto</th>
+                                        <th scope="col" class="text-center">Motivo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tbody>
+                                    @foreach ($user->descuentos as $descuento)
+                                        <tr>
+                                            <td class="text-center">
+                                            <a href="{{route('descuentos.index', $user->id)}}" value="{{$user->id}}" class="dato"  target="_blank"> {{$descuento->fecha }} </a></td>
+                                            <td class="text-center">{{$descuento->monto }}</td>
+                                            <td class="text-center">{{$descuento->motivo }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </tbody>
+                            </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
 </section>
+@endsection
+@section('scripts')
+
+@section('page_js')
+
+@endsection
 @endsection
 <style>
     .avatar2 {

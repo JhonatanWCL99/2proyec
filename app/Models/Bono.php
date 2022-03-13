@@ -9,9 +9,9 @@ class Bono extends Model
 {
     use HasFactory;
     protected $table = 'bonos';
-    protected $fillable =['monto','motivo','fecha','usuario_id'];
+    protected $fillable =['monto','motivo','fecha','user_id'];
 
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 }

@@ -163,6 +163,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bonos', [App\Http\Controllers\BonoController::class, 'index'])->name('bonos.index');
         Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
         Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
+        Route::get('/bonos/show/{id}', [App\Http\Controllers\BonoController::class, 'show'])->name('bono.show');
     });
 
     /*Rutas descuentos */

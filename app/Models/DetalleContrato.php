@@ -15,7 +15,7 @@ class DetalleContrato extends Model
         'fecha_fin_contrato',
         'disponibilidad',
         'contrato_id',
-        'usuario_id',
+        'user_id',
     ];
 
     public function contrato(){

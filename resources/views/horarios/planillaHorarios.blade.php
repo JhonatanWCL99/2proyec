@@ -50,6 +50,66 @@
                                             <td>
                                                 {{ $cargo_sucursal->nombre_cargo }}
                                             </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($turnos as $turno)
+                                                        @if ($turno->turno == 'AM')
+                                                            <option value="">{{ $turno->hora_inicio }} a
+                                                                {{ $turno->hora_fin }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 @endif
@@ -78,18 +138,81 @@
                                             <td>
                                                 {{ $cargo_sucursal->nombre_cargo }}
                                             </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($turnos as $turno)
+                                                        @if ($turno->turno == 'PM')
+                                                            <option value="">{{ $turno->hora_inicio }} a
+                                                                {{ $turno->hora_fin }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="usuario" id="">
+                                                    @foreach ($cargo_sucursal->users as $user)
+                                                        <option value="">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 @endif
-                                @if (isset($cargos_sucursales))
-                                @foreach ($cargos_sucursales->users as $user)
+                                {{-- @if (isset($cargos_sucursales))
                                     <tr>
-                                        <td>
-                                            {{ $user->name }}
-                                        </td>
+                                        @foreach ($cargos_sucursales as $cargo_sucursal)
+                                            @foreach ($cargo_sucursal->users as $user)
+                                                <td>
+                                                    {{ $user->name }}
+                                                </td>
+                                            @endforeach
+                                        @endforeach
                                     </tr>
-                                @endforeach
-                            @endif
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>

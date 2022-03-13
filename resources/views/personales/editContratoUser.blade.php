@@ -10,12 +10,16 @@
                 <div class="col-lg-12">
                     @foreach ($detalleContratos as $detalleContrato)
                         <div class="card">
+                            <div class="card-header">
+                                <h4>Contratos Anteriores</h4>
+                            </div>
                             <div class="card-body">
-                                <div class="card card-primary">
+                                {{-- <div class="card card-primary"> --}}
                                     <div class="row ">
+                                        <h5></h5>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="direccion">Direccion<span
+                                                <label for="direccion">Fecha de Inicio de Contrato<span
                                                         class="required">*</span></label>
                                                 <input type="text" class="form-control" name="direccion"
                                                     value="{{ $detalleContrato->fecha_inicio_contrato }}" required
@@ -24,7 +28,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="nombre">Nombre<span class="required">*</span></label>
+                                                <label for="nombre">Fecha Fin de Contrato<span class="required">*</span></label>
                                                 <input type="text" class="form-control" name="nombre"
                                                     value="{{ $detalleContrato->fecha_fin_contrato }}" required disabled>
                                             </div>
@@ -32,22 +36,22 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="correo">Correo<span class="required">*</span></label>
+                                                <label for="correo">Disponibilidad<span class="required">*</span></label>
                                                 <input type="text" class="form-control" name="correo"
                                                     value="{{ $detalleContrato->disponibilidad }}" required disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="nro_fiscal">Nro Fiscal<span
+                                                <label for="nro_fiscal">Tipo de Contrato<span
                                                         class="required">*</span></label>
                                                 <input type="number" class="form-control" name="nro_fiscal"
                                                     value="{{ $detalleContrato->contrato->tipo_contrato }}" required
-                                                    disabled>
+                                                    readonly>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                {{-- </div> --}}
                             </div>
                         </div>
                     @endforeach

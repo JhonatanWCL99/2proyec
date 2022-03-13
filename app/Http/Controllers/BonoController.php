@@ -50,7 +50,7 @@ class BonoController extends Controller
         $bono->monto =$request->get('monto');
         $bono->motivo =$request->get('motivo');
         $bono->fecha =$request->get('fecha');
-        $bono->usuario_id =$request->get('usuario_id');
+        $bono->user_id =$request->get('usuario_id');
        
         $bono->save();
         return redirect()->route('bonos.index');

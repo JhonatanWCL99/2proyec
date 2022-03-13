@@ -31,9 +31,9 @@ class UserController extends Controller
     }
     public function showDetalleContrato($id){
         $user=User::find($id);
-        $habilidades=Habilidad::where('usuario_id',$user->id);
-        $detalleContratos=DetalleContrato::where('usuario_id',$id)->get(); 
-        $experienciaLaboral=ExperienciaLaboral::where('usuario_id',$user->id);
+        $habilidades=Habilidad::where('user_id',$user->id);
+        $detalleContratos=DetalleContrato::where('user_id',$id)->get(); 
+        $experienciaLaboral=ExperienciaLaboral::where('user_id',$user->id);
 
         return view('personales.show',compact('user','habilidades','experienciaLaboral','detalleContratos'));
     }
@@ -44,7 +44,7 @@ class UserController extends Controller
     public function contratar(Request $request)
     {   
        /*  dd($request); */
-        $request->validate([
+       /*  $request->validate([
             'email' => 'required',
             'nombre' => 'required',
             'apellido' => 'required',
@@ -61,7 +61,7 @@ class UserController extends Controller
             'habilidades' => 'required',
             'fecha_inicio_contrato' =>'required',
             'fecha_fin_contrato' =>'required',
-        ]);
+        ]); */
    
         /* dd($request->habilidades[1]); */
         $contratar_personal = new User();

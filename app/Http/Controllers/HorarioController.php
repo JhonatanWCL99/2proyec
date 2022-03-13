@@ -6,6 +6,7 @@ use App\Models\CargoSucursal;
 use App\Models\Encargado;
 use App\Models\Horario;
 use App\Models\Sucursal;
+use App\Models\Turno;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -132,15 +133,17 @@ class HorarioController extends Controller
     public function planillaHorarios()
     {   
         $sucursales=Sucursal::all();
-        $cargosucursales=CargoSucursal::all();
-        $users=User::find(1);
-        dd($users->cargosucursals);
-        return view('horarios.planillaHorarios',compact('sucursales','cargos_sucursales'));
+        $cargos_sucursales=CargoSucursal::all();
+       /*  $cargo_sucursal=CargoSucursal::find(1); */
+        $user=User::find(1);
+        $turnos=Turno::all();
+        /* dd($cargo_sucursal->users); */
+        return view('horarios.planillaHorarios',compact('sucursales','cargos_sucursales','turnos'));
     }
 
     public function cargarHorarios(Request $request){
 
-        dd($request);
+        /* dd($request); */
         if(isset($request->fecha_inicial,$request->fecha_final)){
             User::where('sucursal_id',$request->sucursal_id)->whereBetween('points', [1, 150]);
         }

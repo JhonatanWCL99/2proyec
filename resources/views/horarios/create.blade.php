@@ -94,11 +94,11 @@
                                                 <label for="encargado_id">Encargado<span
                                                         class="required">*</span></label>
                                                 <div class="selectric-hide-select">
-                                                    <select name="encargado_id" id="_encargado"
+                                                    <select name="encargado_id" id="_funcionarios"
                                                         class="form-control selectric">
-                                                    @foreach ($encargados as $encargado )
+                                                   {{--  @foreach ($encargados as $encargado )
                                                         <option value="{{$encargado->id}}"{{$encargado->nombre}}></option>                                                        
-                                                    @endforeach
+                                                    @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>
@@ -127,7 +127,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                         "X-CSRF-Token": csrfToken
-                    }
+                    } 
                 }).then(response => {
                     return response.json()
                 }).then(data => {

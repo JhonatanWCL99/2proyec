@@ -21,13 +21,13 @@ class CreateDetalleContratosTable extends Migration
             $table->date('fecha_fin_contrato');
             $table->string('disponibilidad');
             $table->unsignedBigInteger('contrato_id');
-            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('user_id');
            /*  $table->foreignIdFor(Contrato::class);
             $table->foreignIdFor(User::class); */
             $table->timestamps();
 
             $table->foreign('contrato_id')->on('contratos')->references('id');
-            $table->foreign('usuario_id')->on('users')->references('id');
+            $table->foreign('user_id')->on('users')->references('id');
         });
     }
 

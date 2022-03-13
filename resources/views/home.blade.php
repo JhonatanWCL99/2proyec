@@ -59,7 +59,6 @@
                                                     {{ $cant_sucursales }}</span></h2>
                                             <p class="m-b-0 text-center"><a href="{{ route('proveedores.index') }}"
                                                     class="text-white">Sucursales</a></p>
-
                                         </div>
                                     </div>
                                 </div>

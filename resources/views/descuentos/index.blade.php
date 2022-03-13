@@ -19,66 +19,66 @@
                             Asignar Descuento
                         </button>
                         <p>&nbsp</p>
+                        <div class="table-responsive">
 
+                            <table class="table table-striped mt-15 " id="table">
+                                <thead style="background-color: #6777ef;">
+                                    <!---->
+                                    <!--<th style="display:none;">ID</th>-->
+                                    <th style="color: #fff;">Nombre</th>
+                                    <th style="color: #fff;">Monto</th>
+                                    <th style="color: #fff;">Motivo</th>
+                                    <th style="color: #fff;">Fecha</th>
+
+
+                                    <th style="color: #fff;"></th>
+
+
+
+                                    <!-- <th style="color: #fff;">Acciones</th> -->
+                                </thead>
+                                <tbody>
+                                    @foreach ($descuentos as $descuento)
+                                        <tr>
+
+                                            <td>{{ $descuento->usuario->name }}</td>
+                                            <td>{{ $descuento->monto }}</td>
+                                            <td>{{ $descuento->motivo }}</td>
+                                            <td>{{ $descuento->fecha }}</td>
+                                            <td>
+                                                <div class="dropdown" style="position: absolute;">
+                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        {{-- <li><a class="dropdown-item"
+                                                                href="{{ route('descuentos.create', $bono->id) }}">Editar</a>
+                                                        </li>
+                                                        <li>
+                                                            <form action="{{ route('bonos.create', $bono->id) }}"
+                                                                id="formulario-eliminar2" class="formulario-eliminar"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('Delete')
+                                                                <a class="dropdown-item" href="javascript:;"
+                                                                    onclick="document.getElementById('formulario-eliminar2').submit()"
+                                                                    id="enlace">Eliminar</a>
+                                                            </form>
+                                                        </li> --}}
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
 
-                    <div class="table-responsive">
 
-                        <table class="table table-striped mt-15 " id="table">
-                            <thead style="background-color: #6777ef;">
-                                <!---->
-                                <!--<th style="display:none;">ID</th>-->
-                                <th style="color: #fff;">Nombre</th>
-                                <th style="color: #fff;">Monto</th>
-                                <th style="color: #fff;">Motivo</th>
-                                <th style="color: #fff;">Fecha</th>
-
-
-                                <th style="color: #fff;"></th>
-
-
-
-                                <!-- <th style="color: #fff;">Acciones</th> -->
-                            </thead>
-                            <tbody>
-                                @foreach ($descuentos as $descuento)
-                                    <tr>
-
-                                        <td>{{ $descuento->usuario->name }}</td>
-                                        <td>{{ $descuento->monto }}</td>
-                                        <td>{{ $descuento->motivo }}</td>
-                                        <td>{{ $descuento->fecha }}</td>
-                                        <td>
-                                            <div class="dropdown" style="position: absolute;">
-                                                <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item"
-                                                            href="{{ route('bonos.create', $bono->id) }}">Editar</a>
-                                                    </li>
-                                                    <li>
-                                                        <form action="{{ route('bonos.create', $bono->id) }}"
-                                                            id="formulario-eliminar2" class="formulario-eliminar"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('Delete')
-                                                            <a class="dropdown-item" href="javascript:;"
-                                                                onclick="document.getElementById('formulario-eliminar2').submit()"
-                                                                id="enlace">Eliminar</a>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-
-                    </div>
 
                 </div>
 
@@ -134,9 +134,9 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
                 <a href="{{ route('descuentos.store') }}" class="btn btn-warning">Descontar</a>
-                
+
             </div>
-        </form>
+            </form>
         </div>
     </div>
 @endsection
