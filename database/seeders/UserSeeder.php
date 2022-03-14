@@ -31,9 +31,9 @@ class UserSeeder extends Seeder
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
         ]);
-      /*   $user1->assignRole('Admin'); */
+        /*   $user1->assignRole('Admin'); */
 
-        $user2=User::Create([
+        $user2 = User::Create([
             'email' => 'alejandrobarja@gmail.com',
             'foto' => '',
             'name' => 'Alejandro',
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
         ]);
         /* $user2->assignRole('Admin'); */
 
-        $user3=User::Create([
+        $user3 = User::Create([
             'email' => 'migurlgarron@gmail.com',
             'foto' => '',
             'name' => 'Miguel',
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'tipo_usuario_id' => 1,
         ]);
 
-       /*  $user3->assignRole('Encargado'); */
+        /*  $user3->assignRole('Encargado'); */
 
         User::Create([
             'email' => 'jhonathan@gmail.com',
@@ -91,96 +91,6 @@ class UserSeeder extends Seeder
             'estado' => 1,
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ]);
-        User::Create([
-            'email' => 'silvia@gmail.com',
-            'foto' => '',
-            'name' => 'Silvia',
-            'apellido' => 'Alvarez',
-            'fecha_nacimiento' => '1999-09-11',
-            'ci' => '454654',
-            'celular_personal' => '78979842',
-            'celular_referencia' => '63252321',
-            'domicilio' => 'BARRIO EL FUERTE CALLE IMPERIAL 8VO ANILLO',
-            'zona' => 'Norte',
-            'codigo' => '1111',
-
-            'password' => '46546513',
-            'estado' => 1,
-            'sucursal_id' => 6,
-            'tipo_usuario_id' => 2,
-        ]);
-        User::Create([
-            'email' => 'silvia@gmail.com',
-            'foto' => '',
-            'name' => 'Silvia',
-            'apellido' => 'Alvarez',
-            'fecha_nacimiento' => '1999-09-11',
-            'ci' => '454654',
-            'celular_personal' => '78979842',
-            'celular_referencia' => '63252321',
-            'domicilio' => 'BARRIO EL FUERTE CALLE IMPERIAL 8VO ANILLO',
-            'zona' => 'Norte',
-            'codigo' => '2222',
-
-            'password' => '46546513',
-            'estado' => 1,
-            'sucursal_id' => 6,
-            'tipo_usuario_id' => 2,
-        ]);
-        User::Create([
-            'email' => 'cabernetvilla@gmail.com',
-            'foto' => '',
-            'name' => 'Rayza',
-            'apellido' => 'Unzueta',
-            'fecha_nacimiento' => '1995-12-11',
-            'ci' => '484842',
-            'celular_personal' => '76328118',
-            'celular_referencia' => '63252321',
-            'domicilio' => 'VILLA PRIMERO DE MAYO',
-            'zona' => 'Norte',
-            'codigo' => '3333',
-
-            'password' => '46546513',
-            'estado' => 1,
-            'sucursal_id' => 8,
-            'tipo_usuario_id' => 2,
-        ]);
-        User::Create([
-            'email' => 'qdelibajio@gmail.com',
-            'foto' => '',
-            'name' => 'Aylin',
-            'apellido' => 'Llanos',
-            'fecha_nacimiento' => '1995-12-11',
-            'ci' => '484842',
-            'celular_personal' => '61352564',
-            'celular_referencia' => '63252321',
-            'domicilio' => 'AV DOBLE VIA',
-            'zona' => 'Norte',
-            'codigo' => '5555',
-
-            'password' => '46546513',
-            'estado' => 1,
-            'sucursal_id' => 15,
-            'tipo_usuario_id' => 2,
-        ]);
-        User::Create([
-            'email' => 'cabernetroca@gmail.com',
-            'foto' => '',
-            'name' => 'Fabiola',
-            'apellido' => 'Urquiza',
-            'fecha_nacimiento' => '1995-12-11',
-            'ci' => '484842',
-            'celular_personal' => '76388489',
-            'celular_referencia' => '64548125',
-            'domicilio' => 'av roca y coronado',
-            'zona' => 'Roca',
-            'codigo' => '6666',
-
-            'password' => '46546513',
-            'estado' => 1,
-            'sucursal_id' => 10,
-            'tipo_usuario_id' => 2,
         ]);
     }
 }

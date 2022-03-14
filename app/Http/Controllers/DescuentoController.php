@@ -38,7 +38,8 @@ class DescuentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+   
         $request->validate([
             'monto'=>'required',
             'motivo'=>'required',
@@ -50,7 +51,7 @@ class DescuentoController extends Controller
         $descuento->monto =$request->get('monto');
         $descuento->motivo =$request->get('motivo');
         $descuento->fecha =$request->get('fecha');
-        $descuento->usuario_id =$request->get('usuario_id');
+        $descuento->user_id =$request->get('user_id');
        
         $descuento->save();
         return redirect()->route('descuentos.index');
@@ -64,7 +65,9 @@ class DescuentoController extends Controller
      */
     public function show($id)
     {
-        //
+        $descuento = Descuento::find($id);
+        $usuario = User::find($descuento->user_id);
+        return view('descuentos.show', ['descuento'=>$descuento, 'usuario'=> $usuario ]);
     }
 
     /**

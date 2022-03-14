@@ -172,6 +172,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/descuentos', [App\Http\Controllers\DescuentoController::class, 'index'])->name('descuentos.index');
         Route::get('/descuentos/create', [App\Http\Controllers\DescuentoController::class, 'create'])->name('descuentos.create');
          Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
+         Route::get('/descuentos/show/{id}', [App\Http\Controllers\DescuentoController::class, 'show'])->name('descuentos.show');
        
     });
 

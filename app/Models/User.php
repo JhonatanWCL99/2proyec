@@ -97,4 +97,12 @@ class User extends Authenticatable
     public function horarios(){
         return $this->hasMany(Horario::class);
     }
+
+    public function habilidades(){
+        return $this->hasMany(Habilidad::class);
+    }
+
+    public function experiencias_laborales(){
+        return $this->hasMany(ExperienciaLaboral::class);
+    }
 }

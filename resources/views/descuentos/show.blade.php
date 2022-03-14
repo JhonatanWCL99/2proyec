@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'bonos', 'titlePage' => 'Bonos'])
+@extends('layouts.app', ['activePage' => 'descuentos', 'titlePage' => 'Bonos'])
 
 @section('content')
 
@@ -8,7 +8,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Bono detallado:</h3>
+        <h3 class="page__heading">Detalle del descuento </h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -18,24 +18,24 @@
                         <tbody>
                             <tr>
                                 <th>Nombre del Empleado</th>
-                                <td >{{ $bono->user->name }}</td>
+                                <td >{{ $descuento->user->name }}</td>
                             </tr>
                             <tr>
-                                <th>Monto Recibido</th>
-                                <td >{{ $bono->monto }}Bs</td>
+                                <th>Monto Descontado</th>
+                                <td >{{ $descuento->monto }}Bs</td>
                             </tr>
                             <tr>
                                 <th>Fecha asignado</th>
-                                <td><span class="badge badge-primary">{!! $bono->fecha!!}</span></td>
+                                <td><span class="badge badge-primary">{!! $descuento->fecha!!}</span></td>
                             </tr>
                             <tr>
-                                <th>Motivo del Bono</th>
-                                <td>{{ $bono->motivo }}</td>
+                                <th>Motivo del descuento</th>
+                                <td>{{ $descuento->motivo }}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="button-container ">
-                        <a href="{{ route('bonos.index') }}" class="btn btn-warning  btn-twitter mr-2"> Volver </a>
+                        <a href="{{ route('descuentos.index') }}" class="btn btn-warning  btn-twitter mr-2"> Volver </a>
                      
                     </div>
                 </div>

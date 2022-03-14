@@ -40,8 +40,10 @@
                                 <tbody>
                                     @foreach ($descuentos as $descuento)
                                         <tr>
-
-                                            <td>{{ $descuento->usuario->name }}</td>
+                                            <td>
+                                                <a href="{{route('descuentos.show', $descuento->id)}}">{{$descuento->user->name}} </a>
+                                            </td>
+                                         
                                             <td>{{ $descuento->monto }}</td>
                                             <td>{{ $descuento->motivo }}</td>
                                             <td>{{ $descuento->fecha }}</td>
@@ -106,9 +108,9 @@
                 <form action="{{ route('descuentos.store') }}" method="POST" class="form-horizontal">
                     @csrf
                     <div class="form-group">
-                        <label for="usuario_id">Seleccione al usuario <span class="required">*</span></label>
+                        <label for="user_id">Seleccione al usuario <span class="required">*</span></label>
                         <div class="selectric-hide-select">
-                            <select name="usuario_id" class="form-control selectric">
+                            <select name="user_id" class="form-control selectric">
                                 @foreach ($usuarios as $usuario)
                                     <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                 @endforeach
@@ -117,26 +119,23 @@
                     </div>
                     <div class="form-group">
                         <label for="monto" class="col-form-label">Monto a descontar</label>
-                        <input type="number" class="form-control" id="monto">
+                        <input type="number" class="form-control" id="monto" name="monto">
                     </div>
                     <div class="form-group">
                         <label for="fecha" class="col-form-label">Fecha</label>
-                        <input type="date" class="form-control" id="fecha">
+                        <input type="date" class="form-control" id="fecha" name="fecha">
                     </div>
-
-
                     <div class="form-group">
                         <label for="motivo" class="col-form-label">Motivo del descuento:</label>
-                        <textarea class="form-control" id="motivo"></textarea>
+                        <textarea class="form-control" id="motivo" name="motivo"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" href="{{ route('descuentos.index') }}" class="btn btn-dark"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Descontar</a>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
-                <a href="{{ route('descuentos.store') }}" class="btn btn-warning">Descontar</a>
-
-            </div>
-            </form>
         </div>
     </div>
 @endsection

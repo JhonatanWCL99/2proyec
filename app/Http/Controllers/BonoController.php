@@ -50,7 +50,7 @@ class BonoController extends Controller
         $bono->monto =$request->get('monto');
         $bono->motivo =$request->get('motivo');
         $bono->fecha =$request->get('fecha');
-        $bono->user_id =$request->get('usuario_id');
+        $bono->user_id =$request->get('user_id');
        
         $bono->save();
         return redirect()->route('bonos.index');
@@ -65,7 +65,7 @@ class BonoController extends Controller
     public function show($id)
     {
         $bono = Bono::find($id);
-        $usuario = User::find($bono->usuario_id);
+        $usuario = User::find($bono->user_id);
         return view('bonos.show', ['bono'=>$bono, 'usuario'=> $usuario ]);
     }
 

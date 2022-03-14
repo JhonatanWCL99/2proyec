@@ -21,13 +21,13 @@ class ContratoSeeder extends Seeder
         ]);
         Contrato::create([
             'tipo_contrato'=>'Contrato Medio',
-            'sueldo'=>3500,
+            'sueldo'=>2122,
             'duracion_contrato'=>'Una gestion',
         ]);
         Contrato::create([
             'tipo_contrato'=>'Contrato Avanzado',
-            'sueldo'=>5000,
-            'duracion_contrato'=>'Dos gestiones',
+            'sueldo'=>2122,
+            'duracion_contrato'=>'Cinco gestiones',
         ]);
     }
 }

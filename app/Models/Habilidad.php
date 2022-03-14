@@ -9,5 +9,9 @@ class Habilidad extends Model
 {
     use HasFactory;
     protected $table = 'habilidades';
-    protected $fillable = ['habilidad'];
+    protected $fillable = ['habilidad','user_id'];
+    
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
