@@ -14,15 +14,19 @@ class CreateHorariosTable extends Migration
     public function up()
     {
         Schema::create('horarios', function (Blueprint $table) {
-            $table->id();
+             $table->id();
             $table->date('fecha');
-            $table->time('horario_ingreso');
-            $table->time('horario_entrada');
-            $table->time('horario_salida')->nullable();
-            $table->string('turno');
+            $table->time('hora_ingreso');
+            $table->time('hora_entrada');
+            $table->time('hora_salida')->nullable();
+            $table->string('horas_trabajadas')->nullable();
+            $table->integer('total_pagar')->nullable();
 
-            $table->unsignedBigInteger('encargado_id');
-            $table->foreign('encargado_id')->on('encargados')->references('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('sucursal_id');
+            $table->foreign('sucursal_id')->on('sucursals')->references('id');
+            $table->foreign('user_id')->on('users')->references('id');
+
             $table->timestamps();
         });
     }

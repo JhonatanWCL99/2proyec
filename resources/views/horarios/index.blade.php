@@ -1,69 +1,71 @@
-@extends('layouts.app', ['activePage' => 'horarios', 'titlePage' => 'Horarios'])
-
-
+@extends('layouts.app', ['activePage' => 'horarios', 'titlePage' => 'horarios'])
 
 @section('content')
+
 @section('css')
+
 @endsection
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Horarios Marcados</h3>
+        <h3 class="page__heading">Costo Mano de Obra</h3>
+
     </div>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+
                     <div class="card-body">
 
-                        <div class="table-responsive">
-
-                            <table class="table table-striped mt-15 " id="table">
+                    <div class="table-responsive">
+                            <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
-                                    <!---->
-                                    <!--<th style="display:none;">ID</th>-->
-                                    <th style="color: #fff;">Encargado</th>
-                                    <th style="color: #fff;">Fecha</th>
-                                    <th style="color: #fff;">Hora Ingreso</th>
-                                    <th style="color: #fff;">Hora Entrada</th>
-                                    <th style="color: #fff;">Hora Salida</th>
-                                    <th style="color: #fff;">Turno</th>
-                                    <th style="color: #fff;"></th>
 
+                                    <th style="color: #fff;">Encargado</th>
+                                    <th style="color: #fff;">Sucursal</th>
+                                    <th style="color: #fff;">Fecha</th>
+
+                                    <th style="color: #fff;">Hora Ingreso</th>
+                                    <th style="color: #fff;">Horario Entrada</th>
+                                    <th style="color: #fff;">Horario Salida</th>
+
+                                    <th style="color: #fff;">Horas Trabajadas</th>
+                                    <th style="color: #fff;">Total a Pagar</th>
+
+                                    <th style="color: #fff;"></th>
+                                    <!-- <th style="color: #fff;"></th> -->
                                     <!-- <th style="color: #fff;">Acciones</th> -->
                                 </thead>
                                 <tbody>
                                     @foreach ($horarios as $horario)
                                     <tr>
+                                        <td>{{$horario->Sucursal->nombre}}</td>
+                                        <td>{{$horario->User->name}}</td>
+                                      <td>{{$horario->fecha}}</td>
+                                        <td>{{$horario->hora_ingreso}}</td>
+                                        <td>{{$horario->hora_entrada}}</td>
+                                        <td>{{$horario->hora_salida}}</td>
                                         <td>
-
-                                            {{$horario->encargado->nombre}}
-
+                                        {{$horario->horas_trabajadas}}
                                         </td>
-
-                                        <td>{{$horario->fecha}}</td>
-
-
-                                        <td>{{$horario->horario_entrada}}</td>
-                                        <td>{{$horario->horario_ingreso}}</td>
-                                        <td>{{$horario->horario_salida}}</td>
-                                        <td>{{$horario->turno}}</td>
+                                        <td>{{$horario->total_pagar}}</td>
 
                                         <td>
-                                            <div class="dropdown" style="position: absolute;">
-                                                <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{ route('horarios.create', $horario->id) }}">Editar</a></li>
-                                                    <li>
-                                                        <form action="{{route('horarios.create',$horario->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
-                                                            @csrf
-                                                            @method('Delete')
-                                                            <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                        </form>
-                                                    </li>
-                                                </ul>
+                                        <div class="dropdown" style="position: absolute;" >
+                                            <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item " href="{{ route('horarios.create', $horario->id) }}">Editar</a></li>
+                                                <li>
+                                                    <form action="{{route('horarios.create',$horario->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
+                                                    @csrf
+                                                    @method('Delete')
+                                                    <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
+                                                    </form>
+                                                </li>
+                                            </ul>
                                             </div>
                                         </td>
                                     </tr>
@@ -93,7 +95,6 @@
     )
 </script>
 @endif
-
 <script>
     $('.formulario-eliminar').submit(function(e) {
         e.preventDefault();
@@ -146,23 +147,19 @@
                 sSortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        columnDefs: [{
-                orderable: false,
-                targets: 6
-            },
-            {
-                orderable: false,
-                targets: 7
-            }
-        ]
+        columnDefs: [
+        { orderable: false, targets: 4 },
+        { orderable: false, targets: 5 }
+  ]
     });
 </script>
 @endsection
 @endsection
+
 @section('css')
+.titulo{
+    font-size: 50px;
+    background-color: red;
 
-.tablecolor {
-background-color: #212121;
 }
-
 @endsection

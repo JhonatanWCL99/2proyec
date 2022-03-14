@@ -35,7 +35,7 @@
                                                             </li>
                                                             <li id="payment"><strong>Competencia y Habilidades</strong>
                                                             </li>
-                                                            <li id="confirm"><strong>Datos en la Empresa</strong>
+                                                            <li id="confirm"><strong>Datos en Donesco</strong>
                                                             </li>
                                                         </ul> <!-- fieldsets -->
                                                         <fieldset>
@@ -44,67 +44,130 @@
                                                                 <div class="form-row">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nombre">NOMBRES</label>
-                                                                        <input type="text" class="form-control "
+                                                                        <input type="text"
+                                                                            class="form-control  @error('nombre') is-invalid @enderror"
                                                                             id="nombre" name="nombre"
-                                                                            placeholder="Nombres..." >
+                                                                            placeholder="Nombres..."
+                                                                            value="{{ old('nombre') }}">
+                                                                        @error('nombre')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="apellidos">APELLIDOS</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control @error('apellido') is-invalid @enderror"
                                                                             id="apellido" name="apellido"
-                                                                            placeholder="Apellidos..." >
+                                                                            placeholder="Apellidos..."
+                                                                            value="{{ old('apellido') }}">
+                                                                        @error('apellido')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
 
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="fecha_nacimiento">FECHA
                                                                             NACIMIENTO</label>
-                                                                        <input type="date" class="form-control "
+                                                                        <input type="date"
+                                                                            class="form-control  @error('fecha_nacimiento') is-invalid @enderror"
                                                                             id="fecha_nacimiento"
                                                                             name="fecha_nacimiento"
-                                                                            placeholder="Fecha de Nacimiento...">
+                                                                            placeholder="Fecha de Nacimiento..."
+                                                                            value="{{ old('fecha_nacimiento') }}">
+                                                                        @error('fecha_nacimiento')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="carnet_identidad">CARNET DE
                                                                             IDENTIDAD</label>
-                                                                        <input type="text" class="form-control "
+                                                                        <input type="text"
+                                                                            class="form-control @error('carnet_identidad') is-invalid @enderror"
                                                                             id="carnet_identidad"
                                                                             name="carnet_identidad"
-                                                                            placeholder="Carnet de Identidad...">
+                                                                            placeholder="Carnet de Identidad..."
+                                                                            value="{{ old('carnet_identidad') }}">
+                                                                        @error('carnet_identidad')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
 
                                                                     <div class="form-group col-md-6 ">
                                                                         <label for="domicilio">DOMICILIO</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control @error('domicilio') is-invalid @enderror"
                                                                             id="domicilio" name="domicilio"
-                                                                            placeholder="Domicilio...">
+                                                                            placeholder="Domicilio..."
+                                                                            value="{{ old('carnet_identidad') }}">
+                                                                        @error('domicilio')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="zona">ZONA</label>
-                                                                        <input type="text" class="form-control "
-                                                                            id="zona" name="zona" placeholder="Zona...">
+                                                                        <input type="text"
+                                                                            class="form-control @error('zona') is-invalid @enderror"
+                                                                            id="zona" name="zona" placeholder="Zona..."
+                                                                            value="{{ old('zona') }}">
+                                                                        @error('zona')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nro_celular_personal">NRO DE CELULAR
                                                                             PERSONAL</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control @error('nro_celular_personal') is-invalid @enderror"
                                                                             id="nro_celular_personal"
                                                                             name="nro_celular_personal"
-                                                                            placeholder="Nro de Celular Personal...">
+                                                                            placeholder="Nro de Celular Personal..."
+                                                                            value="{{ old('nro_celular_personal') }}">
+                                                                        @error('nro_celular_personal')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nro_celular_referencia">NRO CELULAR
                                                                             DE REFERENCIA</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control @error('nro_celular_referencia') is-invalid @enderror"
                                                                             id="nro_celular_referencia"
                                                                             name="nro_celular_referencia"
-                                                                            placeholder="Nro de Celular de Refencia...">
+                                                                            placeholder="Nro de Celular de Refencia..."
+                                                                            value="{{ old('nro_celular_referencia') }}">
+                                                                        @error('nro_celular_referencia')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="email">CORREO
                                                                             ELECTRONICO</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text"
+                                                                            class="form-control @error('email') is-invalid @enderror"
                                                                             id="email" name="email"
-                                                                            placeholder="Correo Electronico...">
+                                                                            placeholder="Correo Electronico..."
+                                                                            value="{{ old('email') }}">
+                                                                        @error('email')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="foto">FOTO</label>
@@ -123,24 +186,41 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nombre_empresa">NOMBRE DE LA
                                                                             EMPRESA</label>
-                                                                        <input type="text" class="form-control "
-                                                                            id="nombre_empresas" name="nombre_empresas[]"
-                                                                            placeholder="Nombre de la empresa...">
+                                                                        <input type="text" class="form-control @error('nombre_empresas[]') is-invalid @enderror"
+                                                                            id="nombre_empresas"
+                                                                            name="nombre_empresas[]"
+                                                                            placeholder="Nombre de la empresa..." 
+                                                                            value="{{ old('nombre_empresas[]') }}">
+                                                                        @error('nombre_empresas[]')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="cargo">CARGO EN LA
                                                                             EMPRESA</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="text" class="form-control @error('cargos[]') is-invalid @enderror"
                                                                             name="cargos[]" id="cargos"
-                                                                            placeholder="Cargo...">
+                                                                            placeholder="Cargo..."
+                                                                            value="{{ old('cargos[]') }}">
+                                                                        @error('cargos[]')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="descripcion">DESCRIPCION DEL
                                                                             TRABAJO</label>
-                                                                        <textarea cols="30" rows="10" type="text"
-                                                                            class="form-control "
-                                                                            name="descripciones[]" id="descripciones"
-                                                                            placeholder="descripcion del trabajo..."></textarea>
+                                                                        <textarea cols="30" rows="10" type="text" class="form-control @error('descripciones[]') is-invalid @enderror" name="descripciones[]" id="descripciones"
+                                                                            placeholder="descripcion del trabajo..."
+                                                                            value="{{ old('descripciones[]') }}"></textarea>
+                                                                        @error('descripciones[]')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                         <br>
                                                                         <span
                                                                             class="badge badge-pill badge-danger puntero_experiencia ocultar_experiencia">Eliminar</span>
@@ -169,10 +249,15 @@
                                                                 <div class="form-row clonar_habilidad">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="habilidad">HABILIDAD</label>
-                                                                        <input type="text"
-                                                                            class="form-control"
+                                                                        <input type="text" class="form-control @error('habilidades[]') is-invalid @enderror"
                                                                             id="habilidades" name="habilidades[]"
-                                                                            placeholder="Habilidad...">
+                                                                            placeholder="Habilidad..."
+                                                                            value="{{ old('habilidades[]') }}">
+                                                                        @error('habilidades[]')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                         <br>
                                                                         <span
                                                                             class="badge badge-pill badge-danger puntero_habilidad ocultar_habilidad">Eliminar</span>
@@ -202,18 +287,28 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="fecha_inicio">FECHA INICIAL DEL
                                                                             CONTRATO</label>
-                                                                        <input type="date"
-                                                                            class="form-control"
+                                                                        <input type="date" class="form-control @error('fecha_inicio_contrato') is-invalid @enderror"
                                                                             id="fecha_inicio_contrato"
-                                                                            name="fecha_inicio_contrato">
+                                                                            name="fecha_inicio_contrato"
+                                                                            value="{{ old('fecha_inicio_contrato') }}">
+                                                                        @error('fecha_inicio_contrato')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
-                                                                        <label for="fecha_fin">FECHA FINAL DEL
+                                                                        <label for="fecha_fin_contrato">FECHA FINAL DEL
                                                                             CONTRATO</label>
-                                                                        <input type="date"
-                                                                            class="form-control "
+                                                                        <input type="date" class="form-control @error('fecha_fin_contrato') is-invalid @enderror"
                                                                             id="fecha_fin_contrato"
-                                                                            name="fecha_fin_contrato">
+                                                                            name="fecha_fin_contrato"
+                                                                            value="{{ old('fecha_fin_contrato') }}">
+                                                                        @error('fecha_fin_contrato')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label
@@ -229,7 +324,7 @@
                                                                         <label for="tipo_contrato">TIPO DE
                                                                             CONTRATO</label>
                                                                         <select name="contrato_id" id=""
-                                                                            class="form-control">
+                                                                            class="form-control" >
                                                                             @foreach ($contratos as $contrato)
                                                                                 <option value="{{ $contrato->id }}">
                                                                                     {{ $contrato->tipo_contrato }}
@@ -252,9 +347,15 @@
                                                                         <label for="codigo_usuario">CODIGO DE
                                                                             USUARIO</label>
                                                                         <input type="number"
-                                                                            class="form-control @error('codigo_usuario') is-invalid @enderror"
-                                                                            id="codigo_usuario" name="codigo_usuario"
-                                                                            placeholder="Codigo de Usuario...">
+                                                                            class="form-control @error('codigo') is-invalid @enderror"
+                                                                            id="codigo_usuario" name="codigo"
+                                                                            placeholder="Codigo de Usuario..."
+                                                                            value="{{ old('codigo') }}">
+                                                                        @error('codigo')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
 
@@ -295,6 +396,9 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         let clonado_habilidad = document.querySelector('.clonar_habilidad');
         let clon_habilidad = clonado_habilidad.cloneNode(true);
 
+        clon_habilidad.querySelectorAll("input").forEach(e => e.value = "");
+        clon_habilidad
+
         contenido_habilidad.appendChild(clon_habilidad).classList.remove('clonar_habilidad');
 
         let remover_ocutar = contenido_habilidad.lastChild.childNodes[1].querySelectorAll('span');
@@ -318,6 +422,9 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         e.preventDefault();
         let clonado_experiencia = document.querySelector('.clonar_experiencia');
         let clon_experiencia = clonado_experiencia.cloneNode(true);
+
+        clon_experiencia.querySelectorAll("input").forEach(e => e.value = "");
+        clon_experiencia.querySelectorAll("textarea").forEach(e => e.value = "");
 
         contenido_experiencia.appendChild(clon_experiencia).classList.remove('clonar_experiencia');
 
@@ -412,70 +519,9 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
 
 
     });
-
-    const form = document.getElementById('msform');
-    /* const usuario = document.getElementById('nombre');
-    const email = document.getElementById('email'); */
-    const codigo = document.getElementById('codigo');
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-
-        checkInputs();
-    });
-
-    function checkInputs() {
-        // trim to remove the whitespaces
-        const usuarioValue = usuario.value.trim();
-        const emailValue = email.value.trim();
-        const codigoValue = codigo.value.trim();
-        /* const password2Value = password2.value.trim(); */
-
-        /* if (usuarioValue === '') {
-            setErrorFor(usuario, 'Noi puede dejar el usuairo en blanco');
-        } else {
-            setSuccessFor(usuario);
-        }
-
-        if (emailValue === '') {
-            setErrorFor(email, 'No puede dejar el email en blanco');
-        } else if (!isEmail(emailValue)) {
-            setErrorFor(email, 'No ingreso un email válido');
-        } else {
-            setSuccessFor(email);
-        } */
-
-        if (codigoValue === '') {
-            setErrorFor(codigo, 'Password no debe ingresar en blanco.');
-        } else {
-            setSuccessFor(codigo);
-        }
-
-    }
-
-    function setErrorFor(input, message) {
-        const formControl = input.parentElement;
-        const small = formControl.querySelector('small');
-        formControl.className = 'form-control error';
-        small.innerText = message;
-    }
-
-    function setSuccessFor(input) {
-        const formControl = input.parentElement;
-        formControl.className = 'form-control success';
-    }
-
-    function isEmail(email) {
-        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            .test(email);
-    }
 </script>
 @endsection
 <style>
-
-
-
-
 #grad1 {
     background-color: #9C27B0;
     background-image: linear-gradient(120deg, #FF4081, #81D4FA)

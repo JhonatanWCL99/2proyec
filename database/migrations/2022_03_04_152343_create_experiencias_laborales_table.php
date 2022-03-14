@@ -17,9 +17,10 @@ class CreateExperienciasLaboralesTable extends Migration
             $table->id();
             $table->string('cargo');
             $table->string('nombre_empresa');
-          
             $table->string('descripcion');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->on('users')->references('id');
         });
     }
 

@@ -35,7 +35,10 @@
                                 <tbody>
                                     @foreach ($bonos as $bono)
                                     <tr>  
-                                        <td>{{$bono->user->name}}</td>
+                                        <td>
+                                            <a href="{{route('bonos.show', $bono->id)}}">{{$bono->user->name}} </a>
+                                        </td>
+                                 
                                         <td>{{$bono->monto}}</td>
                                         <td>{{$bono->motivo}}</td>
                                         <td>{{$bono->fecha}}</td>

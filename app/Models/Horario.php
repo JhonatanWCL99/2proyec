@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Horario extends Model
 {
     use HasFactory;
-    protected $table= 'horarios';
+    protected $table = 'horarios';
+    protected $fillable = ['fecha','hora_ingreso','hora_entrada','hora_salida','horas_trabajadas','total_pagar','user_id','sucursal_id'];
 
-    protected $fillable =['fecha','horario_ingreso','hora_entrada','horario_salida','turno','encargado_id'];
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 
-    public function encargado(){
-        return $this->belongsTo(Encargado::class);
+    public function Sucursal(){
+        return $this->belongsTo(Sucursal::class);
     }
 
     

@@ -155,6 +155,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/horarios', [App\Http\Controllers\HorarioController::class, 'store'])->name('horarios.store');
     Route::post('/horarios/create', [App\Http\Controllers\HorarioController::class, 'obtenerSucursal'])->name('horarios.obtenerSucursal');
     Route::post('/funcionarios', [App\Http\Controllers\HorarioController::class, 'funcionarios'])->name('sucursal.funcionarios');
+    Route::get('/reporteHorario', [App\Http\Controllers\HorarioController::class, 'reporteHorario'])->name('horarios.reporteHorario');
     Route::get('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
     Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios');
 
@@ -163,7 +164,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bonos', [App\Http\Controllers\BonoController::class, 'index'])->name('bonos.index');
         Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
         Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
-        Route::get('/bonos/show/{id}', [App\Http\Controllers\BonoController::class, 'show'])->name('bono.show');
+        Route::get('/bonos/show/{id}', [App\Http\Controllers\BonoController::class, 'show'])->name('bonos.show');
     });
 
     /*Rutas descuentos */

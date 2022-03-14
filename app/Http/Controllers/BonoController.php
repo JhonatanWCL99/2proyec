@@ -64,7 +64,9 @@ class BonoController extends Controller
      */
     public function show($id)
     {
-        //
+        $bono = Bono::find($id);
+        $usuario = User::find($bono->usuario_id);
+        return view('bonos.show', ['bono'=>$bono, 'usuario'=> $usuario ]);
     }
 
     /**

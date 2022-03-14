@@ -93,4 +93,8 @@ class User extends Authenticatable
     public function cargosucursals(){
         return $this->belongsToMany(CargoSucursal::class);
     }
+
+    public function horarios(){
+        return $this->hasMany(Horario::class);
+    }
 }

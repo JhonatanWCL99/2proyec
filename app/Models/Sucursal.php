@@ -26,6 +26,10 @@ class Sucursal extends Model
     public function cargos_sucursales(){
         return $this->hasMany(Cargos_sucursales::class);
     }
+
+    public function Horario(){
+        return $this->hasMany(Horario::class);
+    }
    
    
 }
