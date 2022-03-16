@@ -8,7 +8,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Bono detallado:</h3>
+        <h3 class="page__heading">Detalle del Bono:</h3>
     </div>
     <div class="section-body">
         <div class="row">

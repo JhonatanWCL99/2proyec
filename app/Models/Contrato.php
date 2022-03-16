@@ -10,4 +10,8 @@ class Contrato extends Model
     use HasFactory;
     protected $table='contratos';
     protected $fillable=['tipo_contrato','sueldo','duracion_contrato'];
+
+    public function detalleContratos(){
+        return $this->hasMany(DetalleContrato::class);
+    }
 }

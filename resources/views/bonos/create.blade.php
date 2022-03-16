@@ -17,9 +17,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="usuario_id">Seleccione al usuario <span class="required">*</span></label>
+                                            <label for="user_id">Seleccione al usuario <span class="required">*</span></label>
                                             <div class="selectric-hide-select">
-                                                <select name="usuario_id" class="form-control selectric">
+                                                <select name="user_id" class="form-control selectric">
                                                     @foreach($usuarios as $usuario)
                                                     <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                                                     @endforeach

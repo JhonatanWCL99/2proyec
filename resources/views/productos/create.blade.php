@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="card card-primary">
                             <br>
-                            <form action="{{ route('bonos.store') }}" method="POST" class="form-horizontal">
+                            <form action="{{ route('productos.store') }}" method="POST" class="form-horizontal">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'contrato_personales', 'titlePage' => 'Contrato de Personales'])
+@extends('layouts.app', ['activePage' => 'personales', 'titlePage' => 'Contrato de Personales'])
 
 @section('content')
 

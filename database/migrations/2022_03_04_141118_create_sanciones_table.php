@@ -16,7 +16,7 @@ class CreateSancionesTable extends Migration
         Schema::create('sanciones', function (Blueprint $table) {
             $table->id();
             $table->string('imagen')->nullable();
-            $table->date('fecha');
+            $table->date('fecha')->nullable();
             $table->string('descripcion')->nullable();
             $table->unsignedBigInteger('sucursal_id'); 
             $table->unsignedBigInteger('user_id'); 

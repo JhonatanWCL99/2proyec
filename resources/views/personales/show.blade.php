@@ -33,10 +33,11 @@
                             </p>
                         </div>
                         </p>
-                        {{-- <div class="card-description">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam officia corporis molestiae
-                            aliquid provident placeat.
-                        </div> --}}
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-container">
+                            <a href="{{ route('personales.editDatosBasicos',$user->id) }}" class="btn btn-sm btn-primary" style="color:white">Editar Datos Basicos</a>
+                        </div>
                     </div>
 
                 </div>
@@ -77,12 +78,13 @@
                                         </td>
                                     @endif
                                 </tr>
-                                <tr>
-                                    <th>Fecha Nacimiento</th>
-                                    <td>{!! $user->fecha_nacimiento !!}</td>
-                                </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-container">
+                            <button  class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
+                        </div>
                     </div>
                 </div>
 
@@ -125,6 +127,11 @@
                                     </tbody>
                                 </table>
 
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <a href="{{ route('personales.editContratoUser',$user->id) }}" class="btn btn-sm btn-primary" style="color:white">Renovar Contrato</a>
                             </div>
                         </div>
                     </div>

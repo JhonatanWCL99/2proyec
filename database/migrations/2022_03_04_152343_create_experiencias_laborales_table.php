@@ -15,9 +15,9 @@ class CreateExperienciasLaboralesTable extends Migration
     {
         Schema::create('experiencias_laborales', function (Blueprint $table) {
             $table->id();
-            $table->string('cargo');
-            $table->string('nombre_empresa');
-            $table->string('descripcion');
+            $table->string('cargo')->nullable();
+            $table->string('nombre_empresa')->nullable();
+            $table->string('descripcion')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->foreign('user_id')->on('users')->references('id');

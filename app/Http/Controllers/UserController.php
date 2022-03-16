@@ -34,11 +34,9 @@ class UserController extends Controller
     public function showDetalleContrato($id)
     {
         $user = User::find($id);
-        $habilidades = Habilidad::where('user_id', $user->id);
         $detalleContratos = DetalleContrato::where('user_id', $id)->get();
-        $experienciaLaboral = ExperienciaLaboral::where('user_id', $user->id);
 
-        return view('personales.show', compact('user', 'habilidades', 'experienciaLaboral', 'detalleContratos'));
+        return view('personales.show', compact('user', 'detalleContratos'));
     }
 
 
@@ -48,7 +46,6 @@ class UserController extends Controller
     {
         /*   dd($request); */
         $request->validate([
-            'email' => 'required',
             'nombre' => 'required',
             'apellido' => 'required',
             'fecha_nacimiento' => 'required',
@@ -56,8 +53,6 @@ class UserController extends Controller
             'domicilio' => 'required',
             'zona' => 'required',
             'nro_celular_personal' => 'required',
-            'nro_celular_referencia' => 'required',
-            'codigo' => 'required|unique:users|max:4',
             'fecha_inicio_contrato' => 'required',
             'fecha_fin_contrato' => 'required',
             /* 'habilidades' => 'required|array', 
@@ -90,7 +85,31 @@ class UserController extends Controller
         }
 
         $contratar_personal->save();
-        if ($contratar_personal->save()) {
+
+        for ($i = 0; $i < sizeof($request->habilidades); $i++) {
+            Habilidad::create([
+                'habilidad' => $request->habilidades[$i],
+                'user_id' => $contratar_personal->id,
+            ]);
+        }
+        for ($j = 0; $j < sizeof($request->nombre_empresas); $j++) {
+            ExperienciaLaboral::create([
+                'cargo' => $request->cargos[$j],
+                'nombre_empresa' => $request->nombre_empresas[$j],
+                'descripcion' => $request->descripciones[$j],
+                'user_id' => $contratar_personal->id,
+            ]);
+        }
+
+        DetalleContrato::create([
+            'fecha_inicio_contrato' => $request->fecha_inicio_contrato,
+            'fecha_fin_contrato' => $request->fecha_fin_contrato,
+            'disponibilidad' => $request->disponibilidad,
+            'contrato_id' => $request->contrato_id,
+            'user_id' =>  $contratar_personal->id,
+        ]);
+
+        /* if ($contratar_personal->save()) {
             for ($i = 0; $i < sizeof($request->habilidades); $i++) {
                 $habilidad = Habilidad::create([
                     'habilidad' => $request->habilidades[$i],
@@ -106,16 +125,14 @@ class UserController extends Controller
                 ]);
             }
 
-            /* if ($habilidad && $experienciaLaboral) { */
-                DetalleContrato::create([
-                    'fecha_inicio_contrato' => $request->fecha_inicio_contrato,
-                    'fecha_fin_contrato' => $request->fecha_fin_contrato,
-                    'disponibilidad' => $request->disponibilidad,
-                    'contrato_id' => $request->contrato_id,
-                    'user_id' =>  $contratar_personal->id,
-                ]);
-            /* } */
-        }
+            DetalleContrato::create([
+                'fecha_inicio_contrato' => $request->fecha_inicio_contrato,
+                'fecha_fin_contrato' => $request->fecha_fin_contrato,
+                'disponibilidad' => $request->disponibilidad,
+                'contrato_id' => $request->contrato_id,
+                'user_id' =>  $contratar_personal->id,
+            ]);
+        } */
         return redirect()->route('personales.index')->with('success', 'Personal contratado correctamente');
     }
 
@@ -128,7 +145,13 @@ class UserController extends Controller
     {
         $contratos = Contrato::all();
         $usuario = User::find($id);
-        $detalleContratos = DetalleContrato::where('usuario_id', $id)->get();
+        $detalleContratos = DetalleContrato::where('user_id', $id)->get();
         return view('personales.editContratoUser', compact('contratos', 'detalleContratos', 'usuario'));
+    }
+
+    public function editDatosBasicos($id)
+    {
+        $usuario = User::find($id);
+        return view('personales.editDatosBasicos', compact('usuario'));
     }
 }

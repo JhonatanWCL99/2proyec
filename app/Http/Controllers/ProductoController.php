@@ -39,6 +39,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+      /*   dd($request); */
         $request->validate([
             'codigo'=>'required',
             'nombre' => 'required',

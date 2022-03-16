@@ -144,30 +144,21 @@
                                                                         <label for="nro_celular_referencia">NRO CELULAR
                                                                             DE REFERENCIA</label>
                                                                         <input type="text"
-                                                                            class="form-control @error('nro_celular_referencia') is-invalid @enderror"
+                                                                            class="form-control"
                                                                             id="nro_celular_referencia"
                                                                             name="nro_celular_referencia"
                                                                             placeholder="Nro de Celular de Refencia..."
                                                                             value="{{ old('nro_celular_referencia') }}">
-                                                                        @error('nro_celular_referencia')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="email">CORREO
                                                                             ELECTRONICO</label>
                                                                         <input type="text"
-                                                                            class="form-control @error('email') is-invalid @enderror"
+                                                                            class="form-control "
                                                                             id="email" name="email"
                                                                             placeholder="Correo Electronico..."
                                                                             value="{{ old('email') }}">
-                                                                        @error('email')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
+                                                                
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="foto">FOTO</label>
@@ -343,7 +334,7 @@
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-group col-md-6">
+                                                                    {{-- <div class="form-group col-md-6">
                                                                         <label for="codigo_usuario">CODIGO DE
                                                                             USUARIO</label>
                                                                         <input type="number"
@@ -356,7 +347,7 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
-                                                                    </div>
+                                                                    </div> --}}
                                                                 </div>
 
                                                             </div>
