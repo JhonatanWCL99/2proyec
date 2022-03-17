@@ -55,7 +55,7 @@ class UserController extends Controller
             'nro_celular_personal' => 'required',
             'fecha_inicio_contrato' => 'required',
             'fecha_fin_contrato' => 'required',
-            'codigo' => 'unique:users|max:4',
+            'codigo' => 'unique:users|max:5',
             /* 'habilidades.*' => 'required', */
             /* 'habilidades' => 'required|array',
             'habilidades.*' => 'required' */

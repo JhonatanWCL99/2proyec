@@ -26,7 +26,7 @@
                                             <h2 class="text-center"><i class="fa fa-users f-left"></i><span>
                                                     {{ $cant_usuarios }}</span></h2>
 
-                                            <p class="m-b-0 text-center"><a href="/usuarios"
+                                            <p class="m-b-0 text-center"><a href="{{route('personales.index')}}"
                                                     class="text-white">Usuarios</a></p>
                                         </div>
                                     </div>
@@ -41,7 +41,7 @@
                                             @endphp
                                             <h2 class="text-center"><i
                                                     class="fa fa-user-lock f-left"></i><span>{{ $cant_areas }}</span></h2>
-                                            <p class="m-b-0 text-center"><a href="/roles" class="text-white">Areas</a>
+                                            <p class="m-b-0 text-center"><a href="{{route('departamentos.index')}}" class="text-white">Areas</a>
                                             </p>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                             @endphp
                                             <h2 class="text-center"><i class="fa fa-car"></i><span>
                                                     {{ $cant_sucursales }}</span></h2>
-                                            <p class="m-b-0 text-center"><a href="{{ route('proveedores.index') }}"
+                                            <p class="m-b-0 text-center"><a href="{{ route('sucursales.index') }}"
                                                     class="text-white">Sucursales</a></p>
                                         </div>
                                     </div>
