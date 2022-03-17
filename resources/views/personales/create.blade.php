@@ -128,7 +128,7 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nro_celular_personal">NRO DE CELULAR
                                                                             PERSONAL</label>
-                                                                        <input type="text"
+                                                                        <input type="number"
                                                                             class="form-control @error('nro_celular_personal') is-invalid @enderror"
                                                                             id="nro_celular_personal"
                                                                             name="nro_celular_personal"
@@ -143,8 +143,7 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nro_celular_referencia">NRO CELULAR
                                                                             DE REFERENCIA</label>
-                                                                        <input type="text"
-                                                                            class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                             id="nro_celular_referencia"
                                                                             name="nro_celular_referencia"
                                                                             placeholder="Nro de Celular de Refencia..."
@@ -153,8 +152,7 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="email">CORREO
                                                                             ELECTRONICO</label>
-                                                                        <input type="text"
-                                                                            class="form-control "
+                                                                        <input type="text" class="form-control "
                                                                             id="email" name="email"
                                                                             placeholder="Correo Electronico..."
                                                                             value="{{ old('email') }}">
@@ -177,7 +175,8 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="nombre_empresa">NOMBRE DE LA
                                                                             EMPRESA</label>
-                                                                        <input type="text" class="form-control @error('nombre_empresas[]') is-invalid @enderror"
+                                                                        <input type="text"
+                                                                            class="form-control @error('nombre_empresas[]') is-invalid @enderror"
                                                                             id="nombre_empresas"
                                                                             name="nombre_empresas[]"
                                                                             placeholder="Nombre de la empresa..."
@@ -191,7 +190,8 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="cargo">CARGO EN LA
                                                                             EMPRESA</label>
-                                                                        <input type="text" class="form-control @error('cargos[]') is-invalid @enderror"
+                                                                        <input type="text"
+                                                                            class="form-control @error('cargos[]') is-invalid @enderror"
                                                                             name="cargos[]" id="cargos"
                                                                             placeholder="Cargo..."
                                                                             value="{{ old('cargos[]') }}">
@@ -204,7 +204,8 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="descripcion">DESCRIPCION DEL
                                                                             TRABAJO</label>
-                                                                        <textarea cols="30" rows="10" type="text" class="form-control @error('descripciones[]') is-invalid @enderror" name="descripciones[]" id="descripciones"
+                                                                        <textarea cols="30" rows="10" type="text" class="form-control @error('descripciones[]') is-invalid @enderror"
+                                                                            name="descripciones[]" id="descripciones"
                                                                             placeholder="descripcion del trabajo..."
                                                                             value="{{ old('descripciones[]') }}"></textarea>
                                                                         @error('descripciones[]')
@@ -240,11 +241,12 @@
                                                                 <div class="form-row clonar_habilidad">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="habilidad">HABILIDAD</label>
-                                                                        <input type="text" class="form-control @error('habilidades.'.'0') is-invalid @enderror"
+                                                                        <input type="text"
+                                                                            class="form-control @error('habilidades.' . '0') is-invalid @enderror"
                                                                             id="habilidad" name="habilidades[]"
                                                                             placeholder="Habilidad..."
-                                                                            value="{{ old('habilidades.'.'0') }}">
-                                                                        @error('habilidades.'.'0')
+                                                                            value="{{ old('habilidades.' . '0') }}">
+                                                                        @error('habilidades.' . '0')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -278,7 +280,8 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="fecha_inicio">FECHA INICIAL DEL
                                                                             CONTRATO</label>
-                                                                        <input type="date" class="form-control @error('fecha_inicio_contrato') is-invalid @enderror"
+                                                                        <input type="date"
+                                                                            class="form-control @error('fecha_inicio_contrato') is-invalid @enderror"
                                                                             id="fecha_inicio_contrato"
                                                                             name="fecha_inicio_contrato"
                                                                             value="{{ old('fecha_inicio_contrato') }}">
@@ -291,7 +294,8 @@
                                                                     <div class="form-group col-md-6">
                                                                         <label for="fecha_fin_contrato">FECHA FINAL DEL
                                                                             CONTRATO</label>
-                                                                        <input type="date" class="form-control @error('fecha_fin_contrato') is-invalid @enderror"
+                                                                        <input type="date"
+                                                                            class="form-control @error('fecha_fin_contrato') is-invalid @enderror"
                                                                             id="fecha_fin_contrato"
                                                                             name="fecha_fin_contrato"
                                                                             value="{{ old('fecha_fin_contrato') }}">
@@ -315,7 +319,7 @@
                                                                         <label for="tipo_contrato">TIPO DE
                                                                             CONTRATO</label>
                                                                         <select name="contrato_id" id=""
-                                                                            class="form-control" >
+                                                                            class="form-control">
                                                                             @foreach ($contratos as $contrato)
                                                                                 <option value="{{ $contrato->id }}">
                                                                                     {{ $contrato->tipo_contrato }}
@@ -334,20 +338,23 @@
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
-                                                                    {{-- <div class="form-group col-md-6">
-                                                                        <label for="codigo_usuario">CODIGO DE
-                                                                            USUARIO</label>
-                                                                        <input type="number"
-                                                                            class="form-control @error('codigo') is-invalid @enderror"
-                                                                            id="codigo_usuario" name="codigo"
-                                                                            placeholder="Codigo de Usuario..."
-                                                                            value="{{ old('codigo') }}">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="sucursal">CODIGO DE USUARIO</label>
+                                                                        <div class="input-group mb-6">
+                                                                            <input type="text" class="form-control"
+                                                                                placeholder="" id="codigo" name="codigo"
+                                                                                value="{{ $user_cod }}" readonly>
+                                                                            <button class="btn btn-primary "
+                                                                                id="actualizar_codigo"
+                                                                                type="button">Actualizar
+                                                                                Codigo</button>
+                                                                        </div>
                                                                         @error('codigo')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
-                                                                    </div> --}}
+                                                                    </div>
                                                                 </div>
 
                                                             </div>
@@ -387,7 +394,7 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         let clonado_habilidad = document.querySelector('.clonar_habilidad');
         let clon_habilidad = clonado_habilidad.cloneNode(true);
 
-        clon_habilidad.querySelectorAll("input").forEach(e => e.value = "" );
+        clon_habilidad.querySelectorAll("input").forEach(e => e.value = "");
         clon_habilidad.querySelector('#habilidad').className = 'form-control'
 
 
@@ -508,7 +515,20 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
             return false;
         })
 
+        let botonActualizar = document.getElementById("actualizar_codigo");
+        let inputCodigo = document.getElementById("codigo");
 
+        botonActualizar.addEventListener("click", function() {
+            numeroRandom = getRandomIntInclusive(10000, 99999);
+
+            inputCodigo.value = numeroRandom;
+        });
+
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
 
     });
 </script>

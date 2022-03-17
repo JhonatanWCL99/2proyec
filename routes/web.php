@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Sucursal;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $sucursales=Sucursal::all();
+    return view('auth.login',compact('sucursales'));
 });
 
 
-Auth::routes();
 
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -27,6 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /*Route::get('reporteproducto', function(){
 return view('reporteproducto');
 });*/
+
 
 
 /*Auth */
@@ -159,7 +162,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/funcionarios', [App\Http\Controllers\HorarioController::class, 'funcionarios'])->name('sucursal.funcionarios');
     Route::get('/reporteHorario', [App\Http\Controllers\HorarioController::class, 'reporteHorario'])->name('horarios.reporteHorario');
     Route::get('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
-    Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios');
+   /*  Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios'); */
+    Route::post('/planillaHorarios', [App\Http\Controllers\HorarioController::class, 'obtenerFuncionarios'])->name('horarios.obtenerFuncionarios');
 
     /*Rutas Bonos */
     Route::group(['middleware' => ['auth']], function () {
@@ -167,6 +171,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
         Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
         Route::get('/bonos/show/{id}', [App\Http\Controllers\BonoController::class, 'show'])->name('bonos.show');
+        Route::delete('/bonos/{id}', [\App\Http\Controllers\BonoController::class, 'destroy'])->name('bonos.destroy');
     });
 
     /*Rutas descuentos */
@@ -175,6 +180,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/descuentos/create', [App\Http\Controllers\DescuentoController::class, 'create'])->name('descuentos.create');
          Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
          Route::get('/descuentos/show/{id}', [App\Http\Controllers\DescuentoController::class, 'show'])->name('descuentos.show');
+         Route::delete('/descuentos/{id}', [\App\Http\Controllers\DescuentoController::class, 'destroy'])->name('descuentos.destroy');
 
     });
 

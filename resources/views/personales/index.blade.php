@@ -1,7 +1,6 @@
 @extends('layouts.app', ['activePage' => 'personales', 'titlePage' => 'Contrato de Personales'])
 
 @section('content')
-
 @section('css')
 @endsection
 
@@ -21,22 +20,39 @@
                         <div class="table-responsive">
                             <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
-                                    <th style="color: #fff;">ID</th>
-                                    <th style="color: #fff;">Nombre</th>
-                                    <th style="color: #fff;">Apellido</th>
-                                    <th style="color: #fff;">Correo</th>
+                                    <th style="color: #fff;">C I</th>
+                                    <th style="color: #fff;">Nombre y Apellido</th>
+                                    <th style="color: #fff;">Celular Personal</th>
+                                    <th style="color: #fff;">Codigo de Usuario</th>
+                                    <th style="color: #fff;">Estado del Personal</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
                                     @foreach ($personales as $personal)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('personales.showDetalleContrato', $personal->id) }}" value="{{ $personal->id }}">{{ $personal->id }} </a>
+                                                <a href="{{ route('personales.showDetalleContrato', $personal->id) }}"
+                                                    value="{{ $personal->ci }}">{{ $personal->ci }} </a>
                                             </td>
 
-                                            <td>{{ $personal->name }}</td>
-                                            <td>{{ $personal->apellido }}</td>
-                                            <td>{{ $personal->email }}</td>
+                                            <td>{{ $personal->name }} {{ $personal->apellido }}</td>
+                                            <td>{{ $personal->celular_personal }} </td>
+                                            @if ($personal->codigo != '')
+                                                <td>{{ $personal->codigo }} </td>
+                                            @endif
+                                            @if ($personal->codigo == '')
+                                                <td>Sin Codigo Asignado </td>
+                                            @endif
+                                            @if ($personal->estado == 1)
+                                                <td>
+                                                    <div class="badge badge-success">Activo</div>
+                                                </td>
+                                            @endif
+                                            @if ($personal->estado == 0)
+                                                <td>
+                                                    <div class="badge badge-danger">Inactivo</div>
+                                                </td>
+                                            @endif
                                             <td>
                                                 <div class="dropdown" style="position: absolute;">
                                                     <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"

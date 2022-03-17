@@ -74,12 +74,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      
 
                                   
                                    
                                 </div> 
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary toastrDefaultSuccess" id=toastr-1>Guardar</button>
                                     <a class="btn btn-danger" href="{{route('personales.index')}}">Volver</a>
                                 </div>
                             </form>
@@ -89,6 +90,15 @@
             </div>
         </div>
     </div>
-
+  <script>$('.toast').toast(option)</script>
+    <script>
+        $(function(){
+            $('.toastrDefaultSuccess').click(function(param) {
+                toastr.success('Asignado con Exito!')
+            });
+        })
+    </script>
+<script src="assets/modules/izitoast/js/iziToast.min.js"></script>
+<script src="assets/js/page/modules-toastr.js"></script>
 </section>
 @endsection

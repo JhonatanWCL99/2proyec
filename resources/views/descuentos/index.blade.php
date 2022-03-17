@@ -41,9 +41,10 @@
                                     @foreach ($descuentos as $descuento)
                                         <tr>
                                             <td>
-                                                <a href="{{route('descuentos.show', $descuento->id)}}">{{$descuento->user->name}} </a>
+                                                <a href="{{ route('descuentos.show', $descuento->id) }}">{{ $descuento->user->name }}
+                                                </a>
                                             </td>
-                                         
+
                                             <td>{{ $descuento->monto }}</td>
                                             <td>{{ $descuento->motivo }}</td>
                                             <td>{{ $descuento->fecha }}</td>
@@ -54,11 +55,10 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        {{-- <li><a class="dropdown-item"
-                                                                href="{{ route('descuentos.create', $bono->id) }}">Editar</a>
-                                                        </li>
+
                                                         <li>
-                                                            <form action="{{ route('bonos.create', $bono->id) }}"
+                                                            <form
+                                                                action="{{ route('descuentos.destroy', $descuento->id) }}"
                                                                 id="formulario-eliminar2" class="formulario-eliminar"
                                                                 method="POST">
                                                                 @csrf
@@ -67,7 +67,7 @@
                                                                     onclick="document.getElementById('formulario-eliminar2').submit()"
                                                                     id="enlace">Eliminar</a>
                                                             </form>
-                                                        </li> --}}
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -130,101 +130,102 @@
                         <textarea class="form-control" id="motivo" name="motivo"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" href="{{ route('descuentos.index') }}" class="btn btn-dark"
-                            data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-warning">Descontar</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 @endsection
+
 @section('page_js')
 
 
-    @section('scripts')
-        @if (session('eliminar') == 'ok')
-            <script>
-                Swal.fire(
-                    'Eliminado!',
-                    'Tu registro ha sido eliminado.',
-                    'success'
-                )
-            </script>
-        @endif
+@section('scripts')
+    @if (session('eliminar') == 'ok')
+        <script>
+            Swal.fire(
+                'Eliminado!',
+                'Tu registro ha sido eliminado.',
+                'success'
+            )
+        </script>
+    @endif
 
-        <script>
-            $('.formulario-eliminar').submit(function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Estas Seguro(a)?',
-                    text: "¡No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonText: 'Si, Eliminarlo!'
-                }).then((result) => {
-                    if (result.value) {
-                        /*  Swal.fire(
-                             'Deleted!',
-                             'Your file has been deleted.',
-                             'success'
-                         ) */
-                        console.log(this);
-                        this.submit();
-                    }
-                })
-            });
-        </script>
-    @section('page_js')
-        <script>
-            $('#table').DataTable({
-                language: {
-                    sProcessing: "Procesando...",
-                    sLengthMenu: "Mostrar _MENU_ registros",
-                    sZeroRecords: "No se encontraron resultados",
-                    sEmptyTable: "Ningun dato disponible en esta tabla",
-                    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    sInfoPostFix: "",
-                    sSearch: "Buscar:",
-                    sUrl: "",
-                    sInfoThousands: ",",
-                    sLoadingRecords: "Cargando...",
-                    oPaginate: {
-                        sFirst: "Primero",
-                        sLast: "Ãšltimo",
-                        sNext: "Siguiente",
-                        sPrevious: "Anterior"
-                    },
-                    oAria: {
-                        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-                        sSortDescending: ": Activar para ordenar la columna de manera descendente"
-                    }
+    <script>
+        $('.formulario-eliminar').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Estas Seguro(a)?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, Eliminarlo!'
+            }).then((result) => {
+                if (result.value) {
+                    /*  Swal.fire(
+                         'Deleted!',
+                         'Your file has been deleted.',
+                         'success'
+                     ) */
+                    console.log(this);
+                    this.submit();
+                }
+            })
+        });
+    </script>
+@section('page_js')
+    <script>
+        $('#table').DataTable({
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningun dato disponible en esta tabla",
+                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "",
+                sSearch: "Buscar:",
+                sUrl: "",
+                sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Ãšltimo",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
                 },
-                columnDefs: [{
-                        orderable: false,
-                        targets: 3
-                    },
-                    {
-                        orderable: false,
-                        targets: 4
-                    }
-                ]
-            });
-        </script>
-    @endsection
+                oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            columnDefs: [{
+                    orderable: false,
+                    targets: 3
+                },
+                {
+                    orderable: false,
+                    targets: 4
+                }
+            ]
+        });
+    </script>
+@endsection
 @endsection
 @endsection
 
 @section('page_css')
 <style>
-    .tablecolor {
-        background-color: #212121;
-    }
+.tablecolor {
+    background-color: #212121;
+}
 
 </style>
 @endsection

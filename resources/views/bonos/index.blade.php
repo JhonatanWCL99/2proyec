@@ -13,6 +13,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        
                         <a class="btn btn-outline-info" href="{{route('bonos.create')}}">Asignar nuevo Bono</a><br><br>
                         <div class="table-responsive">
 
@@ -48,9 +49,9 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{ route('bonos.create', $bono->id) }}">Editar</a></li>
+                                                    
                                                     <li>
-                                                        <form action="{{route('bonos.create',$bono->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
+                                                        <form action="{{route('bonos.destroy',$bono->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
                                                             @csrf
                                                             @method('Delete')
                                                             <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
@@ -70,12 +71,10 @@
         </div>
     </div>
 </section>
+
 @endsection
 @section('scripts')
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 @if(session('eliminar')=='ok')
 <script>

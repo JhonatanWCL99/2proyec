@@ -18,74 +18,75 @@
                                 <br>
                                 <br>
                             @endif
-                            @if ($usuario->foto === null)
-                            <div align="center">
-                                <img id="imagenPrevisualizacion" src="{{ url('img/no-user.png') }}" width="150"
-                                    height="130" />
-                            </div>
-                            <br><br>
-                        @endif
-                            <form action="{{ route('personales.actualizarDatosBasicos',$usuario->id) }}" method="POST" class="form-horizontal"
-                                enctype="multipart/form-data">
+                            @if ($usuario->foto == null || $usuario->foto === '')
+                                <div align="center">
+                                    <img id="imagenPrevisualizacion" src="{{ url('img/no-user.png') }}" width="150"
+                                        height="130" />
+                                </div>
+                                <br><br>
+                            @endif
+                            <form action="{{ route('personales.actualizarDatosBasicos', $usuario->id) }}" method="POST"
+                                class="form-horizontal" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Foto</label>
-                                            <input type="file" id="seleccionArchivos" class="form-control " name="imagen"
-                                                @if ($usuario->foto != null) value="{{ url($usuario->foto) }}" @endif>
+                                            <input type="file" id="seleccionArchivos" class="form-control " name="foto"
+                                                @if ($usuario->foto != null) value="{{ url($usuario->foto) }}"
+                                                @endif>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nombre">Nombre<span class="required">*</span></label>
                                             <input type="text" class="form-control" name="nombre"
-                                                value="{{ $usuario->name }}" required>
+                                                value="{{ $usuario->name }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nombre">Apellido<span class="required">*</span></label>
                                             <input type="text" class="form-control" name="apellido"
-                                                value="{{ $usuario->apellido }}" required>
+                                                value="{{ $usuario->apellido }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="direccion">Direccion<span class="required">*</span></label>
                                             <input type="text" class="form-control" name="domicilio"
-                                                value="{{ $usuario->domicilio }}" required>
+                                                value="{{ $usuario->domicilio }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="zona">Zona<span class="required">*</span></label>
                                             <input type="text" class="form-control" name="zona"
-                                                value="{{ $usuario->zona }}" required>
+                                                value="{{ $usuario->zona }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="celular">Celular Personal<span
+                                            <label for="celular_personal">Celular Personal<span
                                                     class="required">*</span></label>
-                                            <input type="number" class="form-control" name="celular"
-                                                value="{{ $usuario->celular_personal }}" required>
+                                            <input type="number" class="form-control" name="celular_personal"
+                                                value="{{ $usuario->celular_personal }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="celular">Celular de Referencia<span
+                                            <label for="celular_referencia">Celular de Referencia<span
                                                     class="required">*</span></label>
-                                            <input type="number" class="form-control" name="celular"
-                                                value="{{ $usuario->celular_referencia }}" required>
+                                            <input type="number" class="form-control" name="celular_referencia"
+                                                value="{{ $usuario->celular_referencia }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="empresa">Correo<span class="required">*</span></label>
-                                            <input type="text" class="form-control" name="empresa"
-                                                value="{{ $usuario->email }}" required>
+                                            <label for="email">Correo<span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="email"
+                                                value="{{ $usuario->email }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

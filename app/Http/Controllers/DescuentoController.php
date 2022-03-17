@@ -101,6 +101,8 @@ class DescuentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $descuento= Descuento::find($id);
+        $descuento->delete();
+        return redirect()->route('descuentos.index')->with('eliminar','ok');
     }
 }

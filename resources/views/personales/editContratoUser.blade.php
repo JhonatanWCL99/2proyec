@@ -12,11 +12,18 @@
                         <div class="card-header">
                             <h4>Contratos Anteriores</h4>
                         </div>
-                        @foreach ($detalleContratos as $detalleContrato)
+                        @php
+                            $contador = 0;
+                        @endphp
+                        @foreach ($usuario->detalleContratos as $detalleContrato)
                             <div class="card-body">
                                 {{-- <div class="card card-primary"> --}}
+                                @php
+                                    $contador++;
+                                @endphp
                                 <div class="row ">
-                                    <h5></h5>
+                                    <h6>Contrato # {{ $contador }}</h6>
+                                    <br><br>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="direccion">Fecha de Inicio de Contrato<span
@@ -36,7 +43,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="correo">Disponibilidad<span class="required">*</span></label>
+                                            <label for="disponibilidad">Disponibilidad<span
+                                                    class="required">*</span></label>
+
                                             <input type="text" class="form-control" name="correo"
                                                 value="{{ $detalleContrato->disponibilidad }}" readonly>
                                         </div>
@@ -46,7 +55,7 @@
                                             <label for="nro_fiscal">Tipo de Contrato<span
                                                     class="required">*</span></label>
                                             <input type="text" class="form-control" name="nro_fiscal"
-                                                value="{{ $detalleContrato->contrato->tipo_contrato }}"  readonly>
+                                                value="{{ $detalleContrato->contrato->tipo_contrato }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +76,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="usuario_id">Usuario<span class="required">*</span></label>
-                                            <input type="text" class="form-control " name="usuario"
+                                            <input type="text" class="form-control " name="usuario_id"
                                                 value="{{ $usuario->id }}" readonly>
                                         </div>
                                     </div>
@@ -103,9 +112,11 @@
                                         <div class="form-group">
                                             <label for="disponibilidad">Disponibilidad<span
                                                     class="required">*</span></label>
-                                            <input type="text"
-                                                class="form-control @error('disponibilidad') is-invalid @enderror"
-                                                name="disponibilidad" placeholder="Disponibilidad...">
+                                            <select name="disponibilidad" id="disponibilidad" class="form-control">
+                                                <option value="am">Am</option>
+                                                <option value="pm">Pm</option>
+                                                <option value="ambos">Ambos</option>
+                                            </select>
                                             @error('disponibilidad')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -132,7 +143,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
-                                    <a class="btn btn-danger" href="{{ route('personales.showDetalleContrato',$usuario->id) }}">Volver</a>
+                                    <a class="btn btn-danger"
+                                        href="{{ route('personales.showDetalleContrato', $usuario->id) }}">Volver</a>
                                 </div>
                             </form>
                         </div>

@@ -68,8 +68,8 @@
                                                 <label for="turno">Turno<span class="required">*</span></label>
                                                 <div class="selectric-hide-select">
                                                     <select name="turno" class="form-control selectric">
-                                                        <option>AM</option>
-                                                        <option>PM</option>
+                                                        <option value="am">AM</option>
+                                                        <option value="pm">PM</option>
                                                     </select>
                                                 </div>
                                             </div>

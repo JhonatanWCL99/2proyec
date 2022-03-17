@@ -63,8 +63,9 @@
                         </span>
                     @enderror
             </div> <br>           
-            <input type="submit" class="btn btn-success" value="Registrar">
-            <a href="{{route('sanciones.index')}}" class="btn btn-danger btn-xs">Volver</a>
+            <input type="submit" class="btn btn-primary" value="Registrar">
+            <a href="{{route('personales.index')}}" class="btn btn-warning btn-xs">Volver</a>
+            <a href="{{route('sanciones.index')}}" class="btn btn-warning btn-xs">Ir a Sanciones</a>
         </form>
         </div>
     </div>

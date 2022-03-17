@@ -26,10 +26,10 @@ class UserController extends Controller
 
     public function create()
     {
-        /*$user_cod = rand(1, 15);*/
+        $user_cod = rand(10000, 99999);
         $sucursales = Sucursal::all();
         $contratos = Contrato::all();
-        return view('personales.create', compact('sucursales', 'contratos'));
+        return view('personales.create', compact('sucursales', 'contratos', 'user_cod'));
     }
     public function showDetalleContrato($id)
     {
@@ -55,6 +55,7 @@ class UserController extends Controller
             'nro_celular_personal' => 'required',
             'fecha_inicio_contrato' => 'required',
             'fecha_fin_contrato' => 'required',
+            'codigo' => 'unique:users|max:4',
             /* 'habilidades.*' => 'required', */
             /* 'habilidades' => 'required|array',
             'habilidades.*' => 'required' */
@@ -87,43 +88,26 @@ class UserController extends Controller
 
         $contratar_personal->save();
 
-        for ($i = 0; $i < sizeof($request->habilidades); $i++) {
-            Habilidad::create([
-                'habilidad' => $request->habilidades[$i],
-                'user_id' => $contratar_personal->id,
-            ]);
-        }
-        for ($j = 0; $j < sizeof($request->nombre_empresas); $j++) {
-            ExperienciaLaboral::create([
-                'cargo' => $request->cargos[$j],
-                'nombre_empresa' => $request->nombre_empresas[$j],
-                'descripcion' => $request->descripciones[$j],
-                'user_id' => $contratar_personal->id,
-            ]);
-        }
 
-        DetalleContrato::create([
-            'fecha_inicio_contrato' => $request->fecha_inicio_contrato,
-            'fecha_fin_contrato' => $request->fecha_fin_contrato,
-            'disponibilidad' => $request->disponibilidad,
-            'contrato_id' => $request->contrato_id,
-            'user_id' =>  $contratar_personal->id,
-        ]);
-
-        /* if ($contratar_personal->save()) {
+        if ($contratar_personal->save()) {
             for ($i = 0; $i < sizeof($request->habilidades); $i++) {
-                $habilidad = Habilidad::create([
-                    'habilidad' => $request->habilidades[$i],
-                    'user_id' => $contratar_personal->id,
-                ]);
+                if($request->habilidades[$i]!=""){
+                    Habilidad::create([
+                        'habilidad' => $request->habilidades[$i],
+                        'user_id' => $contratar_personal->id,
+                    ]);
+                }
             }
             for ($j = 0; $j < sizeof($request->nombre_empresas); $j++) {
-                $experienciaLaboral = ExperienciaLaboral::create([
-                    'cargo' => $request->cargos[$j],
-                    'nombre_empresa' => $request->nombre_empresas[$j],
-                    'descripcion' => $request->descripciones[$j],
-                    'user_id' => $contratar_personal->id,
-                ]);
+                if($request->cargos[$j]!="" && $request->nombre_empresas[$j]!=""){
+                    ExperienciaLaboral::create([
+                        'cargo' => $request->cargos[$j],
+                        'nombre_empresa' => $request->nombre_empresas[$j],
+                        'descripcion' => $request->descripciones[$j],
+                        'user_id' => $contratar_personal->id,
+                    ]);
+                }
+                
             }
 
             DetalleContrato::create([
@@ -133,13 +117,24 @@ class UserController extends Controller
                 'contrato_id' => $request->contrato_id,
                 'user_id' =>  $contratar_personal->id,
             ]);
-        } */
+        }
         return redirect()->route('personales.index')->with('success', 'Personal contratado correctamente');
     }
 
     public function actualizarContratoUser(Request $request)
     {
-        dd($request);
+        $detalleContrato = new DetalleContrato();
+        $detalleContrato->fecha_inicio_contrato = $request->get('fecha_inicio_contrato');
+        $detalleContrato->fecha_fin_contrato = $request->get('fecha_fin_contrato');
+        $detalleContrato->disponibilidad = $request->get('disponibilidad');
+        $detalleContrato->contrato_id = $request->get('contrato_id');
+        $detalleContrato->user_id = $request->get('usuario_id');
+
+        $detalleContrato->save();
+
+        if($detalleContrato->save()){
+            return redirect()->route('personales.showDetalleContrato',$detalleContrato->user_id);
+        }
     }
 
     public function editContratoUser($id)
@@ -156,18 +151,39 @@ class UserController extends Controller
         return view('personales.editDatosBasicos', compact('usuario'));
     }
 
-    public function actualizarDatosBasicos($id,Request $request){
-        dd($request);
-        $usuario = User::find($id);
-        $usuario->name = $request->get('nombre');
-        $usuario->apellido = $request->get('apellido');
-        $usuario->domicilio = $request->get('domicilio');
-        $usuario->zona = $request->get('zona');
-        $usuario->celular_personal = $request->get('celular');
-        $usuario->celular_referencia = $request->get('email');
-        $usuario->estado = $request->get('estado');
-        $usuario->save();
+    public function actualizarDatosBasicos($id, Request $request)
+    {
 
-        return view('personales.editContratoUser', compact('usuario'));
+
+        $user = User::find($id);
+        /*  dd($request); */
+        $user->name = $request->get('nombre');
+        $user->apellido = $request->get('apellido');
+        $user->domicilio = $request->get('domicilio');
+        $user->zona = $request->get('zona');
+        $user->celular_personal = $request->get('celular_personal');
+        $user->celular_referencia = $request->get('celular_referencia');
+        $user->email = $request->get('email');
+        $user->estado = $request->get('estado');
+        /* $mi_imagen = public_path() . '/imgages/products/mi_imagen.jpg'; */
+        if ($request->hasFile("foto")) {
+            if (@getimagesize($user->foto)) {
+                unlink($user->foto);
+                $file = $request->file('foto');
+                $destinationPath = 'img/contratos/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+                $user->foto = $destinationPath . $filename;
+            } else {
+                $file = $request->file('foto');
+                $destinationPath = 'img/contratos/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+                $user->foto = $destinationPath . $filename;
+            }
+        }
+        $user->save();
+        $contratos = Contrato::all();
+        return redirect()->route('personales.showDetalleContrato', $user->id)->with('success', 'Datos Basicos actualizados correctamente');
     }
 }

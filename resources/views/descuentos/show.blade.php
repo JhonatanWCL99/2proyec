@@ -22,11 +22,11 @@
                             </tr>
                             <tr>
                                 <th>Monto Descontado</th>
-                                <td >{{ $descuento->monto }}Bs</td>
+                                <td ><span class="badge badge-primary">{{ $descuento->monto }}Bs</span></td>
                             </tr>
                             <tr>
                                 <th>Fecha asignado</th>
-                                <td><span class="badge badge-primary">{!! $descuento->fecha!!}</span></td>
+                                <td>{!! $descuento->fecha!!}</td>
                             </tr>
                             <tr>
                                 <th>Motivo del descuento</th>

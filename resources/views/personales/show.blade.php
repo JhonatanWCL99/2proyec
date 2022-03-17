@@ -10,16 +10,28 @@
     </div>
     <div class="section-body">
         <div class="row">
+            {{-- <div class="col-md-12">
+                <div class="card-body">
+                    <div class="card card-user">
+                        @if (session('success'))
+                            <div class="alert alert-success" role="success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div> --}}
             <div class="col-md-4">
                 <div class="card card-user">
                     <div class="card-header ">
                         <h4>Datos Basicos</h4>
                     </div>
+
                     <div class="card-body">
                         <p class="card-text">
                         <div class="author">
                             {{-- <a href="#"> --}}
-                            @if ($user->foto === null)
+                            @if ($user->foto === null || $user->foto === '')
                                 <img src="{{ url('img/no-user.png') }}" alt="image" class="rounded-circle"
                                     width="125px" height="125px" />
                                 <br>
@@ -27,7 +39,8 @@
                             @if ($user->foto != null)
                                 <img src="{{ url($user->foto) }}" alt="image" class="rounded-circle" width="125px"
                                     height="125px">
-                                <br>
+                                <br> 
+                             
                             @endif
 
                             <h5 class="title mt-3">{{ $user->name }} {{ $user->apellido }}</h5>
@@ -47,57 +60,90 @@
                         <div class="button-container">
                             <a href="{{ route('personales.editDatosBasicos', $user->id) }}"
                                 class="btn btn-sm btn-primary" style="color:white">Editar Datos Basicos</a>
+                                <a  href="{{ route('personales.index')}}" class="btn btn-sm btn-warning" style="color:white">Volver</a>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col">
+                <div class="col-md-12">
 
-                <div class="card ">
-                    <div class="card-header">
-                        <h4>Datos en la Empresa</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-md">
-                            <tbody>
-                                <tr>
-                                    <th>Codigo</th>
-                                    <td>{{ $user->codigo }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Sucursal</th>
-                                    <td>{{ $user->sucursal->nombre }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>{!! $user->email !!}</td>
-                                </tr>
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4>Datos en la Empresa</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-md">
+                                <tbody>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <td>{{ $user->codigo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sucursal</th>
+                                        <td>{{ $user->sucursal->nombre }}</td>
+                                    </tr>
+                                    {{-- <tr>
+                                        <th>Email</th>
+                                        <td>{!! $user->email !!}</td>
+                                    </tr> --}}
 
-                                <tr>
-                                    <th>Estado Usuario</th>
-                                    @if ($user->estado == 1)
-                                        <td>
-                                            <div class="badge badge-success">Activo</div>
-                                        </td>
-                                    @endif
-                                    @if ($user->estado == 0)
-                                        <td>
-                                            <div class="badge badge-danger">Inactivo</div>
-                                        </td>
-                                    @endif
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer">
+                                    <tr>
+                                        <th>Estado Usuario</th>
+                                        @if ($user->estado == 1)
+                                            <td>
+                                                <div class="badge badge-success">Activo</div>
+                                            </td>
+                                        @endif
+                                        @if ($user->estado == 0)
+                                            <td>
+                                                <div class="badge badge-danger">Inactivo</div>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- <div class="card-footer">
                         <div class="button-container">
                             <button class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
                         </div>
+                    </div> --}}
                     </div>
                 </div>
+                <div class="col-md-12">
 
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4>Habilidades de {{ $user->name }} {{ $user->apellido }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-md">
+                                <tbody>
+                                    @php
+                                        $contador=0;
+                                    @endphp
+                                    @foreach ($user->habilidades as $habilidad)
+                                    @php
+                                         $contador+=1;
+                                    @endphp
+                                        <tr>
+                                            <th>Habilidad # {{$contador}}</th>
+                                            <td>{{ $habilidad->habilidad }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{-- <div class="card-footer">
+                        <div class="button-container">
+                            <button class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
+                        </div>
+                    </div> --}}
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="card card-user">
@@ -121,7 +167,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($detalleContratos as $detallecontrato)
+                                        @foreach ($user->detalleContratos as $detallecontrato)
                                             <tr>
                                                 <td class="text-center">
                                                     {{ $detallecontrato->contrato->tipo_contrato }}
@@ -174,7 +220,7 @@
                                         @foreach ($user->bonos as $bono)
                                             <tr>
                                                 <td class="text-center">
-                                                    <a href="{{ route('bonos.show', $user->id) }}"
+                                                    <a href="{{ route('bonos.show', $bono->id) }}"
                                                         value="{{ $user->id }}" class="dato"
                                                         target="_blank">
                                                         {{ $bono->fecha }} </a>
@@ -187,6 +233,12 @@
                                     </tbody>
                                 </table>
 
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <a class="btn btn-sm btn-primary" href="{{ route('bonos.create') }}"
+                                    target="_blank">Agregar Bono</a>
                             </div>
                         </div>
                     </div>
@@ -233,6 +285,12 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <a class="btn btn-sm btn-primary" href="{{ route('sanciones.create') }}"
+                                    target="_blank">Agregar Sancion</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,7 +318,7 @@
                                         @foreach ($user->descuentos as $descuento)
                                             <tr>
                                                 <td class="text-center">
-                                                    <a href="{{ route('descuentos.show', $user->id) }}"
+                                                    <a href="{{ route('descuentos.show', $descuento->id) }}"
                                                         value="{{ $user->id }}" class="dato"
                                                         target="_blank">
                                                         {{ $descuento->fecha }} </a>
@@ -272,6 +330,12 @@
                                     </tbody>
 
                                 </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <a class="btn btn-sm btn-primary" href="{{ route('descuentos.index') }}"
+                                    target="_blank">Agregar Descuento</a>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 <ul class="sidebar-menu sidebar">
     <li class="menu-header ">Dashboard</li>
     <li class="dropdown {{ $activePage == 'home'  ? ' active' : '' }}">
-      <a href="home" ><i class="fas fa-home titulo"></i><span class="titulo">Dashboard</span></a>
+      <a href="{{ route('home') }}" ><i class="fas fa-home titulo"></i><span class="titulo">Dashboard</span></a>
     </li>
     <li class="menu-header">Administracion</li>
     <li class="dropdown {{ $activePage === 'proveedores' ? ' active' : '' }}">

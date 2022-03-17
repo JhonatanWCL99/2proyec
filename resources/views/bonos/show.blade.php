@@ -22,11 +22,11 @@
                             </tr>
                             <tr>
                                 <th>Monto Recibido</th>
-                                <td >{{ $bono->monto }}Bs</td>
+                                <td ><span class="badge badge-primary">{{ $bono->monto }}Bs</span></td>
                             </tr>
                             <tr>
                                 <th>Fecha asignado</th>
-                                <td><span class="badge badge-primary">{!! $bono->fecha!!}</span></td>
+                                <td>{!! $bono->fecha!!}</td>
                             </tr>
                             <tr>
                                 <th>Motivo del Bono</th>

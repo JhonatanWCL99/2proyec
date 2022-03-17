@@ -12,7 +12,7 @@ class CargoSucursal extends Model
     protected $table = 'cargos_sucursales';
     protected $fillable =['nombre_cargo','descripcion'];
 
-    public function users(){
+    public function users(){    
         return $this->belongsToMany(User::class);
     }
     

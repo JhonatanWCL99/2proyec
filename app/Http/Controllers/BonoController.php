@@ -16,6 +16,7 @@ class BonoController extends Controller
     public function index()
     {
         $bonos = Bono::all();
+     
         return view('bonos.index')->with('bonos',$bonos);
     }
 
@@ -100,6 +101,8 @@ class BonoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bono= Bono::find($id);
+        $bono->delete();
+        return redirect()->route('bonos.index')->with('eliminar','ok');
     }
 }

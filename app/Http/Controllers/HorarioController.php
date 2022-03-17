@@ -31,17 +31,14 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        $usuarios= User::all();
-        $sucursales= Sucursal::all();
+        $usuarios = User::all();
+        $sucursales = Sucursal::all();
         $fecha = Carbon::now();
         $hora_ent = Carbon::now();
         $hora_sal = '21:30:45';
         $horas_trab = $hora_ent->diffInHours($hora_sal);
-        $total_pagar = $horas_trab*12;
-        return view('horarios.create')->with('usuarios',$usuarios)->with('sucursales',$sucursales)->with('fecha',$fecha)->with('hora_ent', $hora_ent)->with('hora_sal',$hora_sal)->with('horas_trab',$horas_trab)->with('total_pagar',$total_pagar);
-      
-       
-       
+        $total_pagar = $horas_trab * 12;
+        return view('horarios.create')->with('usuarios', $usuarios)->with('sucursales', $sucursales)->with('fecha', $fecha)->with('hora_ent', $hora_ent)->with('hora_sal', $hora_sal)->with('horas_trab', $horas_trab)->with('total_pagar', $total_pagar);
     }
 
     /**
@@ -57,18 +54,18 @@ class HorarioController extends Controller
             'hora_ingreso' => 'required',
             'hora_entrada' => 'required',
         ]);
-      
-        $horarios= new Horario();
-        $horarios->fecha =$request->get('fecha');
-        $horarios->hora_ingreso =$request->get('hora_ingreso');
-        $horarios->hora_entrada =$request->get('hora_entrada');
-        $horarios->hora_salida =$request->get('hora_salida');
-        $horarios->horas_trabajadas =$request->get('horas_trabajadas');
-        $horarios->total_pagar =$request->get('total_pagar');
-        $horarios->user_id =$request->get('user_id');
-        $horarios->sucursal_id =$request->get('sucursal_id');
-      
- 
+
+        $horarios = new Horario();
+        $horarios->fecha = $request->get('fecha');
+        $horarios->hora_ingreso = $request->get('hora_ingreso');
+        $horarios->hora_entrada = $request->get('hora_entrada');
+        $horarios->hora_salida = $request->get('hora_salida');
+        $horarios->horas_trabajadas = $request->get('horas_trabajadas');
+        $horarios->total_pagar = $request->get('total_pagar');
+        $horarios->user_id = $request->get('user_id');
+        $horarios->sucursal_id = $request->get('sucursal_id');
+
+
 
         $horarios->save();
 
@@ -120,16 +117,18 @@ class HorarioController extends Controller
         //
     }
 
-    public function reporteHorario(){
+    public function reporteHorario()
+    {
 
-        $usuarios= User::all();
-        return view('horarios.reporteHorario')->with('usuarios',$usuarios);
+        $usuarios = User::all();
+        $sucursales = Sucursal::all();
+        return view('horarios.reporteHorario')->with('usuarios', $usuarios)->with('sucursales', $sucursales);
     }
 
     public function funcionarios(Request $request)
     {
         if (isset($request->texto)) {
-            $funcionarios2 = User::where('sucursal_id',$request->texto)->get();
+            $funcionarios2 = User::where('sucursal_id', $request->texto)->get();
             return response()->json(
                 [
                     'lista' => $funcionarios2,
@@ -146,21 +145,43 @@ class HorarioController extends Controller
     }
 
     public function planillaHorarios()
-    {   
-        $sucursales=Sucursal::all();
-        $cargos_sucursales=CargoSucursal::all();
-       /*  $cargo_sucursal=CargoSucursal::find(1); */
-        $user=User::find(1);
-        $turnos=Turno::all();
+    {
+        $sucursales = Sucursal::all();
+        $cargos_sucursales = CargoSucursal::all();
+        /*  $cargo_sucursal=CargoSucursal::find(1); */
+        $user = User::find(1);
+        $turnos = Turno::all();
         /* dd($cargo_sucursal->users); */
-        return view('horarios.planillaHorarios',compact('sucursales','cargos_sucursales','turnos'));
+        return view('horarios.planillaHorarios', compact('sucursales', 'cargos_sucursales', 'turnos'));
     }
 
-    public function cargarHorarios(Request $request){
+    public function cargarHorarios(Request $request)
+    {
 
         /* dd($request); */
-        if(isset($request->fecha_inicial,$request->fecha_final)){
-            User::where('sucursal_id',$request->sucursal_id)->whereBetween('points', [1, 150]);
+        if (isset($request->fecha_inicial, $request->fecha_final)) {
+            User::where('sucursal_id', $request->sucursal_id)->whereBetween('points', [1, 150]);
+        }
+    }
+
+    public function obtenerFuncionarios(Request $request)
+    {
+        if (isset($request->texto)) {
+            $funcionarios = User::where('sucursal_id', $request->texto)->get();
+            $sucursal = Sucursal::find($request->texto);
+            return response()->json(
+                [
+                    'nombre_sucursal' => $sucursal->nombre,
+                    'lista' => $funcionarios,
+                    'success' => true
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'success' => false
+                ]
+            );
         }
     }
 }

@@ -15,7 +15,7 @@
                     <h4 style="text-align: center;font-size:large">Seleccione la Sucursal</h4>
                 </div>
                 <div class="card-body">
-                    <select name="" id="" class="form-select">
+                    <select name="" id="_sucursal" class="form-select">
                         @foreach ($sucursales as $sucursal)
                             <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
                         @endforeach
@@ -24,7 +24,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 style="text-align: center;font-size:large">Sucursal 3 Pasos</h4>
+                    <h4 style="text-align: center;font-size:large" id="sucursal_nombre">Nombre de Sucursal </h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -61,10 +61,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="usuario" id="">
-                                                    @foreach ($cargo_sucursal->users as $user)
+                                                <select name="usuario" id="_funcionarios_lunes">
+                                                  {{--   @foreach ($cargo_sucursal->users as $user)
                                                         <option value="">{{ $user->name }}</option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </td>
                                             <td>
@@ -221,7 +221,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive" style="overflow-x: hidden">
-                        <form action="{{ route('horarios.cargarHorarios') }}" method="POST">
+                        <form action="{{-- {{ route('horarios.cargarHorarios') }} --}}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-md-8">
@@ -290,6 +290,33 @@ integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ
     });
 </script>
 @section('page_js')
+    <script>
+        const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+        document.getElementById('_sucursal').addEventListener('change', (e) => {
+            fetch('{{route("horarios.obtenerFuncionarios")}}', {
+                method: 'POST',
+                body: JSON.stringify({
+                    texto: e.target.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRF-Token": csrfToken
+                }
+            }).then(response => {
+                return response.json()
+            }).then(data => {
+                var opciones = "";
+
+                //Lunes
+                for (let i in data.lista) {
+                    opciones += '<option value="' + data.lista[i].id + '">' + data.lista[i].name +
+                        '</option>';
+                }
+                document.getElementById("_funcionarios_lunes").innerHTML = opciones;
+                document.getElementById("sucursal_nombre").innerHTML = data.nombre_sucursal;
+            }).catch(error => console.error(error));
+        })
+    </script>
     <script>
         $('#table').DataTable({
             language: {
