@@ -164,6 +164,7 @@ class UserController extends Controller
         $user->celular_personal = $request->get('celular_personal');
         $user->celular_referencia = $request->get('celular_referencia');
         $user->email = $request->get('email');
+        $user->ci = $request->get('ci');
         $user->estado = $request->get('estado');
         /* $mi_imagen = public_path() . '/imgages/products/mi_imagen.jpg'; */
         if ($request->hasFile("foto")) {

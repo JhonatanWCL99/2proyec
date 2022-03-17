@@ -40,6 +40,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="ci">Carnet de Identidad <span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="ci"
+                                                value="{{ $usuario->ci }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="nombre">Nombre<span class="required">*</span></label>
                                             <input type="text" class="form-control" name="nombre"
                                                 value="{{ $usuario->name }}">
