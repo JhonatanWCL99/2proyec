@@ -10,12 +10,22 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            @if ($usuario->foto != null)
+                                <div align="center">
+                                    <img id="imagenPrevisualizacion" src="{{ url($usuario->foto) }}" width="150"
+                                        height="130" />
+                                </div>
+                                <br>
+                                <br>
+                            @endif
+                            @if ($usuario->foto === null)
                             <div align="center">
-                                <img id="imagenPrevisualizacion" src="{{ url($usuario->foto) }}" width="150"
+                                <img id="imagenPrevisualizacion" src="{{ url('img/no-user.png') }}" width="150"
                                     height="130" />
                             </div>
-                            <br>
-                            <form action="{{-- {{ route('personales.actualizarDatosBasicos',$usuario->id) }} --}}" method="POST" class="form-horizontal"
+                            <br><br>
+                        @endif
+                            <form action="{{ route('personales.actualizarDatosBasicos',$usuario->id) }}" method="POST" class="form-horizontal"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -23,7 +33,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Foto</label>
-                                            <input type="file" id="seleccionArchivos" class="form-control " name="imagen">
+                                            <input type="file" id="seleccionArchivos" class="form-control " name="imagen"
+                                                @if ($usuario->foto != null) value="{{ url($usuario->foto) }}" @endif>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre<span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="nombre"
+                                                value="{{ $usuario->name }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -110,18 +128,18 @@
     </section>
 @endsection
 @section('page_js')
-<script>
-    const $seleccionArchivos = document.querySelector("#seleccionArchivos"),
-        $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
+    <script>
+        const $seleccionArchivos = document.querySelector("#seleccionArchivos"),
+            $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
         $seleccionArchivos.addEventListener("change", () => {
             const archivos = $seleccionArchivos.files;
-                if (!archivos || !archivos.length) {
-                    $imagenPrevisualizacion.src = "";
-                    return;
-                }
-                const primerArchivo = archivos[0];
-                const objectURL = URL.createObjectURL(primerArchivo);
-                $imagenPrevisualizacion.src = objectURL;
-            });
-</script>
+            if (!archivos || !archivos.length) {
+                $imagenPrevisualizacion.src = "";
+                return;
+            }
+            const primerArchivo = archivos[0];
+            const objectURL = URL.createObjectURL(primerArchivo);
+            $imagenPrevisualizacion.src = objectURL;
+        });
+    </script>
 @endsection

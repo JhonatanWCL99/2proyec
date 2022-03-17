@@ -55,7 +55,8 @@ class UserController extends Controller
             'nro_celular_personal' => 'required',
             'fecha_inicio_contrato' => 'required',
             'fecha_fin_contrato' => 'required',
-            /* 'habilidades' => 'required|array', 
+            /* 'habilidades.*' => 'required', */
+            /* 'habilidades' => 'required|array',
             'habilidades.*' => 'required' */
             //'habilidades.*' => 'required|array'
         ]);
@@ -153,5 +154,20 @@ class UserController extends Controller
     {
         $usuario = User::find($id);
         return view('personales.editDatosBasicos', compact('usuario'));
+    }
+
+    public function actualizarDatosBasicos($id,Request $request){
+        dd($request);
+        $usuario = User::find($id);
+        $usuario->name = $request->get('nombre');
+        $usuario->apellido = $request->get('apellido');
+        $usuario->domicilio = $request->get('domicilio');
+        $usuario->zona = $request->get('zona');
+        $usuario->celular_personal = $request->get('celular');
+        $usuario->celular_referencia = $request->get('email');
+        $usuario->estado = $request->get('estado');
+        $usuario->save();
+
+        return view('personales.editContratoUser', compact('usuario'));
     }
 }

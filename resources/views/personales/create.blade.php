@@ -158,7 +158,7 @@
                                                                             id="email" name="email"
                                                                             placeholder="Correo Electronico..."
                                                                             value="{{ old('email') }}">
-                                                                
+
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="foto">FOTO</label>
@@ -180,7 +180,7 @@
                                                                         <input type="text" class="form-control @error('nombre_empresas[]') is-invalid @enderror"
                                                                             id="nombre_empresas"
                                                                             name="nombre_empresas[]"
-                                                                            placeholder="Nombre de la empresa..." 
+                                                                            placeholder="Nombre de la empresa..."
                                                                             value="{{ old('nombre_empresas[]') }}">
                                                                         @error('nombre_empresas[]')
                                                                             <span class="invalid-feedback" role="alert">
@@ -240,11 +240,11 @@
                                                                 <div class="form-row clonar_habilidad">
                                                                     <div class="form-group col-md-6">
                                                                         <label for="habilidad">HABILIDAD</label>
-                                                                        <input type="text" class="form-control @error('habilidades[]') is-invalid @enderror"
-                                                                            id="habilidades" name="habilidades[]"
+                                                                        <input type="text" class="form-control @error('habilidades.'.'0') is-invalid @enderror"
+                                                                            id="habilidad" name="habilidades[]"
                                                                             placeholder="Habilidad..."
-                                                                            value="{{ old('habilidades[]') }}">
-                                                                        @error('habilidades[]')
+                                                                            value="{{ old('habilidades.'.'0') }}">
+                                                                        @error('habilidades.'.'0')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -387,8 +387,9 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         let clonado_habilidad = document.querySelector('.clonar_habilidad');
         let clon_habilidad = clonado_habilidad.cloneNode(true);
 
-        clon_habilidad.querySelectorAll("input").forEach(e => e.value = "");
-        clon_habilidad
+        clon_habilidad.querySelectorAll("input").forEach(e => e.value = "" );
+        clon_habilidad.querySelector('#habilidad').className = 'form-control'
+
 
         contenido_habilidad.appendChild(clon_habilidad).classList.remove('clonar_habilidad');
 

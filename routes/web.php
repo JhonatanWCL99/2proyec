@@ -127,6 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/personales/editContratoUser/{id}', [App\Http\Controllers\UserController::class, 'editContratoUser'])->name('personales.editContratoUser');
     Route::get('/personales/editDatosBasicos/{id}', [App\Http\Controllers\UserController::class, 'editDatosBasicos'])->name('personales.editDatosBasicos');
     Route::post('/personales/editContratoUser', [App\Http\Controllers\UserController::class, 'actualizarContratoUser'])->name('personales.actualizarContratoUser');
+    Route::put('/personales/editDatosBasicos/{id}', [App\Http\Controllers\UserController::class, 'actualizarDatosBasicos'])->name('personales.actualizarDatosBasicos');
 });
 
 
@@ -174,16 +175,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/descuentos/create', [App\Http\Controllers\DescuentoController::class, 'create'])->name('descuentos.create');
          Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
          Route::get('/descuentos/show/{id}', [App\Http\Controllers\DescuentoController::class, 'show'])->name('descuentos.show');
-       
+
     });
 
 
 /* Route::post('/login', function () {
     $credentials = request()->only('codigo');
-    dd($credentials); 
+    dd($credentials);
     if(Auth::attempt($credentials)){
         return "Estas logeado";
-    } 
+    }
     return "No estas logeado";
 
 })->name('login.prueba'); */

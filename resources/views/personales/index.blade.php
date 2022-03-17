@@ -21,7 +21,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
-                                    <th style="color: #fff;">Codigo</th>
+                                    <th style="color: #fff;">ID</th>
                                     <th style="color: #fff;">Nombre</th>
                                     <th style="color: #fff;">Apellido</th>
                                     <th style="color: #fff;">Correo</th>
@@ -31,7 +31,7 @@
                                     @foreach ($personales as $personal)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('personales.showDetalleContrato', $personal->id) }}" value="{{ $personal->codigo }}">{{ $personal->codigo }} </a>
+                                                <a href="{{ route('personales.showDetalleContrato', $personal->id) }}" value="{{ $personal->id }}">{{ $personal->id }} </a>
                                             </td>
 
                                             <td>{{ $personal->name }}</td>

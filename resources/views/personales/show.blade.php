@@ -19,8 +19,17 @@
                         <p class="card-text">
                         <div class="author">
                             {{-- <a href="#"> --}}
-                            <img src="{{ url($user->foto) }}" alt="image" class="rounded-circle" width="125px"
-                                height="125px">
+                            @if ($user->foto === null)
+                                <img src="{{ url('img/no-user.png') }}" alt="image" class="rounded-circle"
+                                    width="125px" height="125px" />
+                                <br>
+                            @endif
+                            @if ($user->foto != null)
+                                <img src="{{ url($user->foto) }}" alt="image" class="rounded-circle" width="125px"
+                                    height="125px">
+                                <br>
+                            @endif
+
                             <h5 class="title mt-3">{{ $user->name }} {{ $user->apellido }}</h5>
                             {{-- </a> --}}
                             <p class="description">
@@ -36,7 +45,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="button-container">
-                            <a href="{{ route('personales.editDatosBasicos',$user->id) }}" class="btn btn-sm btn-primary" style="color:white">Editar Datos Basicos</a>
+                            <a href="{{ route('personales.editDatosBasicos', $user->id) }}"
+                                class="btn btn-sm btn-primary" style="color:white">Editar Datos Basicos</a>
                         </div>
                     </div>
 
@@ -83,7 +93,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="button-container">
-                            <button  class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
+                            <button class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
                         </div>
                     </div>
                 </div>
@@ -131,7 +141,8 @@
                         </div>
                         <div class="card-footer">
                             <div class="button-container">
-                                <a href="{{ route('personales.editContratoUser',$user->id) }}" class="btn btn-sm btn-primary" style="color:white">Renovar Contrato</a>
+                                <a href="{{ route('personales.editContratoUser', $user->id) }}"
+                                    class="btn btn-sm btn-primary" style="color:white">Renovar Contrato</a>
                             </div>
                         </div>
                     </div>

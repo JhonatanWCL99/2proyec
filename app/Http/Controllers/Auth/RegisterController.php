@@ -23,7 +23,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-    
+
     /**
      * Where to redirect users after registration.
      *
@@ -70,8 +70,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'codigo' => $data['codigo'],
             'password' => $data['password'],
-            'estado'=>$data['estado'],
-            'sucursal_id'=>$data['sucursal_id'],
+            'sucursal_id'=>1,
         ]);
     }
 }
