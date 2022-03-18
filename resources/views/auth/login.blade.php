@@ -4,7 +4,9 @@ Admin Login
 @endsection
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
+
 <div class="card card-primary">
+
     <div class="card-header">
         <h5 class="titulo">Te damos la bienvenida al sistema DONESCO SRL.</h5>
     </div>
@@ -32,14 +34,19 @@ Admin Login
             <div class="invalid-feedback">
                 {{ $errors->first('codigo') }}
             </div><br>
-           <!--  <label class="label" for="codigo">Sucursal *</label><br><br>
+            
+       
+
+         
+            <label class="label" for="codigo">Sucursal *</label><br><br>
             <div class="selectric-hide-select">
-                <select name="categoria_id" class="form-control selectric">
+                <select name="sucursal_id" class="form-control selectric">
                     @foreach($sucursales as $sucursal)
                     <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
                     @endforeach
                 </select>
-            </div> -->
+            </div>
+
             <div class="form-group">
                 <div class="d-block">
                 </div>
@@ -88,24 +95,3 @@ Admin Login
 </script>
 
 @endsection
-<style>
-    .titulo {
-        text-align: center;
-        font-size: 15px;
-    }
-
-    .label {
-        font-weight: bold;
-        font-size: 15px;
-    }
-
-    .boton {
-        width: 100%;
-    }
-
-    input[type="text"]:focus,
-    select.form-control:focus {
-        -webkit-box-shadow: none;
-        box-shadow: none;
-    }
-</style>

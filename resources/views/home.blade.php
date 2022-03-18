@@ -15,7 +15,6 @@
                             <div class="row">
 
                                 <div class="col-md-4 col-xl-4">
-
                                     <div class="card  text-white bg-warning mb-3 order-card ">
                                         <div class="card-block border-success mb-3 ">
                                             <h6 class="text-center">&nbsp</h6>
@@ -26,7 +25,7 @@
                                             <h2 class="text-center"><i class="fa fa-users f-left"></i><span>
                                                     {{ $cant_usuarios }}</span></h2>
 
-                                            <p class="m-b-0 text-center"><a href="{{route('personales.index')}}"
+                                            <p class="m-b-0 text-center"><a href="{{ route('personales.index') }}"
                                                     class="text-white">Usuarios</a></p>
                                         </div>
                                     </div>
@@ -41,7 +40,8 @@
                                             @endphp
                                             <h2 class="text-center"><i
                                                     class="fa fa-user-lock f-left"></i><span>{{ $cant_areas }}</span></h2>
-                                            <p class="m-b-0 text-center"><a href="{{route('departamentos.index')}}" class="text-white">Areas</a>
+                                            <p class="m-b-0 text-center"><a href="{{ route('departamentos.index') }}"
+                                                    class="text-white">Areas</a>
                                             </p>
                                         </div>
                                     </div>
@@ -97,6 +97,10 @@
 
 
     <script>
+
+       
+
+
         var chart = Highcharts.chart('producto', {
 
             chart: {

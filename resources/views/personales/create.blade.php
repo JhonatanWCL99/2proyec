@@ -155,7 +155,7 @@
                                                                         <input type="text" class="form-control "
                                                                             id="email" name="email"
                                                                             placeholder="Correo Electronico..."
-                                                                            value="{{ old('email') }}">
+                                                                            value="{{($correo) }}">
 
                                                                     </div>
                                                                     <div class="form-group col-md-6">

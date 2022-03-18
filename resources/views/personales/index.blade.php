@@ -13,7 +13,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{ route('personales.create') }}">Nuevo contrato de
                             personal</a><br><br>
@@ -107,6 +106,16 @@
             'Tu registro ha sido eliminado.',
             'success'
         )
+    </script>
+@endif
+
+@if (session('contratar')=='ok')
+    <script>
+        iziToast.success({
+            title: 'BIEN',
+            message: "El personal se ha contratado exitosamente",
+            position: 'topRight',
+        });
     </script>
 @endif
 <script>

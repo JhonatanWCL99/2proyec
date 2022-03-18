@@ -346,6 +346,15 @@
 </section>
 @endsection
 @section('scripts')
+@if (session('actualizado')=='ok')
+    <script>
+        iziToast.success({
+            title: 'BIEN',
+            message: "Los datos basicos se han actualizado exitosamente",
+            position: 'topRight',
+        });
+    </script>
+@endif
 @section('page_js')
 @endsection
 @endsection

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user1 = User::Create([
+        User::Create([
             'email' => 'patrickaguilar2403@gmail.com',
             'foto' => '',
             'name' => 'Patricio',
@@ -30,10 +31,9 @@ class UserSeeder extends Seeder
             'estado' => 1,
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ]);
-        /*   $user1->assignRole('Admin'); */
+        ])->assignRole('Super Admin');
 
-        $user2 = User::Create([
+        User::Create([
             'email' => 'alejandrobarja@gmail.com',
             'foto' => '',
             'name' => 'Alejandro',
@@ -51,9 +51,8 @@ class UserSeeder extends Seeder
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
         ]);
-        /* $user2->assignRole('Admin'); */
 
-        $user3 = User::Create([
+        User::Create([
             'email' => 'migurlgarron@gmail.com',
             'foto' => '',
             'name' => 'Miguel',
@@ -72,7 +71,6 @@ class UserSeeder extends Seeder
             'tipo_usuario_id' => 1,
         ]);
 
-        /*  $user3->assignRole('Encargado'); */
 
         User::Create([
             'email' => 'jhonathan@gmail.com',

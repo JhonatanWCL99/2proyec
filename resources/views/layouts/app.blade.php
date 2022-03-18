@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
 
     @yield('page_css')
     <!-- Template CSS -->
@@ -67,6 +67,10 @@
     @include('profile.edit_profile')
 
 </body>
+@include('vendor.lara-izitoast.toast')
+<script src="{{ asset('js/iziToast.js') }}"></script>
+
+
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

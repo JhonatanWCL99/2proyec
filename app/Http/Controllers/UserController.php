@@ -12,6 +12,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+use LaraIzitoast\Toaster;
+use LaraIzitoast\LaraIzitoastServiceProvider;
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -19,17 +23,18 @@ class UserController extends Controller
 
     public function index()
     {
-
         $personales = User::all();
+        
         return view('personales.index', compact('personales'));
     }
 
     public function create()
     {
+        $correo = 'alguien@gmail.com';
         $user_cod = rand(10000, 99999);
         $sucursales = Sucursal::all();
         $contratos = Contrato::all();
-        return view('personales.create', compact('sucursales', 'contratos', 'user_cod'));
+        return view('personales.create', compact('sucursales', 'contratos', 'user_cod','correo'));
     }
     public function showDetalleContrato($id)
     {
@@ -37,6 +42,7 @@ class UserController extends Controller
         $detalleContratos = DetalleContrato::where('user_id', $id)->get();
 
         return view('personales.show', compact('user', 'detalleContratos'));
+
     }
 
 
@@ -118,7 +124,7 @@ class UserController extends Controller
                 'user_id' =>  $contratar_personal->id,
             ]);
         }
-        return redirect()->route('personales.index')->with('success', 'Personal contratado correctamente');
+        return redirect()->route('personales.index')->with('contratar', 'ok');
     }
 
     public function actualizarContratoUser(Request $request)
@@ -142,13 +148,14 @@ class UserController extends Controller
         $contratos = Contrato::all();
         $usuario = User::find($id);
         $detalleContratos = DetalleContrato::where('user_id', $id)->get();
-        return view('personales.editContratoUser', compact('contratos', 'detalleContratos', 'usuario'));
+        return view('personales.editContratoUser', compact('contratos', 'usuario'));
     }
 
     public function editDatosBasicos($id)
-    {
+    {   
+        $roles = Role::all();
         $usuario = User::find($id);
-        return view('personales.editDatosBasicos', compact('usuario'));
+        return view('personales.editDatosBasicos', compact('usuario','roles'));
     }
 
     public function actualizarDatosBasicos($id, Request $request)
@@ -185,6 +192,6 @@ class UserController extends Controller
         }
         $user->save();
         $contratos = Contrato::all();
-        return redirect()->route('personales.showDetalleContrato', $user->id)->with('success', 'Datos Basicos actualizados correctamente');
+        return redirect()->route('personales.showDetalleContrato', $user->id)->with('actualizado', 'ok');
     }
 }
