@@ -48,7 +48,7 @@
         <li class="nav-item{{ $activePage == 'descuentos' ? ' active' : '' }}"><a class="nav-link" href="{{ route('descuentos.index') }}">Descuentos</a></li> 
         <li class="nav-item{{ $activePage == 'horarios' ? ' active' : '' }}"><a class="nav-link" href="{{ route('horarios.index') }}">Costo Mano de Obra</a></li> 
         <li class="nav-item{{ $activePage == 'sanciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('sanciones.index')}}">Sanciones</a></li> 
-        
+        <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('vacaciones.index')}}">Vacaciones</a></li> 
       </ul>
     </li>
     

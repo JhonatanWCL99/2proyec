@@ -131,6 +131,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/personales/editDatosBasicos/{id}', [App\Http\Controllers\UserController::class, 'editDatosBasicos'])->name('personales.editDatosBasicos');
     Route::post('/personales/editContratoUser', [App\Http\Controllers\UserController::class, 'actualizarContratoUser'])->name('personales.actualizarContratoUser');
     Route::put('/personales/editDatosBasicos/{id}', [App\Http\Controllers\UserController::class, 'actualizarDatosBasicos'])->name('personales.actualizarDatosBasicos');
+    Route::get('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'vencimientoContratos'])->name('personales.vencimientoContratos');
+    Route::post('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'filtrarContratos'])->name('personales.filtrarContratos');
 });
 
 
@@ -183,7 +185,18 @@ Route::group(['middleware' => ['auth']], function () {
          Route::delete('/descuentos/{id}', [\App\Http\Controllers\DescuentoController::class, 'destroy'])->name('descuentos.destroy');
 
     });
+/*Rutas vacaciones */
+Route::group(['middleware'=> ['auth']],function(){
+    Route::get('/vacaciones', [App\Http\Controllers\VacacionController::class, 'index'])->name('vacaciones.index');
+    Route::get('/vacaciones/create', [App\Http\Controllers\VacacionController::class, 'create'])->name('vacaciones.create');
+    Route::post('/vacaciones', [App\Http\Controllers\VacacionController::class, 'store'])->name('vacaciones.store');
+    Route::get('/vacaciones/show/{id}', [App\Http\Controllers\VacacionController::class, 'show'])->name('vacaciones.show');
+    Route::get('/vacaciones/edit/{id}', [App\Http\Controllers\VacacionController::class, 'edit'])->name('vacaciones.edit');
+    Route::post('/vacaciones/{id}', [App\Http\Controllers\VacacionController::class, 'update'])->name('vacaciones.update');
+    Route::delete('/vacaciones/{id}', [\App\Http\Controllers\VacacionController::class, 'destroy'])->name('vacaciones.destroy');
 
+
+});
 
 /* Route::post('/login', function () {
     $credentials = request()->only('codigo');

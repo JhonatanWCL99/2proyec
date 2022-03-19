@@ -108,4 +108,7 @@ class User extends Authenticatable
     public function experiencias_laborales(){
         return $this->hasMany(ExperienciaLaboral::class);
     }
+    public function vacaciones(){
+        return $this->hasMany(Vacacion::class);
+    }
 }

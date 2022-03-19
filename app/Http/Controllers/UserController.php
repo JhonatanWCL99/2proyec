@@ -194,4 +194,18 @@ class UserController extends Controller
         $contratos = Contrato::all();
         return redirect()->route('personales.showDetalleContrato', $user->id)->with('actualizado', 'ok');
     }
+
+    public function vencimientoContratos(){
+        $detalleContratos=DetalleContrato::all();
+        return view('personales.vencimientoContratos',compact('detalleContratos'));
+    }
+
+    public function filtrarContratos(Request $request){
+        $fecha_inicial=$request->get('fecha_inicial');
+        $fecha_final=$request->get('fecha_final');
+
+       /*  $detalleContratos=DetalleContrato::whereBetween('fecha_fin_contrato', [$fecha_inicial, $fecha_final])->get(); */
+        $detalleContratos=DetalleContrato::where('fecha_fin_contrato','>=',$fecha_inicial)->where('fecha_fin_contrato','<=',$fecha_final)->get();
+        return view('personales.vencimientoContratos',compact('detalleContratos'));
+    }
 }

@@ -11,11 +11,17 @@
     </div>
     <div class="section-body">
         <div class="row">
+            {{-- <a class="btn btn-outline-info" href="{{ route('personales.create') }}">Nuevo contrato de
+                personal</a><br><br> --}}
             <div class="col-lg-12">
                 <div class="card">
+
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{ route('personales.create') }}">Nuevo contrato de
-                            personal</a><br><br>
+                            personal</a>
+                        <a class="btn btn-info  float-right" href="{{ route('personales.vencimientoContratos') }}">Ver Contratos a Vencer</a>
+                        <br><br>
+
                         <div class="table-responsive">
                             <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
@@ -109,7 +115,7 @@
     </script>
 @endif
 
-@if (session('contratar')=='ok')
+@if (session('contratar') == 'ok')
     <script>
         iziToast.success({
             title: 'BIEN',

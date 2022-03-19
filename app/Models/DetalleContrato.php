@@ -21,4 +21,8 @@ class DetalleContrato extends Model
     public function contrato(){
         return $this->belongsTo(Contrato::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
