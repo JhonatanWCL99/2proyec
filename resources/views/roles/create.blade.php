@@ -49,6 +49,7 @@
 
                            </div>
                            <button type="submit" class="btn btn-primary">Guardar</button>
+                           <a class="btn btn-warning" href="{{route('roles.index')}}">Volver</a>
                              {!! Form::close()!!}
                         </div>
                     </div>
