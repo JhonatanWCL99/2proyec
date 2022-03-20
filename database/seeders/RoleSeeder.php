@@ -162,6 +162,7 @@ class RoleSeeder extends Seeder
       $permission119=Permission::create(['name'=>'vacaciones.update']);
       $permission120=Permission::create(['name'=>'vacaciones.destroy']);
       $permission121=Permission::create(['name'=>'vacaciones.show']);
+      $permission122=Permission::create(['name'=>'inventario']);
 
 
       $role1->syncPermissions($permission1,$permission2,$permission3,$permission4,$permission5,
@@ -183,7 +184,7 @@ class RoleSeeder extends Seeder
       $permission96,$permission97,$permission98,$permission99,$permission100,$permission101,$permission102,
       $permission103,$permission104,$permission105, $permission106,$permission107,$permission108,
       $permission109,$permission110,$permission111,$permission112,$permission113,$permission114,
-      $permission115,$permission116,$permission117,$permission118,$permission119,$permission120,$permission121);
+      $permission115,$permission116,$permission117,$permission118,$permission119,$permission120,$permission121,$permission122);
 
       $role4->syncPermissions($permission57,$permission58,$permission59,$permission60,$permission61,$permission62,
       $permission63,$permission64,$permission65,$permission67);

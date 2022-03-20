@@ -12,12 +12,13 @@
     </li>
 
     <li class="menu-header">Modulos</li>
-    <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'productos' || $activePage === 'productos_proveedores' ? ' active' : '' }}">
     
-          
-   
-      <a href="#" class="nav-link has-dropdown class="sidebar><i class="fas fa-archive"></i><span>Inventario</span></a>
+    <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'productos' || $activePage === 'productos_proveedores' ? ' active' : '' }}">
+      @role('Super Admin')
+      <a href="inventario" class="nav-link has-dropdown class="sidebar><i class="fas fa-archive"></i><span>Inventario</span></a>
       <ul class="dropdown-menu  ">
+      @endrole
+      
         @can('categorias.index')
         <li class="nav-item{{ $activePage == 'categorias' ? ' active' : '' }}"><a  href="{{ route('categorias.index') }}">Categorias</a></li>     
         @endcan
