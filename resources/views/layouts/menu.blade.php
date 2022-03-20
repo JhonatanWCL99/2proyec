@@ -53,14 +53,18 @@
     <li class="dropdown  {{ $activePage === 'contratos' || $activePage === 'personales' || $activePage === 'contratos' || $activePage === 'departamentos' || $activePage === 'bonos' || $activePage === 'descuentos' || $activePage === 'horarios' || $activePage === 'sanciones' ? ' active' : '' }}">
       <a href="#" class="nav-link has-dropdown"><i class="fas fa-book"></i> <span>RRHH</span></a>
       <ul class="dropdown-menu">
+        @role('Super Admin')
         <li class="nav-item{{ $activePage == 'departamentos' ? ' active' : '' }}"><a class="nav-link" href="{{ route('departamentos.index') }}">Departamentos</a></li> 
         <li class="nav-item{{ $activePage == 'contratos' ? ' active' : '' }}"><a class="nav-link " href="{{ route('contratos.index') }}">Contratos</a></li> 
-        <li class="nav-item{{ $activePage == 'personales' ? ' active' : '' }}"><a class="nav-link " href="{{ route('personales.index') }}">Personales</a></li> 
         <li class="nav-item{{ $activePage == 'bonos' ? ' active' : '' }}"><a class="nav-link" href="{{ route('bonos.index') }}">Bonos</a></li> 
         <li class="nav-item{{ $activePage == 'descuentos' ? ' active' : '' }}"><a class="nav-link" href="{{ route('descuentos.index') }}">Descuentos</a></li> 
         <li class="nav-item{{ $activePage == 'horarios' ? ' active' : '' }}"><a class="nav-link" href="{{ route('horarios.index') }}">Costo Mano de Obra</a></li> 
         <li class="nav-item{{ $activePage == 'sanciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('sanciones.index')}}">Sanciones</a></li> 
         <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('vacaciones.index')}}">Vacaciones</a></li> 
+        @endrole
+        
+          <li class="nav-item{{ $activePage == 'personales' ? ' active' : '' }}"><a class="nav-link " href="{{ route('personales.index') }}">Personales</a></li>     
+        
       </ul>
     </li>
     
