@@ -9,6 +9,8 @@
       <ul class="dropdown-menu ">
         <li  class="nav-item{{ $activePage == 'proveedores' ? ' active' : '' }}"><a  href="{{ route('proveedores.index') }}" class="nav-link" href="layout-transparent.html">Proveedores</a></li>
       </ul>
+    
+      <a href="{{ route('roles.index') }}" ><i class="fa fa-user-lock f-left titulo"></i><span class="titulo">Roles</span></a>
     </li>
 
     <li class="menu-header">Modulos</li>

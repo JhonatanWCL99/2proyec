@@ -37,10 +37,11 @@
                                 <div class="form-group">
                                      <label for="">Permisos para este Rol</label>
                                 <br/>
-                                @foreach ($permission as $value )
-                                <label>{!! Form::checkbox('permission[]',$value->id, in_array($value->id , $rolePermission) true : false, array('class' => 'name')) !!}
-                                    {{$value->name}}</label>
-                                    <br/>
+                                @foreach ($permissions as $permission )
+                                <label>{!! Form::checkbox('permissions[]',$permission->id, in_array($permission->id , $rolePermission) true : false, array('class' => 'name')) !!}
+                                    {{$permission->name}}
+                                </label>
+                                <br/>
                                 @endforeach
 
                                 </div>

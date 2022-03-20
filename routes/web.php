@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoleController;
 use App\Models\Sucursal;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +134,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/personales/editDatosBasicos/{id}', [App\Http\Controllers\UserController::class, 'actualizarDatosBasicos'])->name('personales.actualizarDatosBasicos');
     Route::get('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'vencimientoContratos'])->name('personales.vencimientoContratos');
     Route::get('/personales/rolesPersonales/{id}', [App\Http\Controllers\UserController::class, 'rolesPersonales'])->name('personales.rolesPersonales');
+    Route::post('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'filtrarContratos'])->name('personales.filtrarContratos');
 });
 
 
@@ -194,8 +196,14 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/vacaciones/edit/{id}', [App\Http\Controllers\VacacionController::class, 'edit'])->name('vacaciones.edit');
     Route::post('/vacaciones/{id}', [App\Http\Controllers\VacacionController::class, 'update'])->name('vacaciones.update');
     Route::delete('/vacaciones/{id}', [\App\Http\Controllers\VacacionController::class, 'destroy'])->name('vacaciones.destroy');
+});
 
-
+    /*Rutas Roles */
+       
+Route::group(['middleware'=> ['auth']], function(){
+    
+    Route::resource('roles', RoleController::class);
+  
 });
 
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['activePage' => 'roles', 'titlePage' => 'Roles'])
 
 @section('content')
     <section class="section">
@@ -10,42 +10,42 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">New rol</h3>
-                            @can('crear-rol') <!--Podemos crear rol con esta directiva-->
+                            <h3 class="text-center">Roles Activos en el Sistema</h3>
+                            <!--Podemos crear rol con esta directiva-->
                                 <a class="btn btn-warning" href="{{route('roles.create')}}">Nuevo</a>
-                            @endcan
+                           
 
                             <table class="table table-striped mt-2">
                                 <thead style="background-color: #6777ef;">
 
-
+                                    <th style="color: #fff;">ID</th>
                                     <th style="color: #fff;">Rol</th>
                                     <th style="color: #fff;">Acciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($roles as $role)
                                         <tr>
-
+                                            <td >{{$role->id}}</td>
                                             <td >{{$role->name}}</td>
 
                                             <td>
-                                                @can('editar-rol') <!--Podemos crear rol con esta directiva-->
-                                                <a class="btn btn-warning" href="{{route('roles.edit',$role->id)}}">Nuevo</a>
-                                            @endcan
-                                                @can('borrar-rol')
+                                             <!--Podemos crear rol con esta directiva-->
+                                                <a class="btn btn-warning" href="{{route('roles.edit',$role->id)}}">Editar</a>
+                                       
+                                             
                                                 {!! Form::open(['method'=>'DELETE', 'route'=>['roles.destroy', $role->id],'style'=>'display:inline' ]) !!}
                                                 {!! Form::submit('Borrar', ['class'=> 'btn btn-danger']) !!}
                                                 {!! Form::close() !!}
-                                                @endcan
+                                      
                                             </td>
 
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                               <div class="pagination justify-content-end">
-                                   {!!$roles->links()!!}
-                               </div>
+                            
+                                  
+                              
 
                         </div>
                     </div>

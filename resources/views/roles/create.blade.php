@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['activePage' => 'roles', 'titlePage' => 'Roles'])
 
 @section('content')
     <section class="section">
@@ -37,9 +37,9 @@
                                 <div class="form-group">
                                      <label for="">Permisos para este Rol</label>
                                 <br/>
-                                @foreach ($permission as $value )
-                                <label>{!! Form::checkbox('permission[]',$value->id,false,array('class'=> 'name')) !!}
-                                    {{$value->name}}</label>
+                                @foreach ($permissions as $permission )
+                                <label>{!! Form::checkbox('permissions[]',$permission->id,false,array('class'=> 'name')) !!}
+                                    {{$permission->description}}</label>
                                     <br/>
                                 @endforeach
 
