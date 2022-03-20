@@ -13,13 +13,24 @@
 
     <li class="menu-header">Modulos</li>
     <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'productos' || $activePage === 'productos_proveedores' ? ' active' : '' }}">
+    
+          
+   
       <a href="#" class="nav-link has-dropdown class="sidebar><i class="fas fa-archive"></i><span>Inventario</span></a>
       <ul class="dropdown-menu  ">
-        <li class="nav-item{{ $activePage == 'categorias' ? ' active' : '' }}"><a  href="{{ route('categorias.index') }}">Categorias</a></li> 
-        <li class="nav-item{{ $activePage == 'productos' ? ' active' : '' }}"><a  href="{{ route('productos.index') }}">Productos</a></li>
-        <li class="nav-item{{ $activePage == 'productos_proveedores' ? ' active' : '' }}"><a  href="{{ route('productos_proveedores.create') }}">Asignar Producto</a></li>
+        @can('categorias.index')
+        <li class="nav-item{{ $activePage == 'categorias' ? ' active' : '' }}"><a  href="{{ route('categorias.index') }}">Categorias</a></li>     
+        @endcan
+        @can('productos.index')
+        <li class="nav-item{{ $activePage == 'productos' ? ' active' : '' }}"><a  href="{{ route('productos.index') }}">Productos</a></li>    
+        @endcan
+        @can('productos_proveedores.create')
+        <li class="nav-item{{ $activePage == 'productos_proveedores' ? ' active' : '' }}"><a  href="{{ route('productos_proveedores.create') }}">Asignar Producto</a></li>    
+        @endcan
+        
       </ul>
     </li>
+
     {{-- <li class="dropdown ">
       <a href="#" class="nav-link has-dropdown class="sidebar><i class="fas fa-building"></i><span>Sucursales</span></a>
       <ul class="dropdown-menu  ">

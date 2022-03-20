@@ -52,6 +52,7 @@
                                 Zona : {{ $user->zona }} <br>
                                 Celular Personal : {{ $user->celular_personal }} <br>
                                 Celular de Referencial : {{ $user->celular_referencia }} <br>
+                                
                             </p>
                         </div>
                         </p>

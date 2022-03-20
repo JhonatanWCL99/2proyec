@@ -163,6 +163,7 @@ class UserController extends Controller
 
 
         $user = User::find($id);
+        $user->roles()->sync($request->roles);
         /*  dd($request); */
         $user->name = $request->get('nombre');
         $user->apellido = $request->get('apellido');
@@ -207,5 +208,10 @@ class UserController extends Controller
        /*  $detalleContratos=DetalleContrato::whereBetween('fecha_fin_contrato', [$fecha_inicial, $fecha_final])->get(); */
         $detalleContratos=DetalleContrato::where('fecha_fin_contrato','>=',$fecha_inicial)->where('fecha_fin_contrato','<=',$fecha_final)->get();
         return view('personales.vencimientoContratos',compact('detalleContratos'));
+    }
+    public function rolesPersonales($id){
+        $roles = Role::all();
+        $usuario = User::find($id);
+       return redirect()->route('personales.rolesPersonales', compact('usuario','roles'));
     }
 }

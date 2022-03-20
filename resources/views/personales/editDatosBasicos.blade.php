@@ -96,6 +96,9 @@
                                                 value="{{ $usuario->email }}">
                                         </div>
                                     </div>
+                                    
+                              
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="estado">Estado<span class="required">*</span></label>
@@ -113,11 +116,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <h2 class="h5">Listado de Roles</h2>
+                                     {!! Form::model($usuario, ['route'=> ['personales.actualizarDatosBasicos', $usuario], 'method'=> 'put']) !!}
+                                    @foreach ($roles as $role )
+                                        <div>
+                                        <label>
+                                            {!!form::checkbox ('roles[]', $role->id, null,['class'=>'mr-1'])!!}
+                                            {{$role->name}}
+                                                </label>
+                                                </div>
+                                                @endforeach
+                                                
+                                            {!! Form::submit('Asignar Rol', ['class'=>'btn btn-success mt-6']) !!}
+
+                                            {!!Form::close()!!}
+
                                 </div>
+                                <br>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
                                     <a href="{{ route('personales.showDetalleContrato', $usuario->id) }}"
                                         class="btn btn-danger" tabindex="8">Cancelar</a>
+                                        
+                                        
+                                        
+                                    
                                 </div>
                                 <br>
                             </form>
