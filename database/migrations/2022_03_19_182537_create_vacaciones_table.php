@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVacacionTable extends Migration
+class CreateVacacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateVacacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('vacacion', function (Blueprint $table) {
+        Schema::create('vacaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('imagen')->nullable();
+
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->unsignedBigInteger('user_id');

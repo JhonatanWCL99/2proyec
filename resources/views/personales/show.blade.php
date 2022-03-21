@@ -39,8 +39,7 @@
                             @if ($user->foto != null)
                                 <img src="{{ url($user->foto) }}" alt="image" class="rounded-circle" width="125px"
                                     height="125px">
-                                <br> 
-                             
+                                <br>
                             @endif
 
                             <h5 class="title mt-3">{{ $user->name }} {{ $user->apellido }}</h5>
@@ -52,7 +51,7 @@
                                 Zona : {{ $user->zona }} <br>
                                 Celular Personal : {{ $user->celular_personal }} <br>
                                 Celular de Referencial : {{ $user->celular_referencia }} <br>
-                                
+
                             </p>
                         </div>
                         </p>
@@ -61,7 +60,8 @@
                         <div class="button-container">
                             <a href="{{ route('personales.editDatosBasicos', $user->id) }}"
                                 class="btn btn-sm btn-primary" style="color:white">Editar Datos Basicos</a>
-                                <a  href="{{ route('personales.index')}}" class="btn btn-sm btn-warning" style="color:white">Volver</a>
+                            <a href="{{ route('personales.index') }}" class="btn btn-sm btn-warning"
+                                style="color:white">Volver</a>
                         </div>
                     </div>
 
@@ -124,14 +124,14 @@
                             <table class="table table-bordered table-md">
                                 <tbody>
                                     @php
-                                        $contador=0;
+                                        $contador = 0;
                                     @endphp
                                     @foreach ($user->habilidades as $habilidad)
-                                    @php
-                                         $contador+=1;
-                                    @endphp
+                                        @php
+                                            $contador += 1;
+                                        @endphp
                                         <tr>
-                                            <th>Habilidad # {{$contador}}</th>
+                                            <th>Habilidad # {{ $contador }}</th>
                                             <td>{{ $habilidad->habilidad }}</td>
                                         </tr>
                                     @endforeach
@@ -342,12 +342,75 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="card card-user">
+                    <div class="card-header ">
+                        <h4>Vacaciones Asignadas a {{ $user->name }}</h4>
+                        <a data-bs-toggle="collapse" href="#vacaciones" role="button" aria-expanded="false"
+                            aria-controls="collapseExample">
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                    </div>
+                    <div class="collapse" id="vacaciones">
+                        <div class="card-body">
+                            <div class="table-resposive">
+                                <table class="table table-bordered table-md" id="table">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Fecha inicio</th>
+                                        <th>Fecha fin</th>
+                                        <th>Personal asignado</th>
+                                        <th>Funcionario encargado</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($user->vacaciones as $vacacion)
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('vacaciones.show', $vacacion->id) }}"
+                                                        value="{{ $vacacion->id }}">{{ $vacacion->id }} </a>
+                                                </td>
+                                                <td>{{ $vacacion->fecha_inicio }}</td>
+                                                <td>{{ $vacacion->fecha_fin }}</td>
+                                                <td>{{ $vacacion->user->name }} </td>
+                                                <td>{{ $vacacion->detalleVacacion->user->name }} </td>
+                                                {{-- <td>
+                                                    <div class="dropdown" style="position: absolute;">
+                                                        <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu"
+                                                            aria-labelledby="dropdownMenuButton1">
+                                                            <li><a class="dropdown-item "
+                                                                    href="{{ route('vacaciones.edit', $vacacion->id) }}">Editar</a>
+                                                            </li>
+                                                            <li><a href="#" class="dropdown-item"
+                                                                    data-id="{{ $vacacion->id }}"
+                                                                    onclick="deleteItem(this)">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="button-container">
+                                <a class="btn btn-sm btn-primary" href="{{ route('vacaciones.create') }}"
+                                    target="_blank">Asignar Vacaciones</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 </section>
 @endsection
 @section('scripts')
-@if (session('actualizado')=='ok')
+@if (session('actualizado') == 'ok')
     <script>
         iziToast.success({
             title: 'BIEN',

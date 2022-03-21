@@ -21,8 +21,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-         
-            'email', 
+
+            'email',
             'foto',
             'name',
             'apellido',
@@ -36,8 +36,8 @@ class User extends Authenticatable
             'password',
             'estado',
             'sucursal_id',
-            'tipo_usuario_id', 
-        
+            'tipo_usuario_id',
+
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-      
+
     ];
 
     /**
@@ -57,7 +57,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function username()
     {
         return 'email';
@@ -110,5 +110,9 @@ class User extends Authenticatable
     }
     public function vacaciones(){
         return $this->hasMany(Vacacion::class);
+    }
+
+    public function detalles_vacaciones(){
+        return $this->hasMany(DetalleVacacion::class);
     }
 }

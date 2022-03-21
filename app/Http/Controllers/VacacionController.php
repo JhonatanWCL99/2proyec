@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetalleVacacion;
+use App\Models\User;
 use App\Models\Vacacion;
 use Illuminate\Http\Request;
 
@@ -26,7 +28,8 @@ class VacacionController extends Controller
      */
     public function create()
     {
-        //
+        $users=User::all();
+        return view('vacaciones.create',compact('users'));
     }
 
     /**
@@ -37,7 +40,30 @@ class VacacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       /*  dd($request); */
+        $vacacion = new Vacacion();
+        $detalleVacacion = new DetalleVacacion();
+
+        $vacacion->fecha_inicio = $request->get('fecha_inicio');
+        $vacacion->fecha_fin = $request->get('fecha_fin');
+        $vacacion->user_id = $request->get('usuario_solicitante');
+        $vacacion->save();
+
+        if($vacacion->save()){
+            if ($request->hasFile("foto")) {
+                $file = $request->file('foto');
+                $destinationPath = 'img/vacaciones/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+                $detalleVacacion->imagen = $destinationPath . $filename;
+            }
+
+            $detalleVacacion->vacacion_id = $vacacion->id;
+            $detalleVacacion->user_id = $request->get('usuario_encargado');
+            $detalleVacacion->save();
+        }
+
+        return redirect()->route('vacaciones.index');
     }
 
     /**
@@ -48,7 +74,8 @@ class VacacionController extends Controller
      */
     public function show($id)
     {
-        //
+        $vacacion =  Vacacion::find($id);
+        return view('vacaciones.show', ['vacacion'=>$vacacion]);
     }
 
     /**

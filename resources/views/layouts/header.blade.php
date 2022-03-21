@@ -6,14 +6,14 @@
 </form>
 
 <ul class="navbar-nav navbar-right">
-    
+
     @if(\Illuminate\Support\Facades\Auth::user())
     <li class="dropdown dropdown-right">
         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user " >
             <div class="d-sm-none d-lg-inline-block">
                 Hola, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
         </a>
-        
+
         <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-title">
                 {{\Illuminate\Support\Facades\Auth::user()->name}}
@@ -28,7 +28,7 @@
                 {{ csrf_field() }}
             </form>
         </div>
-    </li> 
+    </li>
     @else
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             {{-- <img alt="image" src="#" class="rounded-circle mr-1">--}}
@@ -41,7 +41,7 @@
                 <i class="fas fa-sign-in-alt"></i> {{ __('messages.common.login') }}
             </a>
             <div class="dropdown-divider"></div>
-            <a href="{{ route('register') }}" class="dropdown-item has-icon">
+            <a {{-- href="{{ route('register') }}" --}} class="dropdown-item has-icon">
                 <i class="fas fa-user-plus"></i> {{ __('messages.common.register') }}
             </a>
         </div>

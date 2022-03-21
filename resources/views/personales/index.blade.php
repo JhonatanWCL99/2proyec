@@ -19,12 +19,12 @@
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{ route('personales.create') }}">Nuevo contrato de
                             personal</a>
-                     @can('personales.vencimientoContratos')
-                     <a class="btn btn-info  float-right" href="{{ route('personales.vencimientoContratos') }}">Ver Contratos a Vencer</a>       
-                     @endcan
-                      
-                       
-                        
+                    {{--  @can('personales.vencimientoContratos') --}}
+                     <a class="btn btn-info  float-right" href="{{ route('personales.vencimientoContratos') }}">Ver Contratos a Vencer</a>
+                     {{-- @endcan --}}
+
+
+
                         <br><br>
 
                         <div class="table-responsive">

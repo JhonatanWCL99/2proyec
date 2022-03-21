@@ -15,6 +15,12 @@ class CreateDetallesVacacionesTable extends Migration
     {
         Schema::create('detalles_vacaciones', function (Blueprint $table) {
             $table->id();
+            $table->string('imagen')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('vacacion_id');
+
+            $table->foreign('user_id')->on('users')->references('id');
+            $table->foreign('vacacion_id')->on('vacaciones')->references('id');
             $table->timestamps();
         });
     }

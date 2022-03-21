@@ -34,13 +34,13 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Foto</label>
                                             <input type="file" id="seleccionArchivos" class="form-control " name="foto"
-                                                @if ($usuario->foto != null) value="{{ url($usuario->foto) }}"
-                                                @endif>
+                                                @if ($usuario->foto != null) value="{{ url($usuario->foto) }}" @endif>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="ci">Carnet de Identidad <span class="required">*</span></label>
+                                            <label for="ci">Carnet de Identidad <span
+                                                    class="required">*</span></label>
                                             <input type="text" class="form-control" name="ci"
                                                 value="{{ $usuario->ci }}">
                                         </div>
@@ -96,9 +96,9 @@
                                                 value="{{ $usuario->email }}">
                                         </div>
                                     </div>
-                                    
-                              
-                                    
+
+
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="estado">Estado<span class="required">*</span></label>
@@ -116,35 +116,47 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h2 class="h5">Listado de Roles</h2>
-                                     {!! Form::model($usuario, ['route'=> ['personales.actualizarDatosBasicos', $usuario], 'method'=> 'put']) !!}
-                                    @foreach ($roles as $role )
-                                        <div>
-                                        <label>
-                                            {!!form::checkbox ('roles[]', $role->id, null,['class'=>'mr-1'])!!}
-                                            {{$role->name}}
-                                                </label>
+                                    <div class="row">
+                                        <label for="roles" class="col-sm-2 col-form-label">Roles</label>
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                {{-- <div class="tab-content"> --}}
+                                                <div class="tab-pane active">
+                                                    <br>
+                                                    <table class="table table-bordered table-md">
+                                                        <thead>
+                                                            {!! Form::model($usuario, ['route' => ['personales.actualizarDatosBasicos', $usuario], 'method' => 'put']) !!}
+                                                            @foreach ($roles as $role)
+                                                                <tr>
+                                                                    <th>
+                                                                        <label class="form-check-label">
+                                                                            {!! form::checkbox('roles[]', $role->id, null, ['class' => 'form-check-input']) !!}
+                                                                            {{-- <span class="form-check-sign">
+                                                                                        <span class="check"></span>
+                                                                                    </span> --}}
+                                                                            {{ $role->name }}
+                                                                        </label>
+                                                                        {{-- {!! Form::submit('Asignar Rol', ['class' => 'btn btn-success mt-6']) !!}
+                                                                            {!! Form::close() !!} --}}
+                                                                    </th>
+                                                                </tr>
+                                                            @endforeach
+                                                        </thead>
+                                                    </table>
                                                 </div>
-                                                @endforeach
-                                                
-                                            {!! Form::submit('Asignar Rol', ['class'=>'btn btn-success mt-6']) !!}
-
-                                            {!!Form::close()!!}
-
+                                                {{-- </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
                                     <a href="{{ route('personales.showDetalleContrato', $usuario->id) }}"
                                         class="btn btn-danger" tabindex="8">Cancelar</a>
-                                        
-                                        
-                                        
-                                    
                                 </div>
                                 <br>
                             </form>
-
                         </div>
                     </div>
 

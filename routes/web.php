@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /*Rutas Contrato de Personal */
-Route::group(['middleware' => ['auth']], function () {
+/* Route::group(['middleware' => ['auth']], function () { */
     Route::get('/personales', [App\Http\Controllers\UserController::class, 'index'])->name('personales.index');
     Route::get('/personales/create', [App\Http\Controllers\UserController::class, 'create'])->name('personales.create');
     Route::post('/personales', [App\Http\Controllers\UserController::class, 'contratar'])->name('personales.contratar');
@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'vencimientoContratos'])->name('personales.vencimientoContratos');
     Route::get('/personales/rolesPersonales/{id}', [App\Http\Controllers\UserController::class, 'rolesPersonales'])->name('personales.rolesPersonales');
     Route::post('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'filtrarContratos'])->name('personales.filtrarContratos');
-});
+/* }); */
 
 
 /*Rutas Cargos  */
@@ -188,7 +188,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 /*Rutas vacaciones */
-Route::group(['middleware'=> ['auth']],function(){
+/* Route::group(['middleware'=> ['auth']],function(){ */
     Route::get('/vacaciones', [App\Http\Controllers\VacacionController::class, 'index'])->name('vacaciones.index');
     Route::get('/vacaciones/create', [App\Http\Controllers\VacacionController::class, 'create'])->name('vacaciones.create');
     Route::post('/vacaciones', [App\Http\Controllers\VacacionController::class, 'store'])->name('vacaciones.store');
@@ -196,14 +196,14 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::get('/vacaciones/edit/{id}', [App\Http\Controllers\VacacionController::class, 'edit'])->name('vacaciones.edit');
     Route::post('/vacaciones/{id}', [App\Http\Controllers\VacacionController::class, 'update'])->name('vacaciones.update');
     Route::delete('/vacaciones/{id}', [\App\Http\Controllers\VacacionController::class, 'destroy'])->name('vacaciones.destroy');
-});
+/* }); */
 
     /*Rutas Roles */
-       
+
 Route::group(['middleware'=> ['auth']], function(){
-    
+
     Route::resource('roles', RoleController::class);
-  
+
 });
 
 
