@@ -61,7 +61,7 @@
                                             </td>
                                             <td>{{ $detalleContrato->contrato->tipo_contrato }}</td>
                                             <td>{{ $detalleContrato->fecha_inicio_contrato }}</td>
-                                           
+
                                             <td style="color:#fff; background-color: #c3ebbf;">
                                                 {{ $detalleContrato->fecha_fin_contrato }}</td>
                                             @php
@@ -73,7 +73,6 @@
                                                 
                                             @endphp
                                             <td>
-                                                {{-- {{ $years }} Años {{ $months }} Meses  {{ $days }} Dias --}}
                                                 @if ($years < 0)
                                                     Contrato Vencido
                                                 @else
@@ -102,12 +101,6 @@
 </section>
 @endsection
 @section('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
 @if (session('eliminar') == 'ok')
     <script>
         Swal.fire(
@@ -143,6 +136,7 @@ integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ
         })
     });
 </script>
+
 @section('page_js')
     <script>
         $('#table').DataTable({
@@ -172,12 +166,8 @@ integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ
             },
             columnDefs: [{
                     orderable: false,
-                    targets: 6
+                    targets: 4
                 },
-                {
-                    orderable: false,
-                    targets: 7
-                }
             ]
         });
     </script>

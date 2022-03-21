@@ -155,7 +155,7 @@
                                                                         <input type="text" class="form-control "
                                                                             id="email" name="email"
                                                                             placeholder="Correo Electronico..."
-                                                                            value="{{($correo) }}">
+                                                                            value="{{ $correo }}">
 
                                                                     </div>
                                                                     <div class="form-group col-md-6">
@@ -298,12 +298,25 @@
                                                                             class="form-control @error('fecha_fin_contrato') is-invalid @enderror"
                                                                             id="fecha_fin_contrato"
                                                                             name="fecha_fin_contrato"
-                                                                            value="{{ old('fecha_fin_contrato') }}">
+                                                                            value="{{ old('fecha_fin_contrato') }}"
+                                                                            readonly>
                                                                         @error('fecha_fin_contrato')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="tipo_contrato">TIPO DE
+                                                                            CONTRATO</label>
+                                                                        <select name="contrato_id" id="tipo_contrato"
+                                                                            class="form-control">
+                                                                            @foreach ($contratos as $contrato)
+                                                                                <option value="{{ $contrato->id }}">
+                                                                                    {{ $contrato->tipo_contrato }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label
@@ -313,18 +326,6 @@
                                                                             <option value="am">Am</option>
                                                                             <option value="pm">Pm</option>
                                                                             <option value="ambos">Ambos</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="tipo_contrato">TIPO DE
-                                                                            CONTRATO</label>
-                                                                        <select name="contrato_id" id=""
-                                                                            class="form-control">
-                                                                            @foreach ($contratos as $contrato)
-                                                                                <option value="{{ $contrato->id }}">
-                                                                                    {{ $contrato->tipo_contrato }}
-                                                                                </option>
-                                                                            @endforeach
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">
@@ -386,6 +387,44 @@
 integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+    //
+    const formatearFecha = fecha => {
+        const mes = fecha.getMonth() + 1; // Ya que los meses los cuenta desde el 0
+        const dia = fecha.getDate();
+        return `${fecha.getFullYear()}-${(mes < 10 ? '0' : '').concat(mes)}-${(dia < 10 ? '0' : '').concat(dia)}`;
+    };
+
+    let tipo_contrato = document.getElementById('tipo_contrato');
+    let fecha_fin_contrato = document.getElementById('fecha_fin_contrato');
+    let fecha_inicio_contrato = document.getElementById('fecha_inicio_contrato');
+    tipo_contrato.addEventListener('change', e => {
+
+        let fecha_inicio_parseada = new Date(fecha_inicio_contrato.value);
+        if (tipo_contrato.value == 1) {
+            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setMonth(fecha_inicio_parseada.getMonth() +
+                3));
+            fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+            fecha_fin_contrato.value = fecha_final_formateada;
+        }
+
+        if (tipo_contrato.value == 2) {
+            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada.getFullYear() +
+                1));
+            fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+            fecha_fin_contrato.value = fecha_final_formateada;
+        }
+
+        if (tipo_contrato.value == 3) {
+            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada.getFullYear() +
+                5));
+            fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+            fecha_fin_contrato.value = fecha_final_formateada;
+        }
+
+    });
+
+
+    //
     let agregar_habilidad = document.getElementById('agregar_habilidad');
     let contenido_habilidad = document.getElementById('contenedor_habilidad');
 

@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <h3 class="text-center">Roles Activos en el Sistema</h3>
                             <!--Podemos crear rol con esta directiva-->
-                                <a class="btn btn-warning" href="{{route('roles.create')}}">Nuevo</a>
+                                <a class="btn btn-info" href="{{route('roles.create')}}">Agregar nuevo Rol</a>
                            
 
                             <table class="table table-striped mt-2">

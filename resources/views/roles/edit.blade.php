@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app', ['activePage' => 'roles', 'titlePage' => 'Roles'])
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">EDITAR</h3>
+            <h3 class="page__heading">Editar Role</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -38,7 +38,7 @@
                                      <label for="">Permisos para este Rol</label>
                                 <br/>
                                 @foreach ($permissions as $permission )
-                                <label>{!! Form::checkbox('permissions[]',$permission->id, in_array($permission->id , $rolePermission) true : false, array('class' => 'name')) !!}
+                                <label>{!! Form::checkbox('permissions[]',$permission->id, array($permission->id , $permissions)? true : false, array('class' => 'name')) !!}
                                     {{$permission->name}}
                                 </label>
                                 <br/>
@@ -50,6 +50,7 @@
 
                            </div>
                            <button type="submit" class="btn btn-primary">Guardar</button>
+                           <a class="btn btn-info" href="{{route('roles.index')}}">Volver</a>
 
                         </div>
                         {!! Form::close()!!}

@@ -86,7 +86,7 @@
                                                     class="required">*</span></label>
                                             <input type="date"
                                                 class="form-control  @error('fecha_inicio_contrato') is-invalid @enderror"
-                                                name="fecha_inicio_contrato">
+                                                name="fecha_inicio_contrato" id="fecha_inicio_contrato">
                                             @error('fecha_inicio_contrato')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -100,12 +100,28 @@
                                                     class="required">*</span></label>
                                             <input type="date"
                                                 class="form-control  @error('fecha_fin_contrato') is-invalid @enderror"
-                                                name="fecha_fin_contrato">
+                                                name="fecha_fin_contrato" id="fecha_fin_contrato" readonly>
                                             @error('fecha_fin_contrato')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="contrato_id">Seleccione el Tipo de Contrato<span
+                                                    class="required">*</span></label>
+                                            <div class="selectric-hide-select">
+                                                <select name="contrato_id" id="tipo_contrato" class="form-control selectric">
+
+                                                    @foreach ($contratos as $contrato)
+                                                        <option value="{{ $contrato->id }}">
+                                                            {{ $contrato->tipo_contrato }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -124,22 +140,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="contrato_id">Seleccione el Tipo de Contrato<span
-                                                    class="required">*</span></label>
-                                            <div class="selectric-hide-select">
-                                                <select name="contrato_id" class="form-control selectric">
 
-                                                    @foreach ($contratos as $contrato)
-                                                        <option value="{{ $contrato->id }}">
-                                                            {{ $contrato->tipo_contrato }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -157,4 +158,43 @@
         </div>
 
     </section>
+    <script>
+        //
+        const formatearFecha = fecha => {
+            const mes = fecha.getMonth() + 1; // Ya que los meses los cuenta desde el 0
+            const dia = fecha.getDate();
+            return `${fecha.getFullYear()}-${(mes < 10 ? '0' : '').concat(mes)}-${(dia < 10 ? '0' : '').concat(dia)}`;
+        };
+
+        let tipo_contrato = document.getElementById('tipo_contrato');
+        let fecha_fin_contrato = document.getElementById('fecha_fin_contrato');
+        let fecha_inicio_contrato = document.getElementById('fecha_inicio_contrato');
+        tipo_contrato.addEventListener('change', e => {
+
+            let fecha_inicio_parseada = new Date(fecha_inicio_contrato.value);
+            if (tipo_contrato.value == 1) {
+                let nueva_fecha_fin = new Date(fecha_inicio_parseada.setMonth(fecha_inicio_parseada.getMonth() +
+                    3));
+                fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+                fecha_fin_contrato.value = fecha_final_formateada;
+            }
+
+            if (tipo_contrato.value == 2) {
+                let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada
+                    .getFullYear() +
+                    1));
+                fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+                fecha_fin_contrato.value = fecha_final_formateada;
+            }
+
+            if (tipo_contrato.value == 3) {
+                let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada
+                    .getFullYear() +
+                    5));
+                fecha_final_formateada = formatearFecha(nueva_fecha_fin);
+                fecha_fin_contrato.value = fecha_final_formateada;
+            }
+
+        });
+    </script>
 @endsection

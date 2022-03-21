@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Nuevo Proveedor</h3>
+            <h3 class="page__heading">Nueva Vacacion</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
-                                        <a class="btn btn-danger" href="{{ route('proveedores.index') }}">Volver</a>
+                                        <a class="btn btn-danger" href="{{ route('vacaciones.index') }}">Volver</a>
                                     </div>
                                     <br>
                                 </form>

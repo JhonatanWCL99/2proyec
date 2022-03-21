@@ -41,7 +41,7 @@ class RoleController extends Controller
     {
         $this->validate($request, ['name'=> 'required', 'permissions'=>'required']);
         $role= Role::create(['name'=> $request->input('name')]);
-        $role->syncPermission($request->input('permissions'));
+        $role->syncPermissions($request->input('permissions'));
 
         return redirect()->route('roles.index');
     }
@@ -65,7 +65,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-       $permissions= Permission::all();
+       $permissions= Permission::all()->pluck('name', 'id');
+       $role->load('permissions');
        return view('roles.edit', compact('permissions','role'));
     }
 

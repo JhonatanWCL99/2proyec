@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 /*Rutas vacaciones */
+
 /* Route::group(['middleware'=> ['auth']],function(){ */
     Route::get('/vacaciones', [App\Http\Controllers\VacacionController::class, 'index'])->name('vacaciones.index');
     Route::get('/vacaciones/create', [App\Http\Controllers\VacacionController::class, 'create'])->name('vacaciones.create');
@@ -200,7 +201,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*Rutas Roles */
 
-Route::group(['middleware'=> ['auth']], function(){
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
 
     Route::resource('roles', RoleController::class);
 
