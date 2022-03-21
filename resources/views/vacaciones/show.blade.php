@@ -6,7 +6,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Vista detallada de la sanción</h3>
+        <h3 class="page__heading">Vista detallada de la Vacacion</h3>
     </div>
     <div class="section-body">
         <div class="row">

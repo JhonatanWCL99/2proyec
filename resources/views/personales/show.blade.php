@@ -367,7 +367,7 @@
                                             <tr>
                                                 <td>
                                                     <a href="{{ route('vacaciones.show', $vacacion->id) }}"
-                                                        value="{{ $vacacion->id }}">{{ $vacacion->id }} </a>
+                                                        value="{{ $vacacion->id }}" target="_blank">{{ $vacacion->id }}  </a>
                                                 </td>
                                                 <td>{{ $vacacion->fecha_inicio }}</td>
                                                 <td>{{ $vacacion->fecha_fin }}</td>
