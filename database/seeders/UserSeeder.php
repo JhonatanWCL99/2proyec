@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'estado' => 1,
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ]);
+        ])->assignRole('Super Admin');
 
         User::Create([
             'email' => 'migurlgarron@gmail.com',
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'estado' => 1,
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ]);
+        ])->assignRole('Super Admin');
 
 
         User::Create([
@@ -89,6 +89,6 @@ class UserSeeder extends Seeder
             'estado' => 1,
             'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ]);
+        ])->assignRole('Super Admin');
     }
 }

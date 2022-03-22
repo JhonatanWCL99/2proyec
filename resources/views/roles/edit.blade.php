@@ -23,32 +23,22 @@
 
                            @endif
 
-                           {!! Form::model($role,['method'=>'PUT','route'=> ['roles.update', $role->id]])!!}
-                           <div class="row">
-                               <div class="col-xs-12 col-sm-12 col-md-12">
-                                   <div class="form-group">
-                                        <label for="name">Nombre del rol</label>
-                                        {!! Form::text('name',null,array('class'=> 'form-control')) !!}
-                                   </div>
-
-
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                           {!! Form::model($role, ['route'=>['roles.update',$role],'method'=>'put']) !!}
                                 <div class="form-group">
-                                     <label for="">Permisos para este Rol</label>
-                                <br/>
-                                @foreach ($permissions as $permission )
-                                <label>{!! Form::checkbox('permissions[]',$permission->id, array($permission->id , $permissions)? true : false, array('class' => 'name')) !!}
-                                    {{$permission->name}}
-                                </label>
-                                <br/>
-                                @endforeach
-
+                                    {!! Form::label('name', 'nombre') !!}
+                                    {!! Form::text('name',null, ['class'=>'form-control','placeholder'=>'Ingrese el nombre del rol']) !!}
                                 </div>
-                            </div>
 
+                            <h2 class="h3">Lista de Permisos</h2>
+                            @foreach ($permissions as $permission)
+                                    <div>
+                                        <label >
+                                            {!! Form::checkbox('permissions[]', $permission->id, null, ['class'=>'mr-1']) !!}
+                                            {{$permission->description}}
+                                        </label>
+                                    </div>
+                            @endforeach
 
-                           </div>
                            <button type="submit" class="btn btn-primary">Guardar</button>
                            <a class="btn btn-info" href="{{route('roles.index')}}">Volver</a>
 

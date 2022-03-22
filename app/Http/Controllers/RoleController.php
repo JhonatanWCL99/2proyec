@@ -65,8 +65,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-       $permissions= Permission::all()->pluck('name', 'id');
-       $role->load('permissions');
+       $permissions= Permission::all();
+
        return view('roles.edit', compact('permissions','role'));
     }
 
@@ -77,15 +77,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $this->validate($request, ['name'=> 'required', 'permission'=>'required']);
-        $role= Role::find($id);
-        $role->name= $request->input('name');
-        $role->save();
+        $request->validate(['name'=> 'required']);
 
-        $role->asyncPermissions($request->input('permission'));
-        return redirect()->route('roles.index');
+        $role->update($request->all());
+        $role->permissions()->sync($request->permissions);
+
+        return redirect()->route('roles.index',$role)->with('Se creó con exito');
 
     }
 

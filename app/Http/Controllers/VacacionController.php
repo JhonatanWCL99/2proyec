@@ -109,6 +109,6 @@ class VacacionController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        
+    }   
 }

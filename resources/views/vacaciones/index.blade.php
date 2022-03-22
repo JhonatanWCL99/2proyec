@@ -38,17 +38,18 @@
                                             <td>{{ $vacacion->detalleVacacion->user->name }} </td>
                                             <td>
                                                 <div class="dropdown" style="position: absolute;">
-                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item "
-                                                                href="{{ route('vacaciones.edit', $vacacion->id) }}">Editar</a>
+                                                        <li><a class="dropdown-item" href="{{ route('vacaciones.edit', $vacacion->id) }}">Editar</a></li>
+                                                        <li>
+                                                            <form action="{{route('vacaciones.destroy',$vacacion->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
+                                                                @csrf
+                                                                @method('Delete')
+                                                                <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
+                                                            </form>
                                                         </li>
-                                                        <li><a href="#" class="dropdown-item"
-                                                                data-id="{{ $vacacion->id }}"
-                                                                onclick="deleteItem(this)">Eliminar</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

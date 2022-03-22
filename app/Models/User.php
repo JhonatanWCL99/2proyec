@@ -115,4 +115,8 @@ class User extends Authenticatable
     public function detalles_vacaciones(){
         return $this->hasMany(DetalleVacacion::class);
     }
+
+    public function salidas(){
+        return $this->hasMany(Salida::class);
+    }
 }

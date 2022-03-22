@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\VacacionController;
 use App\Models\Sucursal;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ return view('reporteproducto');
 Route::post('/auth/find', [App\Http\Controllers\LoginManualController::class, 'authenticate'])->name('auth.find');
 
 /*Rutas Proveedores */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/proveedores', [App\Http\Controllers\ProveedorController::class, 'index'])->name('proveedores.index');
     Route::get('/proveedores/create', [App\Http\Controllers\ProveedorController::class, 'create'])->name('proveedores.create');
     Route::post('/proveedores', [App\Http\Controllers\ProveedorController::class, 'store'])->name('proveedores.store');
@@ -48,7 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /*Rutas Productos */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'index'])->name('productos.index');
     Route::get('/productos/create', [App\Http\Controllers\ProductoController::class, 'create'])->name('productos.create');
     Route::post('/productos', [App\Http\Controllers\ProductoController::class, 'store'])->name('productos.store');
@@ -58,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/productos/show/{id}', [App\Http\Controllers\ProductoController::class, 'show'])->name('productos.show');
 });
 /* Rutas Sucursales*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/sucursales', [App\Http\Controllers\SucursalController::class, 'index'])->name('sucursales.index');
     Route::get('/sucursales/create', [App\Http\Controllers\SucursalController::class, 'create'])->name('sucursales.create');
     Route::post('/sucursales', [App\Http\Controllers\SucursalController::class, 'store'])->name('sucursales.store');
@@ -69,7 +70,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /* Rutas Categorias*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categorias.index');
     Route::get('/categorias/create', [App\Http\Controllers\CategoriaController::class, 'create'])->name('categorias.create');
     Route::post('/categorias', [App\Http\Controllers\CategoriaController::class, 'store'])->name('categorias.store');
@@ -80,14 +81,14 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /*Rutas Producto Proveedor */
-Route::group(['middleware'=> ['auth']],function(){
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/productos_proveedores', [App\Http\Controllers\ProductoProveedorController::class, 'index'])->name('productos_proveedores.index');
     Route::get('/productos_proveedores/create', [App\Http\Controllers\ProductoProveedorController::class, 'create'])->name('productos_proveedores.create');
     Route::post('/productos_proveedores', [App\Http\Controllers\ProductoProveedorController::class, 'store'])->name('productos_proveedores.store');
 });
 
 /*Rutas Inventario*/
-Route::group(['middleware'=> ['auth']],function(){
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/inventarios', [App\Http\Controllers\InventarioController::class, 'index'])->name('inventarios.index');
     Route::get('/inventarios/create', [App\Http\Controllers\InventarioController::class, 'create'])->name('inventarios.create');
     Route::post('/inventarios', [App\Http\Controllers\InventarioController::class, 'store'])->name('inventarios.store');
@@ -101,7 +102,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
 
 /* Rutas Contratos*/
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/contratos', [App\Http\Controllers\ContratoController::class, 'index'])->name('contratos.index');
     Route::get('/contratos/create', [App\Http\Controllers\ContratoController::class, 'create'])->name('contratos.create');
     Route::post('/contratos', [App\Http\Controllers\ContratoController::class, 'store'])->name('contratos.store');
@@ -112,7 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /*Rutas Departamentos */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/departamentos', [App\Http\Controllers\DepartamentoController::class, 'index'])->name('departamentos.index');
     Route::get('/departamentos/create', [App\Http\Controllers\DepartamentoController::class, 'create'])->name('departamentos.create');
     Route::post('/departamentos', [App\Http\Controllers\DepartamentoController::class, 'store'])->name('departamentos.store');
@@ -135,11 +136,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'vencimientoContratos'])->name('personales.vencimientoContratos');
     Route::get('/personales/rolesPersonales/{id}', [App\Http\Controllers\UserController::class, 'rolesPersonales'])->name('personales.rolesPersonales');
     Route::post('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'filtrarContratos'])->name('personales.filtrarContratos');
+    Route::get('/personales/retiroForm/{id}', [App\Http\Controllers\UserController::class, 'retiroForm'])->name('personales.retiroForm');
 /* }); */
 
 
 /*Rutas Cargos  */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/cargos', [App\Http\Controllers\CargoController::class, 'index'])->name('cargos.index');
     Route::get('/cargos/edit/{id}', [App\Http\Controllers\CargoController::class, 'edit'])->name('cargos.edit');
     Route::get('/cargos/create', [App\Http\Controllers\CargoController::class, 'create'])->name('cargos.create');
@@ -148,7 +150,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 /*Rutas Sanciones  */
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/sanciones', [App\Http\Controllers\SancionesController::class, 'index'])->name('sanciones.index');
     Route::get('/sanciones/create', [App\Http\Controllers\SancionesController::class, 'create'])->name('sanciones.create');
     Route::post('/sanciones', [App\Http\Controllers\SancionesController::class, 'store'])->name('sanciones.store');
@@ -158,7 +160,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/sanciones/{id}', [\App\Http\Controllers\SancionesController::class, 'destroy'])->name('sanciones.destroy');
 });
 /*Ruta Horarios */
-
+Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/horarios', [App\Http\Controllers\HorarioController::class, 'index'])->name('horarios.index');
     Route::get('/horarios/create', [App\Http\Controllers\HorarioController::class, 'create'])->name('horarios.create');
     Route::post('/horarios', [App\Http\Controllers\HorarioController::class, 'store'])->name('horarios.store');
@@ -168,9 +170,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
    /*  Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios'); */
     Route::post('/planillaHorarios', [App\Http\Controllers\HorarioController::class, 'obtenerFuncionarios'])->name('horarios.obtenerFuncionarios');
-
+});
     /*Rutas Bonos */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
         Route::get('/bonos', [App\Http\Controllers\BonoController::class, 'index'])->name('bonos.index');
         Route::get('/bonos/create', [App\Http\Controllers\BonoController::class, 'create'])->name('bonos.create');
         Route::post('/bonos', [App\Http\Controllers\BonoController::class, 'store'])->name('bonos.store');
@@ -179,25 +181,19 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     /*Rutas descuentos */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
         Route::get('/descuentos', [App\Http\Controllers\DescuentoController::class, 'index'])->name('descuentos.index');
         Route::get('/descuentos/create', [App\Http\Controllers\DescuentoController::class, 'create'])->name('descuentos.create');
-         Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
-         Route::get('/descuentos/show/{id}', [App\Http\Controllers\DescuentoController::class, 'show'])->name('descuentos.show');
-         Route::delete('/descuentos/{id}', [\App\Http\Controllers\DescuentoController::class, 'destroy'])->name('descuentos.destroy');
+        Route::post('/descuentos', [App\Http\Controllers\DescuentoController::class, 'store'])->name('descuentos.store');
+        Route::get('/descuentos/show/{id}', [App\Http\Controllers\DescuentoController::class, 'show'])->name('descuentos.show');
+        Route::delete('/descuentos/{id}', [\App\Http\Controllers\DescuentoController::class, 'destroy'])->name('descuentos.destroy');
 
     });
 /*Rutas vacaciones */
 
-/* Route::group(['middleware'=> ['auth']],function(){ */
-    Route::get('/vacaciones', [App\Http\Controllers\VacacionController::class, 'index'])->name('vacaciones.index');
-    Route::get('/vacaciones/create', [App\Http\Controllers\VacacionController::class, 'create'])->name('vacaciones.create');
-    Route::post('/vacaciones', [App\Http\Controllers\VacacionController::class, 'store'])->name('vacaciones.store');
-    Route::get('/vacaciones/show/{id}', [App\Http\Controllers\VacacionController::class, 'show'])->name('vacaciones.show');
-    Route::get('/vacaciones/edit/{id}', [App\Http\Controllers\VacacionController::class, 'edit'])->name('vacaciones.edit');
-    Route::post('/vacaciones/{id}', [App\Http\Controllers\VacacionController::class, 'update'])->name('vacaciones.update');
-    Route::delete('/vacaciones/{id}', [\App\Http\Controllers\VacacionController::class, 'destroy'])->name('vacaciones.destroy');
-/* }); */
+ Route::group(['middleware'=> ['auth']],function(){ 
+    Route::resource('vacaciones', VacacionController::class);
+ }); 
 
     /*Rutas Roles */
 

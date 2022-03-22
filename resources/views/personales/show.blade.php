@@ -91,19 +91,7 @@
                                         <td>{!! $user->email !!}</td>
                                     </tr> --}}
 
-                                    <tr>
-                                        <th>Estado Usuario</th>
-                                        @if ($user->estado == 1)
-                                            <td>
-                                                <div class="badge badge-success">Activo</div>
-                                            </td>
-                                        @endif
-                                        @if ($user->estado == 0)
-                                            <td>
-                                                <div class="badge badge-danger">Inactivo</div>
-                                            </td>
-                                        @endif
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -112,6 +100,45 @@
                             <button class="btn btn-sm btn-primary">Actualizar Datos de la Empresas</button>
                         </div>
                     </div> --}}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Estado de {{$user->name}} en la Empresa</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-md">
+                                <tbody>
+                                    <tr>
+                                        <th>Estado del Usuario</th>
+                                        @if ($user->estado == 1)
+                                            <td>
+                                                <div class="badge badge-success">Activo</div>
+                                            </td>
+                                        @endif
+                                        @if ($user->estado == 0)
+                                            <td>
+                                                <div class="badge badge-danger">Inactivo</div>
+                                        @endif
+                                    </tr>
+                                    @if ($user->estado == 0)
+                                        <tr>
+                                            <th>Motivo</th>
+                                            <td>
+                                                Despido
+                                                <a class="float-right"
+                                                    href="{{ route('personales.editContratoUser', $user->id) }}">Ver
+                                                    Justificativo</a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-primary" href="{{route('personales.retiroForm',$user->id)}}">Agregar un Nuevo Retiro</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -145,6 +172,7 @@
                     </div> --}}
                     </div>
                 </div>
+
             </div>
             <div class="col-md-6">
                 <div class="card card-user">
@@ -367,7 +395,8 @@
                                             <tr>
                                                 <td>
                                                     <a href="{{ route('vacaciones.show', $vacacion->id) }}"
-                                                        value="{{ $vacacion->id }}" target="_blank">{{ $vacacion->id }}  </a>
+                                                        value="{{ $vacacion->id }}"
+                                                        target="_blank">{{ $vacacion->id }} </a>
                                                 </td>
                                                 <td>{{ $vacacion->fecha_inicio }}</td>
                                                 <td>{{ $vacacion->fecha_fin }}</td>

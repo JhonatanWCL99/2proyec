@@ -9,6 +9,7 @@ use App\Models\Habilidad;
 use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use App\Models\User;
+use COM;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -213,5 +214,14 @@ class UserController extends Controller
         $roles = Role::all();
         $usuario = User::find($id);
        return redirect()->route('personales.rolesPersonales', compact('usuario','roles'));
+    }
+
+    public function retiroForm($id){
+        $user = User::find($id);
+        return view('personales.retiroForm',compact('user'));
+    }
+
+    public function saveFormRetiro(){
+
     }
 }
