@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\VacacionController;
 use App\Models\Sucursal;
@@ -137,6 +138,7 @@ Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::get('/personales/rolesPersonales/{id}', [App\Http\Controllers\UserController::class, 'rolesPersonales'])->name('personales.rolesPersonales');
     Route::post('/personales/vencimientoContratos', [App\Http\Controllers\UserController::class, 'filtrarContratos'])->name('personales.filtrarContratos');
     Route::get('/personales/retiroForm/{id}', [App\Http\Controllers\UserController::class, 'retiroForm'])->name('personales.retiroForm');
+    Route::post('/personales/retiroForm', [App\Http\Controllers\UserController::class, 'retiroFormSave'])->name('personales.retiroFormSave');
 /* }); */
 
 
@@ -201,6 +203,10 @@ Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
 
     Route::resource('roles', RoleController::class);
 
+});
+
+Route::group(['middleware'=> ['auth']], function(){
+    Route::resource('compras',CompraController::class);
 });
 
 

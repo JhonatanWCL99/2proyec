@@ -30,6 +30,10 @@ class Sucursal extends Model
     public function Horario(){
         return $this->hasMany(Horario::class);
     }
+
+    public function compras(){
+        return $this->hasMany(Compra::class);
+    }
    
    
 }

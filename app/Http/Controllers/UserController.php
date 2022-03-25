@@ -221,7 +221,7 @@ class UserController extends Controller
         return view('personales.retiroForm',compact('user'));
     }
 
-    public function saveFormRetiro(){
-
+    public function retiroFormSave(Request $request){
+        dd($request);
     }
 }

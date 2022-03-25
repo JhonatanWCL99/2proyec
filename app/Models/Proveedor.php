@@ -14,4 +14,8 @@ class Proveedor extends Model
     public function productos_proveedores(){
         return $this->hasMany(Producto_Proveedor::class); 
     }
+
+    public function compras(){
+        return $this->hasMany(Compra::class);
+    }
 }

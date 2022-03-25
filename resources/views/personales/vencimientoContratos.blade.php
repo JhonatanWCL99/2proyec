@@ -62,7 +62,7 @@
                                             <td>{{ $detalleContrato->contrato->tipo_contrato }}</td>
                                             <td>{{ $detalleContrato->fecha_inicio_contrato }}</td>
 
-                                            <td style="color:#fff; background-color: #c3ebbf;">
+                                            <td style="color:black; background-color: #B9C86D;">
                                                 {{ $detalleContrato->fecha_fin_contrato }}</td>
                                             @php
                                                 $fechaActual = date('Y-m-d');

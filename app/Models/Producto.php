@@ -18,4 +18,8 @@ class Producto extends Model
     public function productos_proveedores(){
         return $this->hasMany(Producto_Proveedor::class); //No me reconoce el Model producto_proveedor
     }
+
+    public function detalleCompra(){
+        return $this->belongsTo(DetalleCompra::class);
+    }
 }

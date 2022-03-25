@@ -17,7 +17,7 @@
                                         height="130" />
                                 </div>
                                 <br>
-                                <form action="{{ route('vacaciones.store') }}" method="POST" class="form-horizontal"
+                                <form action="{{ route('personales.retiroFormSave') }}" method="POST" class="form-horizontal"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row ">
