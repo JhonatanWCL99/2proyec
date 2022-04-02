@@ -43,11 +43,11 @@
             @endcan
 
         </ul>
-    </li>  
+    </li>
     <li class="dropdown">
         <a href="" class="nav-link has-dropdown"><i class="fas fa-shopping-bag"></i> <span> Compras</span></a>
         <ul class="dropdown-menu">
-          <li class="nav-item"> <a href="{{ route('compras.index') }}">Compra</a> </li>
+            <li class="nav-item"> <a href="{{ route('compras.index') }}">Compra</a> </li>
         </ul>
 
     </li>
@@ -89,6 +89,10 @@
                         href="{{ route('sanciones.index') }}">Sanciones</a></li>
                 <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link"
                         href="{{ route('vacaciones.index') }}">Vacaciones</a></li>
+                <li class="nav-item{{ $activePage == 'cronologias' ? ' active' : '' }}"><a class="nav-link"
+                        href="{{ route('cronologias.index') }}">Cronologias</a></li>
+                <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link"
+                        href="{{ route('observaciones.index') }}">Observaciones</a></li>
             @endrole
 
             <li class="nav-item{{ $activePage == 'personales' ? ' active' : '' }}"><a class="nav-link "

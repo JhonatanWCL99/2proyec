@@ -3,6 +3,8 @@
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\VacacionController;
+use App\Http\Controllers\CronologiaController;
+use App\Http\Controllers\ObservacionController;
 use App\Models\Sucursal;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -207,6 +209,14 @@ Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
 
 Route::group(['middleware'=> ['auth']], function(){
     Route::resource('compras',CompraController::class);
+});
+
+Route::group(['middleware'=> ['auth']], function(){
+    Route::resource('cronologias',CronologiaController::class);
+});
+
+Route::group(['middleware'=> ['auth']], function(){
+    Route::resource('observaciones',ObservacionController::class);
 });
 
 

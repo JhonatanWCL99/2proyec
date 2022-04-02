@@ -124,4 +124,12 @@ class User extends Authenticatable
         return $this->hasMany(Compra::class);
     }
 
+    public function cronologias(){
+        return $this->hasMany(Crologia::class);
+    }
+
+    public function observaciones(){
+        return $this->hasMany(Observacion::class);
+    }
+
 }
