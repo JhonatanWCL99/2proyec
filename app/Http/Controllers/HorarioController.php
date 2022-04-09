@@ -33,16 +33,11 @@ class HorarioController extends Controller
     {
         $usuarios = User::all();
         $sucursales = Sucursal::all();
-        $fecha = Carbon::now();
-        $hora_ent = Carbon::now();
-        $hora_sal = '21:30:45';
-        $horas_trab = $hora_ent->diffInHours($hora_sal);
-        $total_pagar = $horas_trab * 12;
-        return view('horarios.create')->with('usuarios', $usuarios)->with('sucursales', $sucursales)->with('fecha', $fecha)->with('hora_ent', $hora_ent)->with('hora_sal', $hora_sal)->with('horas_trab', $horas_trab)->with('total_pagar', $total_pagar);
+        return view('horarios.create')->with('usuarios', $usuarios)->with('sucursales', $sucursales);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -50,22 +45,25 @@ class HorarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fecha' => 'required',
+        
             'hora_ingreso' => 'required',
-            'hora_entrada' => 'required',
+            'hora_salida_fija' => 'required',
         ]);
 
         $horarios = new Horario();
-        $horarios->fecha = $request->get('fecha');
+        $horarios->fecha = Carbon::now();
         $horarios->hora_ingreso = $request->get('hora_ingreso');
+        $horarios->hora_salida_fija = $request->get('hora_salida_fija');
+
         $horarios->hora_entrada = $request->get('hora_entrada');
         $horarios->hora_salida = $request->get('hora_salida');
         $horarios->horas_trabajadas = $request->get('horas_trabajadas');
-        $horarios->total_pagar = $request->get('total_pagar');
+        $horarios->turno= $request->get('turno');
+    
         $horarios->user_id = $request->get('user_id');
         $horarios->sucursal_id = $request->get('sucursal_id');
 
-
+    
 
         $horarios->save();
 
@@ -117,12 +115,19 @@ class HorarioController extends Controller
         //
     }
 
-    public function reporteHorario()
+    public function reporteHorario(Request $request)
     {
-
+        $horarios = Horario::all();
         $usuarios = User::all();
         $sucursales = Sucursal::all();
-        return view('horarios.reporteHorario')->with('usuarios', $usuarios)->with('sucursales', $sucursales);
+        $fecha = Carbon::now();
+        $hora_ent = Carbon::now();
+        $hora_sal = '16:45:45';
+        $horas_trab = $hora_ent->diffInHours($hora_sal);
+        $total_pagar = $horas_trab * 9;
+
+        return view('horarios.reporteHorario')->with('usuarios', $usuarios)->with('sucursales', $sucursales)->with('fecha', $fecha)->with('hora_ent', $hora_ent)->with('hora_sal', $hora_sal)->with('horas_trab', $horas_trab)->with('total_pagar', $total_pagar)->with('horarios',$horarios);
+       
     }
 
     public function funcionarios(Request $request)
@@ -145,7 +150,7 @@ class HorarioController extends Controller
     }
 
     public function planillaHorarios()
-    {
+{
         $sucursales = Sucursal::all();
         $cargos_sucursales = CargoSucursal::all();
         /*  $cargo_sucursal=CargoSucursal::find(1); */

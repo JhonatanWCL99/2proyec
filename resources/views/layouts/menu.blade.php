@@ -17,6 +17,10 @@
             <a href="{{ route('roles.index') }}"><i class="fa fa-user-lock f-left titulo"></i><span
                     class="titulo">Roles</span></a>
         @endrole
+        
+            <a href="{{ route('horarios.create') }}"><i class="fa fa-user-circle"></i><span
+                    class="titulo">Marcar Asistencia</span></a>
+       
 
     </li>
 
@@ -84,11 +88,14 @@
                 <li class="nav-item{{ $activePage == 'descuentos' ? ' active' : '' }}"><a class="nav-link"
                         href="{{ route('descuentos.index') }}">Descuentos</a></li>
                 <li class="nav-item{{ $activePage == 'horarios' ? ' active' : '' }}"><a class="nav-link"
-                        href="{{ route('horarios.index') }}">Costo Mano de Obra</a></li>
+                        href="{{ route('horarios.index') }}">Horario Personal</a></li>  
+                <li class="nav-item{{ $activePage == 'manoObra' ? ' active' : '' }}"><a class="nav-link"
+                        href="{{ route('horarios.store') }}">Costo Mano de Obra</a></li>
                 <li class="nav-item{{ $activePage == 'sanciones' ? ' active' : '' }}"><a class="nav-link"
                         href="{{ route('sanciones.index') }}">Sanciones</a></li>
                 <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link"
                         href="{{ route('vacaciones.index') }}">Vacaciones</a></li>
+                    
                 <li class="nav-item{{ $activePage == 'cronologias' ? ' active' : '' }}"><a class="nav-link"
                         href="{{ route('cronologias.index') }}">Cronologias</a></li>
                 <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link"

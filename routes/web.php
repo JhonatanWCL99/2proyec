@@ -31,9 +31,9 @@ Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-/*Route::get('reporteproducto', function(){
-return view('reporteproducto');
-});*/
+Route::get('marcado_asistencia', function(){
+return view('marcado_asistencia');
+});
 
 
 
@@ -170,7 +170,8 @@ Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
     Route::post('/horarios', [App\Http\Controllers\HorarioController::class, 'store'])->name('horarios.store');
     Route::post('/horarios/create', [App\Http\Controllers\HorarioController::class, 'obtenerSucursal'])->name('horarios.obtenerSucursal');
     Route::post('/funcionarios', [App\Http\Controllers\HorarioController::class, 'funcionarios'])->name('sucursal.funcionarios');
-    Route::get('/reporteHorario', [App\Http\Controllers\HorarioController::class, 'reporteHorario'])->name('horarios.reporteHorario');
+
+    Route::get('horarios/reporteHorario', [App\Http\Controllers\HorarioController::class, 'reporteHorario'])->name('horarios.reporteHorario');
     Route::get('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
    /*  Route::post('/planillaHorarios',[App\Http\Controllers\HorarioController::class, 'cargarHorarios'])->name('horarios.cargarHorarios'); */
     Route::post('/planillaHorarios', [App\Http\Controllers\HorarioController::class, 'obtenerFuncionarios'])->name('horarios.obtenerFuncionarios');

@@ -8,30 +8,34 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Costo Mano de Obra</h3>
+        <h3 class="page__heading">Horario Fijo del Personal</h3>
 
     </div>
+    
     <div class="section-body">
         <div class="row">
+            
+       
             <div class="col-lg-12">
+                
                 <div class="card">
-
+                        
                     <div class="card-body">
-
+                    <a class="btn btn-info  float-left" href="{{ route('horarios.reporteHorario') }}">Reporte de Asistencias</a> 
+                    <br>
+               
+ 
                     <div class="table-responsive">
+                    
                             <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
 
-                                    <th style="color: #fff;">Encargado</th>
+                                    <th style="color: #fff;">Usuario</th>
                                     <th style="color: #fff;">Sucursal</th>
-                                    <th style="color: #fff;">Fecha</th>
-
-                                    <th style="color: #fff;">Hora Ingreso</th>
-                                    <th style="color: #fff;">Horario Entrada</th>
-                                    <th style="color: #fff;">Horario Salida</th>
-
-                                    <th style="color: #fff;">Horas Trabajadas</th>
-                                    <th style="color: #fff;">Total a Pagar</th>
+                                    <th style="color: #fff;">Hora Ingreso Fija</th>
+                                    <th style="color: #fff;">Horario Salida Fija</th>
+                                    <th style="color: #fff;">Turno</th>
+                                  
 
                                     <th style="color: #fff;"></th>
                                     <!-- <th style="color: #fff;"></th> -->
@@ -40,16 +44,11 @@
                                 <tbody>
                                     @foreach ($horarios as $horario)
                                     <tr>
-                                        <td>{{$horario->Sucursal->nombre}}</td>
                                         <td>{{$horario->User->name}}</td>
-                                      <td>{{$horario->fecha}}</td>
+                                        <td>{{$horario->Sucursal->nombre}}</td>
                                         <td>{{$horario->hora_ingreso}}</td>
-                                        <td>{{$horario->hora_entrada}}</td>
-                                        <td>{{$horario->hora_salida}}</td>
-                                        <td>
-                                        {{$horario->horas_trabajadas}}
-                                        </td>
-                                        <td>{{$horario->total_pagar}}</td>
+                                        <td>{{$horario->hora_salida_fija}}</td>
+                                        <td>{{$horario->turno}}</td>
 
                                         <td>
                                         <div class="dropdown" style="position: absolute;" >

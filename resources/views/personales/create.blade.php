@@ -408,14 +408,16 @@ integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZD
         }
 
         if (tipo_contrato.value == 2) {
-            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada.getFullYear() +
+            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada
+            .getFullYear() +
                 1));
             fecha_final_formateada = formatearFecha(nueva_fecha_fin);
             fecha_fin_contrato.value = fecha_final_formateada;
         }
 
         if (tipo_contrato.value == 3) {
-            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada.getFullYear() +
+            let nueva_fecha_fin = new Date(fecha_inicio_parseada.setFullYear(fecha_inicio_parseada
+            .getFullYear() +
                 5));
             fecha_final_formateada = formatearFecha(nueva_fecha_fin);
             fecha_fin_contrato.value = fecha_final_formateada;
