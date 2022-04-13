@@ -56,6 +56,7 @@ class ProductoProveedorController extends Controller
         $producto_proveedor->producto_id =$request->get('producto_id');
         $producto_proveedor->proveedor_id =$request->get('proveedor_id');
         $producto_proveedor->sucursal_id =$request->get('sucursal_id');
+        $producto_proveedor->fecha =$request->get('fecha');
     
         $producto_proveedor->save();
        

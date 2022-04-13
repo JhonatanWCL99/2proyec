@@ -210,6 +210,7 @@ Route::group(['middleware'=> ['auth','role:Super Admin']], function(){
 
 Route::group(['middleware'=> ['auth']], function(){
     Route::resource('compras',CompraController::class);
+    Route::post('compras/create',[CompraController::class,'obtenerProductos'])->name('compras.obtenerproductos');
 });
 
 Route::group(['middleware'=> ['auth']], function(){
