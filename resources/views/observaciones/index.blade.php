@@ -1,60 +1,58 @@
-@extends('layouts.app', ['activePage' => 'cronologias', 'titlePage' => 'Cronologias'])
-
+@extends('layouts.app', ['activePage' => 'observaciones', 'titlePage' => 'Observaciones'])
 @section('content')
-
 @section('css')
-
 @endsection
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Cronologias</h3>
+        <h3 class="page__heading">Observaciones</h3>
 
     </div>
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-
                     <div class="card-body">
-                        <a class="btn btn-outline-info" href="{{route('cronologias.create')}}">Nueva Cronologia</a><br><br>
+                        <a class="btn btn-outline-primary" href="{{ route('observaciones.create') }}">Nuevas Observaciones</a><br><br>
+
                         <div class="table-responsive">
-                            <table class="table table-striped mt-15" id="table">
-                                <thead style="background-color: #6777ef;">
-                                    <th style="color: #fff;">ID</th>
-                                    <th style="color: #fff;">Funcionario</th>
-                                    <th style="color: #fff;">Fecha</th>
-                                    <th style="color: #fff;">Descripcion</th>
+                            <table class="table table-bordered table-md" id="table">
+                                <thead>
+                                    <th>ID</th>
+                                    <th>Fecha observacion </th>
+                                    <th>Descripcion</th>
+                                    <th>Usuario observado</th>
+                                    <th>Personal encargado</th>
+
                                     <th></th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cronologias as $cronologia)
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('cronologias.show', $cronologia->id)}}" value="{{$cronologia->id}}">{{$cronologia->id}} </a>
-                                        </td>
-
-                                        <td>{{$cronologia->user->name}}</td>
-                                        <td>{{$cronologia->fecha_cronologia}}</td>
-                                        <td>{{$cronologia->descripcion}}</td>
-                                        <td>
-                                            <div class="dropdown" style="position: absolute;">
-                                                <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item " href="{{ route('cronologias.edit', $cronologia->id) }}">Editar</a></li>
-                                                    <li>
-                                                        <form action="{{route('cronologias.destroy',$cronologia->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
-                                                            @csrf
-                                                            @method('Delete')
-                                                            <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach ($observaciones as $observacion)
+                                        <tr>
+                                            <td>
+                                                <a href="{{route('observaciones.show', $observacion->id)}}" value="{{$observacion->id}}">{{$observacion->id}} </a>
+                                            </td>
+                                            <td>{{ $observacion->fecha_observacion }}</td>
+                                            <td>{{ $observacion->descripcion }} <br></td>
+                                            <td>{{ $observacion->detalleObservacion->user->name}} </td>
+                                            <td>{{ $observacion->user->name }}</td>
+                                            <td>
+                                                <div class="dropdown" style="position: absolute;">
+                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item "
+                                                                href="{{ route('observaciones.edit', $observacion->id) }}">Editar</a>
+                                                        </li>
+                                                        <li><a href="#" class="dropdown-item"
+                                                                data-id="{{ $observacion->id }}"
+                                                                onclick="deleteItem(this)">Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -67,84 +65,101 @@
 </section>
 @endsection
 @section('scripts')
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-@if(session('eliminar')=='ok')
-<script>
-    Swal.fire(
-        'Eliminado!',
-        'Tu registro ha sido eliminado.',
-        'success'
-    )
-</script>
-@endif
-<script>
-    $('.formulario-eliminar').submit(function(e) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Estas Seguro(a)?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Si, Eliminarlo!'
-        }).then((result) => {
-            if (result.value) {
-                console.log(this);
-                this.submit();
-            }
-        })
-    });
-</script>
 @section('page_js')
-<script>
-    $('#table').DataTable({
-
-        language: {
-            sProcessing: "Procesando...",
-            sLengthMenu: "Mostrar _MENU_ registros",
-            sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningun dato disponible en esta tabla",
-            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sSearch: "Buscar:",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Ãšltimo",
-                sNext: "Siguiente",
-                sPrevious: "Anterior"
+    <script>
+        $('#table').DataTable({
+            "processing": true,
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningun dato disponible en esta tabla",
+                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "",
+                sSearch: "Buscar:",
+                sUrl: "",
+                sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Ãšltimo",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                },
+                oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
             },
-            oAria: {
-                sSortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending: ": Activar para ordenar la columna de manera descendente"
-            }
-        },
-        columnDefs: [
+            columnDefs: [
             {
                 orderable: false,
                 targets: 4
             }
-            
+
         ]
-    });
-</script>
-@endsection
-@endsection
+        });
+    </script>
 
-@section('css')
-.titulo{
-font-size: 50px;
-background-color: red;
+    <script type="application/javascript">
+        function deleteItem(e) {
+            let id = e.getAttribute('data-id');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: true
+            });
 
-}
+            swalWithBootstrapButtons.fire({
+                title: 'Esta seguro de que desea eliminar este registro?',
+                text: "Este cambio no se puede revertir!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'No, Cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    if (result.isConfirmed) {
+                        let id = e.getAttribute('data-id');
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '{{ route('observaciones.destroy', '') }}/' + id,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    swalWithBootstrapButtons.fire(
+                                        'Eliminado!',
+                                        'El registro ha sido eliminado.',
+                                        "success",
+                                    ).then(function() {
+                                        window.location = "observaciones";
+                                    });
+                                }
+
+                            }
+                        });
+
+                    }
+
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelado',
+                        'No se registro la eliminación',
+                        'error'
+                    );
+                }
+            });
+
+        }
+    </script>
+@endsection
 @endsection

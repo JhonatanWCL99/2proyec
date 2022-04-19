@@ -11,7 +11,8 @@ use Carbon\Carbon;
 
 class CompraController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+   /*      dd($request);  */
         $compras=Compra::all();
         return view('compras.index',compact('compras'));
     }
@@ -71,7 +72,9 @@ class CompraController extends Controller
     public function obtenerProductos(Request $request){
 
         if (isset($request->proveedor_id)) {
-            $productos = Producto_Proveedor::where('proveedor_id', $request->proveedor_id)->get();
+            $productos = Producto_Proveedor::where('proveedor_id', $request->proveedor_id)
+            ->join('productos', 'productos.id', '=', 'producto_proveedor.producto_id')->get();
+            //dd($productos);
             return response()->json(
                 [
                     'lista' => $productos,
@@ -85,5 +88,37 @@ class CompraController extends Controller
                 ]
             );
         }
+    }
+    public function obtenerPrecios(Request $request){
+        //dd($request);
+        if (isset($request->producto_id)) {
+            $precio = Producto_Proveedor::select('precio')->where('producto_id', $request->producto_id)->get();
+            //dd($precio);
+            return response()->json(
+                [
+                    'precio' => $precio,
+                    'success' => true
+                ]
+            ); 
+        }else {
+            return response()->json(
+                [
+                    'success' => false
+                ]
+            );
+        }
+    }
+    public function guardarDetalle(Request $request){
+        /* dd($request); */
+        $lista_compra = session()->get('lista_compra');
+        $producto_nombre = Producto::find($request->detalleCompra["producto_id"]);
+        $detalle_compra = $request->detalleCompra;
+        $detalle_compra["producto_nombre"]=$producto_nombre["nombre"];
+        session()->push('lista_compra',$detalle_compra);
+
+        return response()->json([
+            'lista_compra'=>$lista_compra,
+            'success' => true
+        ]);
     }
 }

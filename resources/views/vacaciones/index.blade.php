@@ -1,10 +1,9 @@
 @extends('layouts.app', ['activePage' => 'vacaciones', 'titlePage' => 'Vacaciones'])
 
 @section('content')
-
 @section('css')
 @endsection
-{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <section class="section">
     <div class="section-header">
         <h3 class="page__heading">Vacaciones</h3>
@@ -38,19 +37,18 @@
                                             <td>{{ $vacacion->detalleVacacion->user->name }} </td>
                                             <td>
                                                 <div class="dropdown" style="position: absolute;">
-                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{ route('vacaciones.edit', $vacacion->id) }}">Editar</a></li>
-                                                        <li>
-                                                            <form action="{{route('vacaciones.destroy',$vacacion->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
-                                                                @csrf
-                                                                @method('Delete')
-                                                                <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                            </form>
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('vacaciones.edit', $vacacion->id) }}">Editar</a>
                                                         </li>
-                                                    </ul>
+                                                        <li><a href="#" class="dropdown-item"
+                                                                data-id="{{ $vacacion->id }}"
+                                                                onclick="deleteItem(this)">Eliminar</a></li>
+                                                    </ul> 
                                                 </div>
                                             </td>
                                         </tr>
@@ -132,7 +130,7 @@
                         let id = e.getAttribute('data-id');
                         $.ajax({
                             type: 'DELETE',
-                            url: '{{ route('sanciones.destroy', '') }}/' + id,
+                            url: '{{ route('vacaciones.destroy', '') }}/' + id,
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
@@ -143,7 +141,7 @@
                                         'El registro ha sido eliminado.',
                                         "success",
                                     ).then(function() {
-                                        window.location = "sanciones";
+                                        window.location = "vacaciones";
                                     });
                                 }
 
@@ -167,18 +165,3 @@
     </script>
 @endsection
 @endsection
-{{-- @section('page_css')
-<style>
-a:link {
-    color: rgb(0, 0, 0);
-    background-color: transparent;
-    text-decoration: none;
-}
-
-a:active {
-    color: yellow;
-    background-color: transparent;
-    text-decoration: underline;
-}
-</style>
-@endsection --}}

@@ -25,6 +25,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriaSancion::class);
         $this->call(CargoSucursalSeeder::class);
         $this->call(HorarioSeeder::class);
+        $this->call(CategoriaSeeder::class);
+        $this->call(ProductoSeeder::class);
+        $this->call(ProveedorSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }

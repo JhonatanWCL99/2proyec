@@ -86,7 +86,8 @@ class VacacionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vacacion = Vacacion::find($id);
+        return view('vacaciones.edit',['vacacion'=>$vacacion]);
     }
 
     /**
@@ -98,7 +99,32 @@ class VacacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vacacion = Vacacion::findOrFail($id);
+
+        $vacacion->fecha_inicio = $request->get("fecha_inicio");
+        $vacacion->fecha_fin = $request->get("fecha_fin");
+        $vacacion->save();
+        $detalleVacacion = DetalleVacacion::where('vacacion_id',$vacacion->id)->first();
+
+        if ($request->hasFile("foto")) {
+            if (@getimagesize($detalleVacacion->imagen)){
+                unlink($detalleVacacion->imagen);
+                $file = $request->file('foto');
+                $destinationPath = 'img/vacaciones/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+                $detalleVacacion->imagen = $destinationPath . $filename;
+            } else {
+                $file = $request->file('foto');
+                $destinationPath = 'img/vacaciones/';
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+                $detalleVacacion->imagen = $destinationPath . $filename;
+            }
+        }   
+        $detalleVacacion->save();
+
+        return redirect()->route('vacaciones.show',$vacacion->id);
     }
 
     /**
@@ -109,6 +135,11 @@ class VacacionController extends Controller
      */
     public function destroy($id)
     {
+        $vacacion = Vacacion::find($id);
+        $detalleVacacion = DetalleVacacion::where('vacacion_id',$vacacion->id)->first();
+        unlink($detalleVacacion->imagen);
+        Vacacion::destroy($id);
+        return response()->json(['success' => true],200);       
         
     }   
 }

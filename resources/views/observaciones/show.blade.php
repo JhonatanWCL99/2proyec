@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'cronologias', 'titlePage' => 'Cronologias'])
+@extends('layouts.app', ['activePage' => 'observaciones', 'titlePage' => 'Observaciones'])
 
 @section('content')
 
@@ -8,7 +8,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Vista detallada de la cronologia</h3>
+        <h3 class="page__heading">Vista detallada de la Observacion</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -16,23 +16,36 @@
                 <div class="card-body">
                     <table class="table table-bordered table-striped ">
                         <tbody>
-                            <tr>
-                                <th>Nombre del Funcionario</th>
-                                <td >{{ $cronologia->user->name }}</td>
-                            </tr>
-                            <tr>
+                             <tr>
                                 <th>Fecha</th>
-                                <td><span class="badge badge-primary">{!! $cronologia->fecha_cronologia!!} </span></td>
+                                <td>{!! $observacion->fecha_observacion!!} </td>
                             </tr>
+                            <tr>
+                                <th>Nombre del Encargado </th>
+                                <td >{{ $observacion->user->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre del Personal Observado </th>
+                                <td >{{ $observacion->detalleObservacion->user->name }}</td>
+                            </tr>
+                           
+                            <tr>
+                                <th>Respaldo</th>
+                                <td>
+                                    <p>&nbsp</p>
+                                    <img id="" src="{{url($observacion->foto) }}" alt="" style="width:85%;max-width:150px" class="img-responsive center-block">
+                                    <p>&nbsp</p>
+                                </td>
+                            </tr>      
                             <tr>
                                 <th>Descripcion</th>
-                                <td>{{ $cronologia->descripcion }}</td>
+                                <td><span class="badge badge-primary">{{ $observacion->descripcion }}</span></td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="button-container ">
-                        <a href="{{ route('cronologias.index') }}" class="btn btn-warning  btn-twitter mr-2"> Volver </a>
-                        <a href="{{ route('cronologias.edit', $cronologia->id) }}" class="btn btn-info btn-twitter"> Editar </a>
+                        <a href="{{ route('observaciones.index') }}" class="btn btn-warning  btn-twitter mr-2"> Volver </a>
+                        <a href="{{ route('observaciones.edit', $observacion->id) }}" class="btn btn-info btn-twitter"> Editar </a>
                     </div>
                 </div>
                 <div>

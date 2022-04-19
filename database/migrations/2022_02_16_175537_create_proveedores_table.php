@@ -16,11 +16,10 @@ class CreateProveedoresTable extends Migration
         Schema::create('proveedores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('celular');
-            $table->string('empresa');
-            $table->string('direccion');
-            $table->bigInteger('nit');
-            $table->boolean('estado');
+            $table->integer('celular')->nullable();
+            $table->string('direccion')->nullable();
+            $table->bigInteger('nit')->nullable();
+            $table->boolean('estado')->nullable();
 
             /*$table->unsignedBigInteger('tipo_categoria');
             $table->foreign('tipo_categoria')->references('id')->on('categorias');

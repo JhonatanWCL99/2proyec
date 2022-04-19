@@ -17,9 +17,20 @@
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="usuario">Nombre del Funcionario <span
+                                            <label for="usuario">Personal Encargado <span
                                                     class="required">*</span></label>
                                             <select name="usuario" id="" class="form-control">
+                                                @foreach ($usuarios as $usuario)
+                                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="usuario">Funcionario Observado <span
+                                                    class="required">*</span></label>
+                                                    <select name="usuario_cr" id="" class="form-control">
                                                 @foreach ($usuarios as $usuario)
                                                     <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                                 @endforeach

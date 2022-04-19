@@ -17,8 +17,6 @@ class CreateProductosTable extends Migration
             $table->id(); 
             $table->integer('codigo');
             $table->string('nombre');
-            $table->integer('stock');
-            $table->float('precio');
             $table->boolean('estado');
 
             $table->unsignedBigInteger('categoria_id');

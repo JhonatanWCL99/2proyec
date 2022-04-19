@@ -14,4 +14,9 @@ class Observacion extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function detalleObservacion(){
+        return $this->hasOne(DetalleObservacion::class);
+    }
+
 }

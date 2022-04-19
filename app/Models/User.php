@@ -108,13 +108,6 @@ class User extends Authenticatable
     public function experiencias_laborales(){
         return $this->hasMany(ExperienciaLaboral::class);
     }
-    public function vacaciones(){
-        return $this->hasMany(Vacacion::class);
-    }
-
-    public function detalles_vacaciones(){
-        return $this->hasMany(DetalleVacacion::class);
-    }
 
     public function salidas(){
         return $this->hasMany(Salida::class);
@@ -123,13 +116,28 @@ class User extends Authenticatable
     public function compras(){
         return $this->hasMany(Compra::class);
     }
+    
+    public function vacaciones(){
+        return $this->hasMany(Vacacion::class);
+    }
 
-    public function cronologias(){
-        return $this->hasMany(Crologia::class);
+    public function detalles_vacaciones(){
+        return $this->hasMany(DetalleVacacion::class);
     }
 
     public function observaciones(){
         return $this->hasMany(Observacion::class);
+    }
+    public function detalles_observaciones(){
+        return $this->hasMany(DetalleObservacion::class);
+    }
+
+    public function cronologias(){
+        return $this->hasMany(Cronologia::class);
+    }
+
+    public function detalles_cronologias(){
+        return $this->hasMany(DetallesCronologias::class);
     }
 
 }
