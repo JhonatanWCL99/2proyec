@@ -29,28 +29,26 @@ class UserSeeder extends Seeder
             'codigo' => '2617',
             'password' => '2324234',
             'estado' => 1,
-            'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ])->assignRole('Super Admin');
+        ])->assignRole('Super Admin')->sucursals()->sync(1);
 
         User::Create([
-            'email' => 'alejandrobarja@gmail.com',
+            'email' => 'fernando@gmail.com',
             'foto' => '',
-            'name' => 'Alejandro',
-            'apellido' => 'Barja',
+            'name' => 'Fernando',
+            'apellido' => 'Vicente',
             'fecha_nacimiento' => '1996-05-16',
             'ci' => '23325',
             'celular_personal' => '76644332',
             'celular_referencia' => '6433322',
-            'domicilio' => '2do anillo b/donesco',
+            'domicilio' => '6to anillo zona la colorad',
             'zona' => 'Sur',
-            'codigo' => '5566',
-
+            'codigo' => '8336',
             'password' => '2323255',
             'estado' => 1,
-            'sucursal_id' => 1,
+
             'tipo_usuario_id' => 1,
-        ])->assignRole('Super Admin');
+        ])->assignRole('Super Admin')->sucursals()->sync(1);
 
         User::Create([
             'email' => 'migurlgarron@gmail.com',
@@ -64,12 +62,11 @@ class UserSeeder extends Seeder
             'domicilio' => '2do anillo b/donesco',
             'zona' => 'Sur',
             'codigo' => '2444',
-
             'password' => '878744',
             'estado' => 1,
-            'sucursal_id' => 1,
+
             'tipo_usuario_id' => 1,
-        ])->assignRole('Super Admin');
+        ])->assignRole('Super Admin')->sucursals()->sync(1);
 
 
         User::Create([
@@ -81,14 +78,14 @@ class UserSeeder extends Seeder
             'ci' => '656344',
             'celular_personal' => '7676544',
             'celular_referencia' => '6325232',
-            'domicilio' => 'Plan 300 mechero',
+            'domicilio' => 'Plan 3000 mechero',
             'zona' => 'Norte',
             'codigo' => '7766',
-
             'password' => '7565654',
             'estado' => 1,
-            'sucursal_id' => 1,
             'tipo_usuario_id' => 1,
-        ])->assignRole('Super Admin');
+        ])->assignRole('Super Admin')->assignRole('Contabilidad')->sucursals()->sync(1);
+
+
     }
 }

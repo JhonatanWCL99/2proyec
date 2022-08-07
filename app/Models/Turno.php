@@ -9,5 +9,13 @@ class Turno extends Model
 {
     use HasFactory;
     protected $table= 'turnos';
-    protected $fillable = ['turno','hora_inicio','hora_fin','usuario_id'];
+    protected $fillable = ['turno','hora_inicio','hora_fin'];
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
+
+    public function manos_obras(){
+        return $this->hasMany(ManoObra::class);
+    }
 }

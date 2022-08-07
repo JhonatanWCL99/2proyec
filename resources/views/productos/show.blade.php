@@ -24,11 +24,12 @@
                                 <th>Nombre</th>
                                 <td>{{ $producto->nombre }}</td>
                             </tr>
+                            @if (isset($producto->unidad_medida_compra->nombre))
                             <tr>
-                                <th>Precio</th>
-                                <td>{!! $producto->precio !!}</td>
+                                <th>Unidad de Medida de Compra</th>
+                                <td>{{ $producto->unidad_medida_compra->nombre }}</td>
                             </tr>
-
+                            @endif
                             <tr>
                                 <th>Estado Producto</th>
                                 @if($producto->estado==1)

@@ -15,9 +15,10 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->float('total');
             $table->date('fecha_compra');
-
+            $table->char('tipo_comprobante');
+            $table->char('estado');
+            $table->decimal('total', 18, 4);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('sucursal_id');
             $table->unsignedBigInteger('proveedor_id');

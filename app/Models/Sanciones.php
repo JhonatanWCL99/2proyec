@@ -20,4 +20,9 @@ class Sanciones extends Model
     public function sucursal(){
         return $this->belongsTo(Sucursal::class);
     }
+
+    public function detalleSancion(){
+        return $this->hasOne(DetalleSancion::class);
+    }
+
 }

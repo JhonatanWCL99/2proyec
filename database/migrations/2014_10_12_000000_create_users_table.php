@@ -29,13 +29,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->boolean('estado')->nullable();
-            $table->unsignedBigInteger('sucursal_id');
-            $table->unsignedBigInteger('tipo_usuario_id')->nullable();
+            $table->unsignedBigInteger('tipo_usuario_id')->nullable();          
             $table->rememberToken();
             $table->timestamps();
-            
             $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuarios');
-            $table->foreign('sucursal_id')->references('id')->on('sucursals');
         });
     }
 

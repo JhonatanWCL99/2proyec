@@ -19,7 +19,6 @@ class CreateEncargadosTable extends Migration
             $table->string('codigo');
             $table->integer('celular');
             $table->boolean('estado');
-
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->on('sucursals')->references('id');
             $table->timestamps();

@@ -61,11 +61,12 @@
                                     </div>
                                   
                                     
-                                    <div class="col-md-6">
+                                 
+                                </div> 
+                                <div class="col-md-6">
                                         <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
                                         <a href="{{route('sucursales.index')}}" class="btn btn-danger" tabindex="8">Cancelar</a>
                                     </div>
-                                </div> 
                             </form>
                         </div>
                     </div>

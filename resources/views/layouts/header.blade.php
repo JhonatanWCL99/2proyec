@@ -11,9 +11,8 @@
     <li class="dropdown dropdown-right">
         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user " >
             <div class="d-sm-none d-lg-inline-block">
-                Hola, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
+                {{\Illuminate\Support\Facades\Auth::user()->name}} - {{\Illuminate\Support\Facades\Auth::user()->sucursals[0]->nombre}}</div>
         </a>
-
         <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-title">
                 {{\Illuminate\Support\Facades\Auth::user()->name}}
@@ -49,3 +48,8 @@
     @endif
 
 </ul>
+<style>
+    .header{
+      background: linear-gradient(to left, #91eae4, #86a8e7, #7f7fd5);
+    }
+</style>

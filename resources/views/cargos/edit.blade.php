@@ -13,36 +13,25 @@
                     <div class="card-body">
                         <div class="card card-primary">
                             <br>
-                            <form action="{{ route('cargos.update',$producto->id) }}" method="POST" class="form-horizontal">
+                            <form action="{{ route('cargos.update',$cargo->id) }}" method="POST" class="form-horizontal">
                                 @csrf
                                 @method('PUT')
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nombre">Nombre<span class="required">*</span></label>
-                                            <input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}" required>
+                                            <label for="nombre_cargo">Nombre Cargo<span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="nombre_cargo" value="{{$cargo->nombre_cargo}}" required>
                                         </div>
                                     </div>
                                     
 
-                                <div class="row">
-                                
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="departamento_id">Departamento<span class="required">*</span></label>
-                                            <div class="selectric-hide-select">
-                                                <select name="departamento_id" class="form-control selectric">
-                                                    @foreach($departamentos as $departamento)
-                                                    @if($categoria->id==$producto->departamento_id)
-                                                    <option value="{{$departamento->id}}" selected>{{$departamento->nombre}}</option>
-                                                    @else
-                                                    <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
-                                                    @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <label for="descripcion">Descripcion<span class="required">*</span></label>
+                                            <input type="text" class="form-control" name="descripcion" value="{{$cargo->descripcion}}" required>
                                         </div>
                                     </div>
+                                    
 
                                     <div class="col-md-6">
                                         <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>

@@ -15,6 +15,7 @@ class DetalleCompra extends Model
         'cantidad',
         'subtotal',
         'producto_id',
+        'precio_producto',
         'compra_id',
     ];
 
@@ -23,6 +24,6 @@ class DetalleCompra extends Model
     }
 
     public function producto(){
-        return $this->hasOne(Producto::class);
+        return $this->belongsTo(Producto::class);
     }
 }

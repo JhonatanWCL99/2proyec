@@ -6,7 +6,7 @@
 
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Cargos Disponibles</h3>
+        <h3 class="page__heading">Cargos Activos</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -19,20 +19,21 @@
                             <table class="table table-striped mt-15 " id="table">
                                 <thead style="background-color: #6777ef;">
                                     <!---->
-                                    <!--<th style="display:none;">ID</th>-->
-                                    <th style="color: #fff;">Nombre</th>
-                                 
+                           
+                                    <th style="color: #fff;">Nombre cargo</th>
+                                    <th style="color: #fff;">Descripcion</th>
                                     <th style="color: #fff;"></th>
 
-
-
-                                    <!-- <th style="color: #fff;">Acciones</th> -->
                                 </thead>
                                 <tbody>
-                                    @foreach ($productos as $producto)
+                                    @foreach ($cargos as $cargo)
                                     <tr>
-                                       
-                                        <td>{{$producto->nombre}}</td>
+                                        <td>{{$cargo->nombre_cargo}}</td>
+                                        @if (isset($cargo->descripcion) && ($cargo->descripcion!=null))
+                                        <td>{{$cargo->descripcion}}</td>
+                                        @else
+                                        <td>Sin descripcion</td>
+                                        @endif
                                         <td>
                                             <div class="dropdown" style="position: absolute;">
                                                 <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,9 +65,6 @@
 @endsection
 @section('scripts')
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 @if(session('eliminar')=='ok')
 <script>
@@ -132,12 +130,9 @@
         },
         columnDefs: [{
                 orderable: false,
-                targets: 3
-            },
-            {
-                orderable: false,
-                targets: 4
+                targets: 2
             }
+          
         ]
     });
 </script>
@@ -145,8 +140,5 @@
 @endsection
 @section('css')
 
-    .tablecolor {
-        background-color: #212121;
-    }
 
 @endsection

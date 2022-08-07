@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\UnidadMedidaCompra;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -28,7 +29,8 @@ class ProductoController extends Controller
     public function create()
     {
         $categorias= Categoria::all();
-        return view('productos.create')->with('categorias',$categorias);
+        $unidades = UnidadMedidaCompra::all();
+        return view('productos.create', compact('categorias','unidades'));
     }
 
     /**
@@ -39,25 +41,22 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-      /*   dd($request); */
         $request->validate([
             'codigo'=>'required',
             'nombre' => 'required',
-            'stock' => 'required',
-            'precio' => 'required',
         ]);
 
         $producto= new Producto();
         $producto->codigo =$request->get('codigo');
         $producto->nombre =$request->get('nombre');
-        $producto->stock =$request->get('stock');
-        $producto->precio =$request->get('precio');
         $producto->estado =$request->get('estado');
+        $producto->unidad_medida_compra_id = $request->get('unidad_medida_compra_id');
+        $producto->unidad_medida_venta_id =$request->get('unidad_medida_venta_id');
         $producto->categoria_id =$request->get('categoria_id');
     
         $producto->save();
        
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')->with('registrado', 'ok');
     }
 
     /**
@@ -83,7 +82,8 @@ class ProductoController extends Controller
     {
         $categorias= Categoria::all();
         $producto = Producto::find($id);
-        return view ('productos.edit',compact('producto','categorias'));
+        $unidades_medidas_compras = UnidadMedidaCompra::all();
+        return view ('productos.edit',compact('producto','categorias','unidades_medidas_compras'));
     }
 
     /**
@@ -98,10 +98,10 @@ class ProductoController extends Controller
         $producto= Producto::find($id);
         $producto->codigo =$request->get('codigo');
         $producto->nombre =$request->get('nombre');
-        $producto->stock =$request->get('stock');
-        $producto->precio =$request->get('precio');
         $producto->estado =$request->get('estado');
         $producto->categoria_id =$request->get('categoria_id');
+        $producto->unidad_medida_compra_id =$request->get('unidad_medida_compra_id');
+        $producto->unidad_medida_venta_id =$request->get('unidad_medida_venta_id');
         $producto->save();
         return redirect()->route('productos.index');
     }
@@ -114,8 +114,8 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        $producto= Producto::find($id);
-        $producto->delete();
-        return redirect()->route('productos.index')->with('eliminar','ok');
+        
+        Producto::destroy($id);
+        return response()->json(['success' => true], 200);
     }
 }

@@ -9,8 +9,15 @@ class Producto extends Model
 {
     use HasFactory;
     protected $table='productos';
-    protected $fillable=['codigo','nombre','stock','precio','estado','categoria_id'];
-    
+    protected $fillable=[
+        'codigo',
+        'nombre',
+        'estado',
+        'categoria_id',
+        'unidad_medida_compra_id',
+        'unidad_medida_venta_id'
+    ];
+
     public function categoria(){
         return $this->belongsTo(Categoria::class);
     }
@@ -20,6 +27,31 @@ class Producto extends Model
     }
 
     public function detalleCompra(){
-        return $this->belongsTo(DetalleCompra::class);
+        return $this->hasOne(DetalleCompra::class);
     }
+
+    public function unidad_medida_compra(){
+        return $this->belongsTo(UnidadMedidaCompra::class);
+    }
+
+    public function unidad_medida_venta(){
+        return $this->belongsTo(UnidadMedidaVenta::class);
+    }
+
+    public function detalle_inventarios(){
+        return $this->hasMany(DetalleInventario::class);
+    }
+
+    public function detalle_pedidos(){
+        return $this->hasMany(DetallePedido::class);
+    }
+
+    public function detalle_partes_producciones(){
+        return $this->hasMany(DetalleParteProduccion::class);
+    }
+
+    public function asignar_stock(){
+        return $this->hasMany(DetalleAsignarStock::class);
+    }
+
 }

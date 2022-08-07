@@ -40,7 +40,7 @@
                             @endforeach
 
                            <button type="submit" class="btn btn-primary">Guardar</button>
-                           <a class="btn btn-info" href="{{route('roles.index')}}">Volver</a>
+                           <a class="btn btn-warning" href="{{route('roles.index')}}">Volver</a>
 
                         </div>
                         {!! Form::close()!!}

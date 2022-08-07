@@ -20,7 +20,8 @@
                             <table class="table table-bordered table-md" id="table">
                                 <thead>
                                     <th>Fecha</th>
-                                    <th>Nombre</th>
+                                    <th>Funcionario Sancionado</th>
+                                    <th>Funcionario Encargado</th>
                                     <th>Sucursal</th>
                                     <th>Tipo de sanción</th>
                                     <th>Detalles</th>
@@ -31,6 +32,7 @@
                                         <tr>
                                             <td>{{ $sancion->fecha }}</td>
                                             <td>{{ $sancion->user->name }}</td>
+                                            <td>{{ $sancion->detalleSancion->user->name }}</td>
                                             <td>{{ $sancion->sucursal->nombre }} <br></td>
                                             <td>{{ $sancion->categoriaSancion->nombre }}</td>
                                             <td>
@@ -69,6 +71,7 @@
 </section>
 @endsection
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 @section('page_js')
     <script>
         $('#table').DataTable({

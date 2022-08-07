@@ -54,7 +54,7 @@ class DescuentoController extends Controller
         $descuento->user_id =$request->get('user_id');
        
         $descuento->save();
-        return redirect()->route('descuentos.index');
+        return redirect()->route('personales.index');
     }
 
     /**

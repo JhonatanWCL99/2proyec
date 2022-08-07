@@ -55,12 +55,12 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $categoria = Categoria::find($id);
-       
-        return view('categorias.show', ['categoria'=>$categoria]);
-    }
+        public function show($id)
+        {
+            $categoria = Categoria::find($id);
+        
+            return view('categorias.show', ['categoria'=>$categoria]);
+        }
 
     /**
      * Show the form for editing the specified resource.

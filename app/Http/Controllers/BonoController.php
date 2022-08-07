@@ -54,7 +54,7 @@ class BonoController extends Controller
         $bono->user_id =$request->get('user_id');
        
         $bono->save();
-        return redirect()->route('bonos.index');
+        return back()->with('bono', 'registrado');
     }
 
     /**

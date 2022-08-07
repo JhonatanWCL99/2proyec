@@ -17,8 +17,8 @@
                                 <div class="row ">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nombre">Nombre<span class="required">*</span></label>
-                                            <input type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre">
+                                            <label for="nombre">Nombre <span class="required">*</span></label>
+                                            <input type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" placeholder="Nombre de la Categoria...">
                                             @error('nombre')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

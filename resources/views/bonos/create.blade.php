@@ -32,7 +32,7 @@
                                             <div class="form-group">
                                                 <label for="monto">Monto<span class="required">*</span></label>
                                                 <div class="selectric-hide-select">
-                                                    <select name="monto" class="form-control selectric">
+                                                    <select name="monto" class="form-control select">
 
                                                         <option>300</option>
                                                         <option>500</option>
@@ -90,15 +90,22 @@
             </div>
         </div>
     </div>
-  <script>$('.toast').toast(option)</script>
-    <script>
-        $(function(){
-            $('.toastrDefaultSuccess').click(function(param) {
-                toastr.success('Asignado con Exito!')
-            });
-        })
-    </script>
-<script src="assets/modules/izitoast/js/iziToast.min.js"></script>
-<script src="assets/js/page/modules-toastr.js"></script>
 </section>
+@endsection
+@section('scripts')
+@if(session('bono')=='registrado')
+<script>
+    let ruta_personales = "{{ route('bonos.index') }}";
+    iziToast.success({
+                title: 'SUCCESS',
+                message: "Registro agregado exitosamente",
+                position: 'topRight',
+                timeout: 1000 ,
+                onClosed: function () {
+                    window.location.href = ruta_personales;
+                }
+
+            });
+</script>
+@endif
 @endsection

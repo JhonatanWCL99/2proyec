@@ -25,10 +25,7 @@
                                 <th>Celular</th>
                                 <td><span class="badge badge-primary">{{ $proveedor->celular }}</span></td>
                             </tr>
-                            <tr>
-                                <th>Nombre Empresa</th>
-                                <td>{!! $proveedor->empresa !!}</td>
-                            </tr>
+                           
                             <tr>
                                 <th>Direccion</th>
                                 <td>{{ $proveedor->direccion }}

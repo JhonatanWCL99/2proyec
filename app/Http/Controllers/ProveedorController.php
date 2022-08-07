@@ -12,6 +12,7 @@ class ProveedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         $proveedores = Proveedor::all();
@@ -39,7 +40,7 @@ class ProveedorController extends Controller
         $request->validate([  
             'nombre' => 'required',
             'celular' => 'required',
-            'empresa' => 'required',
+          
             'direccion' => 'required',
             'nit' => 'required',
         ]);
@@ -47,7 +48,7 @@ class ProveedorController extends Controller
         $proveedores= new Proveedor();
         $proveedores->nombre =$request->get('nombre');
         $proveedores->celular =$request->get('celular');
-        $proveedores->empresa =$request->get('empresa');
+      
         $proveedores->direccion =$request->get('direccion');
         $proveedores->nit =$request->get('nit');
         $proveedores->estado =$request->get('estado');
@@ -64,6 +65,7 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         $proveedores = Proveedor::find($id);
@@ -94,7 +96,6 @@ class ProveedorController extends Controller
         $proveedor= Proveedor::find($id);
         $proveedor->nombre =$request->get('nombre');
         $proveedor->celular =$request->get('celular');
-        $proveedor->empresa =$request->get('empresa');
         $proveedor->direccion =$request->get('direccion');
         $proveedor->nit =$request->get('nit');
         $proveedor->estado =$request->get('estado');
@@ -109,6 +110,7 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         $proveedor= Proveedor::find($id);

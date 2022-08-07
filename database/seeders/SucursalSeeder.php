@@ -18,7 +18,7 @@ class SucursalSeeder extends Seeder
             array ('nombre' => 'Sin Definir','direccion'=> 'sin definir ','correo'=>'sindefinir@gmail.com','nro_fiscal'=>'7777F', 'estado'=>1),
             array ('nombre' => 'Bodega Principal','direccion'=> '2do anillo ','correo'=>'donesco@gmail.com','nro_fiscal'=>'7777F', 'estado'=>1),
             array ('nombre' => 'Suc. 3 pasos','direccion'=> 'Av. Tres Pasos al Frente, Edif. hipermaxi','correo'=>'SUCPASOS@gmail.com','nro_fiscal'=>'2504A', 'estado'=>1),
-            array ('nombre' => 'Suc. Plan 300','direccion'=>'Av. Paurito Zona PLan 3000','correo'=>'plan@gmail.com','nro_fiscal'=>'4433B', 'estado'=>1 ),
+            array ('nombre' => 'Suc. Plan 3000','direccion'=>'Av. Paurito Zona PLan 3000','correo'=>'plan@gmail.com','nro_fiscal'=>'4433B', 'estado'=>1 ),
 
             array ('nombre' => 'Suc. Cine Center','direccion'=>'Av. El trompillo edif. cine center' ,'correo'=>'','nro_fiscal'=>'7645C', 'estado'=>1),
             array ('nombre' => 'Suc. Boulevard','direccion'=>'Calle Sucre, esq. Beni edif boulevard plaza' ,'correo'=>'','nro_fiscal'=>'1245D', 'estado'=>1),

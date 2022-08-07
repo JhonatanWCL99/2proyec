@@ -26,8 +26,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CargoSucursalSeeder::class);
         $this->call(HorarioSeeder::class);
         $this->call(CategoriaSeeder::class);
+        $this->call(UnidadMedidaSeeder::class);
         $this->call(ProductoSeeder::class);
         $this->call(ProveedorSeeder::class);
+        $this->call(TareaSeeder::class);
+        $this->call(CategoriaCajaChicaSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }

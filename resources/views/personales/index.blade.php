@@ -67,30 +67,23 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('personales.showDetalleContrato', $personal->id) }}">Ver
-                                                                Detalle</a>
-                                                        </li>
+                                                        
                                                         <li><a class="dropdown-item"
                                                                 href="{{ route('personales.editContratoUser', $personal->id) }}">Actualizar
                                                                 Contrato</a>
                                                         </li>
+                                                         <li><a class="dropdown-item"
+                                                                href="{{ route('personales.asignarCargo', $personal->id) }}">Asignar Cargo
+                                                                </a>
+                                                        </li> 
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('bonos.create') }}">Asignar
-                                                                Bono</a>
+                                                                href="{{ route('personales.asignarSucursal',$personal->id) }}">Asignar
+                                                                Sucursal</a>
                                                         </li>
-                                                        {{-- <li>
-                                                            <form
-                                                                action="{{ route('personales.destroy', $personal->id) }}"
-                                                                id="formulario-eliminar2" class="formulario-eliminar"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('Delete')
-                                                                <a class="dropdown-item" href="javascript:;"
-                                                                    onclick="document.getElementById('formulario-eliminar2').submit()"
-                                                                    id="enlace">Eliminar</a>
-                                                            </form>
-                                                        </li> --}}
+                                                        <li><a class="dropdown-item"
+                                                            href="{{ route('personales.assignTurnView',$personal->id) }}">Asignar
+                                                            Turno</a>
+                                                    </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -106,7 +99,8 @@
     </div>
 </section>
 @endsection
-@section('scripts')
+@section('scripts') 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 @if (session('eliminar') == 'ok')
     <script>
         Swal.fire(

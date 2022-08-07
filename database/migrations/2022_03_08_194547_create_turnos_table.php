@@ -18,9 +18,7 @@ class CreateTurnosTable extends Migration
             $table->string('turno');
             $table->time('hora_inicio');
             $table->time('hora_fin');
-            $table->unsignedBigInteger('usuario_id');
-
-            $table->foreign('usuario_id')->on('users')->references('id');
+            
             $table->timestamps();
         });
     }

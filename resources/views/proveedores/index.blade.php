@@ -15,24 +15,17 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                      
                     <div class="card-body">
-                    <a class="btn btn-outline-info" href="{{route('proveedores.create')}}">Nuevo Proveedor</a><br><br>    
-                    <div class="table-responsive">
+                        <a class="btn btn-outline-info" href="{{route('proveedores.create')}}">Nuevo Proveedor</a><br><br>
+                        <div class="table-responsive">
                             <table class="table table-striped mt-15" id="table">
                                 <thead style="background-color: #6777ef;">
-                      
-                                    
                                     <th style="color: #fff;">Nombre</th>
-                                   
-                                    <th style="color: #fff;">Empresa</th>
                                     <th style="color: #fff;">Direccion</th>
                                     <th style="color: #fff;">Nit</th>
 
                                     <th style="color: #fff;">Estado</th>
                                     <th style="color: #fff;"></th>
-                                    <!-- <th style="color: #fff;"></th> -->
-                                    <!-- <th style="color: #fff;">Acciones</th> -->
                                 </thead>
                                 <tbody>
                                     @foreach ($proveedores as $proveedor)
@@ -41,10 +34,20 @@
                                             <!--<p class="titulo"> dasd</p>-->
                                             <a href="{{route('proveedores.show', $proveedor->id)}}" value="{{$proveedor->nombre}}">{{$proveedor->nombre}} </a>
                                         </td>
-                                        <!--   <td>{{$proveedor->celular}}</td> -->
-                                        <td>{{$proveedor->empresa}}</td>
-                                        <td>{{$proveedor->direccion}}</td>
-                                        <td>{{$proveedor->nit}}</td>
+                                        <td>
+                                            @if($proveedor->direccion!=null)
+                                            {{$proveedor->direccion}}
+                                            @else
+                                            Sin direccion
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($proveedor->nit!=null)
+                                            {{$proveedor->nit}}
+                                            @else
+                                            Sin Nit
+                                            @endif
+                                        </td>
                                         <td>
                                             @if($proveedor->estado==1)
                                             <div class="badge badge-pill badge-success">Activo</div>
@@ -53,33 +56,22 @@
                                             <div class="badge badge-pill badge-danger">Inactivo</div>
                                             @endif
                                         </td>
-                                        <!--<td>
- 
-                                    </div>
 
-                                            <form action="{{route('proveedores.destroy',$proveedor->id)}}" id="formulario-eliminar" class="formulario-eliminar" method="POST">
-                                                @csrf
-                                                @method('Delete')
-                                                <button type="submit" class="btn btn-danger  mr-3" id="">Borrar</button>
-
-                                                <a href="{{route('proveedores.show', $proveedor->id)}}" class="btn btn-info">Mostrar </a>
-                                            </form>
-                                        </td>-->
                                         <td>
-                                        <div class="dropdown" style="position: absolute;" >
-                                            <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item " href="{{ route('proveedores.edit', $proveedor->id) }}">Editar</a></li>
-                                                <li>
-                                                    <form action="{{route('proveedores.destroy',$proveedor->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
-                                                    @csrf
-                                                    @method('Delete')
-                                                    <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
-                                                    </form>
-                                                </li>                                        
-                                            </ul>
+                                            <div class="dropdown" style="position: absolute;">
+                                                <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item " href="{{ route('proveedores.edit', $proveedor->id) }}">Editar</a></li>
+                                                    <li>
+                                                        <form action="{{route('proveedores.destroy',$proveedor->id)}}" id="formulario-eliminar2" class="formulario-eliminar" method="POST">
+                                                            @csrf
+                                                            @method('Delete')
+                                                            <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('formulario-eliminar2').submit()" id="enlace">Eliminar</a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </td>
                                     </tr>
@@ -95,11 +87,7 @@
 </section>
 @endsection
 @section('scripts')
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 @if(session('eliminar')=='ok')
 <script>
     Swal.fire(
@@ -109,32 +97,7 @@
     )
 </script>
 @endif
-<script>
-    $('.formulario-eliminar').submit(function(e) {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Estas Seguro(a)?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Si, Eliminarlo!'
-        }).then((result) => {
-            if (result.value) {
-                /*  Swal.fire(
-                     'Deleted!',
-                     'Your file has been deleted.',
-                     'success'
-                 ) */
-                console.log(this);
-                this.submit();
-            }
-        })
-    });
-</script>
-@section('page_js')
+
 <script>
     $('#table').DataTable({
 
@@ -162,20 +125,19 @@
                 sSortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        columnDefs: [
-        { orderable: false, targets: 4 },
-        { orderable: false, targets: 5 }
-  ]
+        columnDefs: [{
+            orderable: false,
+            targets: 4
+        }, ]
     });
 </script>
-@endsection
+
 @endsection
 
 @section('css')
 .titulo{
-    font-size: 50px;
-    background-color: red;
+font-size: 50px;
+background-color: red;
 
 }
 @endsection
-

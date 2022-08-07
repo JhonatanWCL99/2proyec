@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\CategoriaSancion;
+use App\Models\DetalleSancion;
 use App\Models\Sanciones;
 use App\Models\Sucursal;
 use App\Models\User;
@@ -46,16 +47,17 @@ class SancionesController extends Controller
      */
     public function store(Request $request)
     {
+        /* dd($request); */
         $request->validate([
-            'imagen'=>'required',
             'fecha'=>'required',
-            'user_id'=>'required',
+            'funcionario_encargado'=>'required',
+            'funcionario_sancionado'=>'required',
             'sucursal_id'=>'required',
             'descripcion'=>'required',         
         ]);
         $datos = new Sanciones();
         if($request->hasFile('imagen')){
-            $file= $request->file(('imagen'));
+            $file= $request->file('imagen');
             $destinationPath ='img/sanciones/';
             $filename = time() .'-'. $file->getClientOriginalName();
             $uploadsucess = $request->file('imagen')->move($destinationPath, $filename);
@@ -65,9 +67,16 @@ class SancionesController extends Controller
         $datos->descripcion = $request->descripcion;
         $datos->categoria_sancion_id = $request->categoria_sancion_id;
         $datos->sucursal_id = $request->sucursal_id;
-        $datos->user_id = $request->user_id;
+        $datos->user_id = $request->funcionario_sancionado;
         $datos->save();
-        return redirect()->route('sanciones.index');
+
+        if($datos->save()){
+            $detalleSancion =new DetalleSancion();
+            $detalleSancion->user_id = $request->funcionario_encargado;
+            $detalleSancion->sanciones_id = $datos->id;
+            $detalleSancion->save();
+        }
+        return back()->with('sancion', 'registrado');
 
     } 
     /**

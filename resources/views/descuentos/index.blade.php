@@ -14,7 +14,6 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
                             Asignar Descuento
                         </button>
@@ -29,12 +28,7 @@
                                     <th style="color: #fff;">Monto</th>
                                     <th style="color: #fff;">Motivo</th>
                                     <th style="color: #fff;">Fecha</th>
-
-
                                     <th style="color: #fff;"></th>
-
-
-
                                     <!-- <th style="color: #fff;">Acciones</th> -->
                                 </thead>
                                 <tbody>
