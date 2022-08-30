@@ -166,6 +166,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Artisaninweb\SoapWrapper\ServiceProvider::class, 
  
 
         
@@ -245,6 +246,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'SoapWrapper' => Artisaninweb\SoapWrapper\Facade\SoapWrapper::class,  
 
     ],
 

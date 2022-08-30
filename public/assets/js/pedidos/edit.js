@@ -2,9 +2,10 @@ const csrfToken = document.head.querySelector(
     "[name~=csrf-token][content]"
 ).content;
 
-let actualizar_pedido_enviado = document.getElementById("actualizar_pedido_enviado");
+let actualizar_pedido_enviado = document.getElementById("actualizar_pedido");
 let nuevo_producto = document.getElementById('agregar_nuevo_producto');
 let agregar_insumo = document.getElementById("agregar_insumo");
+
 let checboxs_editar = document.getElementsByClassName("checkbox-editar");
 let checboxs_eliminar = document.getElementsByClassName("checkbox-eliminar");
 let stocks_input = document.getElementsByClassName("form-control stock");
@@ -27,6 +28,7 @@ let array_subtotales = [];
 let array_detalle_pedido_id_a_editar = [];
 let array_detalle_pedido_id_a_eliminar = [];
 let array_detalle_inventario_id_a_agregar= [];
+
 /*OBTENER PRECIO DE PRODUCTO */
 /* producto.addEventListener("change", (e) => {
     fetch(ruta_obtener_precios, {
@@ -119,11 +121,10 @@ $(document).ready(function () {
         .then((data) => {
             console.log(data);
             if(data.precio != null){            
+
                 precios.value= data.precio;
                 productonombre.value=data.producto_nombre;
-                unidad_medida.value = data.unidad_medida;
-                
-
+                unidad_medida.value = data.unidad_medida;               
 
             }else{
                 $("#producto")
@@ -142,11 +143,9 @@ $(document).ready(function () {
 
     });   
 
-
-
 });
 
-nuevo_producto.addEventListener('click',function(){
+agregar_insumo.addEventListener('click',function(){
     if (producto.value == "sin_seleccionar") {
         $("#errorproducto").removeClass("d-none");
     } else {
@@ -154,11 +153,12 @@ nuevo_producto.addEventListener('click',function(){
     }
 
     if(producto.value != "sin_seleccionar"){
-
+        
         let tr = '<tr>'+
+        '<td></td>'+
+        '<td></td>'+
         '<td style="text-align: center;">'+productonombre.value+'</td>'+
         '<td style="text-align: center;">'+unidad_medida.value+'</td>'+
-        '<td style="text-align: center;">0</td>'+
         '<td style="text-align: center;">'+
             ' <input type="number" class="form-control stock" id="stock-'+producto.value+'" style="text-align:center" name="cantidad_enviada" value="0" step="any">'+
         ' </td>'+
@@ -230,7 +230,7 @@ actualizar_pedido_enviado.addEventListener("click", function () {
         array_subtotales.push( td_subtotales[index].innerText );
         array_stocks.push( stocks_input[index].value );
     }
-    
+                                                        
     console.log( array_detalle_pedido_id_a_editar);
     console.log(array_detalle_inventario_id_a_agregar);
 

@@ -31,7 +31,7 @@
                         <thead class="table-hover table-success">
                             
                             <th  style="text-align: center;"> Plato </th>
-                            <th style="text-align: center;"> Categoria Plato </th>
+                            
                             <th style="text-align: center;"> Precio </th>
                             <th style="text-align: center;"> Estado </th>
 
@@ -44,7 +44,7 @@
 
                                 <td style="text-align: center;">{{$detalle->plato->nombre}}</td>
 
-                                <td style="text-align: center;">{{$detalle->plato->categoria_plato->nombre}}</td>
+                           
                                 @if (isset($detalle->plato->platos_sucursales[0]->precio))
                                 <td style="text-align: center;">{{$detalle->plato->platos_sucursales[0]->precio}}</td>
                                 @else

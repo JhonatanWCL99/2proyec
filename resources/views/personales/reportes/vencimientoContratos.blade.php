@@ -213,6 +213,7 @@
     </script>
 @endif
 
+
 <script>
     $('.formulario-eliminar').submit(function(e) {
         e.preventDefault();
@@ -240,6 +241,17 @@
 </script>
 
 @section('page_js')
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap4.min.js"></script>
+
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+
     <script>
         $('#table').DataTable({
             language: {
@@ -266,10 +278,35 @@
                     sSortDescending: ": Activar para ordenar la columna de manera descendente"
                 }
             },
-            columnDefs: [{
-                    orderable: false,
-                    targets: 4
+            dom: 'Bftipr',
+            buttons: [{
+                    //Botón para Excel
+                    extend: 'excel',
+                    footer: true,
+                    title: 'Contratos Vencidos',
+                    filename: 'Contrato',
+                    //Aquí es donde generas el botón personalizado
+                    text: '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>'
                 },
+                //Botón para PDF
+                {
+                    extend: 'pdf',
+                    footer: true,
+                    title: 'Contratos Vencidos',
+                    filename: 'Contrato',
+                    text: '<button class="btn btn-danger">Exportar a PDF <i class="far fa-file-pdf"></i></button>',
+                    customize: function(pdfDocument) {        
+                    }
+                },
+                {
+          extend: 'print',
+          text: '<button class="btn btn-dark">Imprimir <i class="fas fa-print"></i></button>',
+          exportOptions: {
+            modifier: {
+              page: '1'
+            }
+          }
+        },
             ]
         });
     </script>
@@ -301,11 +338,36 @@
                 sSortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
-        columnDefs: [{
-                orderable: false,
-                targets: 4
-            },
-        ]
+        dom: 'Bftipr',
+            buttons: [{
+                    //Botón para Excel
+                    extend: 'excel',
+                    footer: true,
+                    title: 'Contratos Vencidos',
+                    filename: 'Contrato',
+                    //Aquí es donde generas el botón personalizado
+                    text: '<button class="btn btn-success">Exportar a Excel <i class="fas fa-file-excel"></i></button>'
+                },
+                //Botón para PDF
+                {
+                    extend: 'pdf',
+                    footer: true,
+                    title: 'Contratos Vencidos',
+                    filename: 'Contrato',
+                    text: '<button class="btn btn-danger">Exportar a PDF <i class="far fa-file-pdf"></i></button>',
+                    customize: function(pdfDocument) {        
+                    }
+                },
+                {
+          extend: 'print',
+          text: '<button class="btn btn-dark">Imprimir <i class="fas fa-print"></i></button>',
+          exportOptions: {
+            modifier: {
+              page: '1'
+            }
+          }
+        },
+            ]
     });
 </script>
 @endsection

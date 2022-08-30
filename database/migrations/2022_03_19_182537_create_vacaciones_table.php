@@ -15,9 +15,9 @@ class CreateVacacionesTable extends Migration
     {
         Schema::create('vacaciones', function (Blueprint $table) {
             $table->id();
-
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
+            $table->boolean('estado');
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->on('users')->references('id');

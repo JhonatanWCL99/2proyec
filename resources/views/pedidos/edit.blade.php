@@ -115,8 +115,8 @@
                         <h4>Detalles del Pedido</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
+                        <table class="table table-bordered" >
+                            <thead >
                                 <th style="text-align: center;"> Editar </th>
                                 <th style="text-align: center;"> Eliminar </th>
                                 <th style="text-align: center;"> Insumo </th>
@@ -125,7 +125,7 @@
                                 <th style="text-align: center;"> Costo </th>
                                 <th style="text-align: center;"> Subtotal </th>
                             </thead>
-                            <tbody>
+                            <tbody id="cuerpotabla">
                                 <input type="hidden" name="pedido_id" id="pedido_id" value="{{$pedido->id}}">
                                 @foreach($pedido->detalle_pedidos as $index => $detalle )
                                 <tr>

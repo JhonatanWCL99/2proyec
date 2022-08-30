@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Categoria;
 use App\Models\CategoriaPlato;
 use App\Models\DetalleEliminacion;
@@ -10,6 +12,7 @@ use App\Models\Plato;
 use App\Models\Inventario;
 use App\Models\InventarioSistema;
 use App\Models\Producto;
+use App\Models\Producto_Proveedor;
 use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,10 +27,10 @@ class EliminacionController extends Controller
         $user_rol = Auth::user()->roles[0]->id;
         if ($user_rol == 3) {
             $eliminaciones = Eliminacion::where('sucursal_id', Auth::user()->sucursals[0]->id)
-                ->whereDate('fecha',Carbon::now()->toDateString())
+                ->whereDate('fecha', Carbon::now()->toDateString())
                 ->get();
         } else {
-            $eliminaciones = Eliminacion::whereDate('fecha',Carbon::now()->toDateString())->get();
+            $eliminaciones = Eliminacion::whereDate('fecha', Carbon::now()->toDateString())->get();
         }
         return view('eliminaciones.index', compact('eliminaciones'));
     }
@@ -35,7 +38,7 @@ class EliminacionController extends Controller
     public function create()
     {
         $user = Auth::user();
-    /*    $inventario = Inventario::where('sucursal_id', $user->sucursals[0]->id)->where('fecha', Carbon::now()->format('Y-m-d'))->first();
+        /*    $inventario = Inventario::where('sucursal_id', $user->sucursals[0]->id)->where('fecha', Carbon::now()->format('Y-m-d'))->first();
         if(!is_null($inventassrio)){
             $inventario_sistema = InventarioSistema::where('inventario_id', $inventario->id)->first();
         }else{
@@ -45,7 +48,7 @@ class EliminacionController extends Controller
 
         $sucursales = Sucursal::all();
         $categorias = Categoria::all();
-        $categorias_produccion = CategoriaPlato::all();
+        $platos = Plato::all();
         /* dd($categorias_produccion); */
         $last_eliminacion = Eliminacion::where('sucursal_id', Auth::user()->sucursals[0]->id)->orderBy('id', 'desc')->count();
         if ($last_eliminacion == null) {
@@ -55,7 +58,7 @@ class EliminacionController extends Controller
         }
         $fecha_actual = Carbon::now()->locale('es')->isoFormat('dddd, D MMMM Y');
 
-        return view('eliminaciones.create', compact('sucursales', 'categorias_produccion', 'categorias', 'fecha_actual', 'last_eliminacion'));
+        return view('eliminaciones.create', compact('sucursales', 'platos', 'categorias', 'fecha_actual', 'last_eliminacion'));
     }
 
     public function show($id)
@@ -84,19 +87,30 @@ class EliminacionController extends Controller
             $producto = Producto::find($request->producto_id);
             $inventario_p = Inventario::where('sucursal_id', $user->sucursals[0]->id)->where('fecha', Carbon::now()->format('Y-m-d'))->first();
             if ($inventario_p == null) {
+                $precio = Producto_Proveedor::where('producto_id', '=', $request->producto_id)->orderBy('id', 'desc')->first();
+
                 return response()->json([
-                    'status' => false,
-                    'msj' => 'Sin Inventario Registrado',
+                    'status' => true,
+                    'inventario_id' => 0,
+                    'stock' => 0,
+                    'precio' => $precio->precio,
+                    'unidad_medida' => $producto->unidad_medida_compra->nombre,
                 ]);
+                
             }
             $inventario = InventarioSistema::where('inventario_id', $inventario_p->id)->first();
-             $detalleInventario = DetalleInventarioSistema::where('inventario_sistema_id', $inventario->id)->where('producto_id', $producto->id)->first();
+            $detalleInventario = DetalleInventarioSistema::where('inventario_sistema_id', $inventario->id)->where('producto_id', $producto->id)->first();
             if ($detalleInventario == null) {
+                $precio = Producto_Proveedor::where('producto_id', '=', $request->producto_id)->orderBy('id', 'desc')->first();
+
                 return response()->json([
-                    'status' => false,
-                    'msj' => 'Sin Stock de ' . $producto->nombre,
+                    'status' => true,
+                    'inventario_id' => 0,
+                    'stock' => 0,
+                    'precio' => $precio->precio,
+                    'unidad_medida' => $producto->unidad_medida_compra->nombre,
                 ]);
-            } 
+            }
             return response()->json([
                 'status' => true,
                 'inventario_id' => $inventario->id,
@@ -110,8 +124,11 @@ class EliminacionController extends Controller
             $inventario_p = Inventario::where('sucursal_id', $user->sucursals[0]->id)->where('fecha', Carbon::now()->format('Y-m-d'))->first();
             if ($inventario_p == null) {
                 return response()->json([
-                    'status' => false,
-                    'msj' => 'Sin Inventario Registrado',
+                    'status' => true,
+                    'inventario_id' => $plato->id,
+                    'stock' => 0,
+                    'precio' => $precio,
+                    'unidad_medida' => $plato->unidad_medida_compra->nombre,
                 ]);
             }
             $inventario = InventarioSistema::where('inventario_id', $inventario_p->id)->first();
@@ -194,7 +211,9 @@ class EliminacionController extends Controller
     {
         $user = Auth::user();
         $inventario = Inventario::where('sucursal_id', $user->sucursals[0]->id)->where('fecha', Carbon::now()->format('Y-m-d'))->first();
-        $inventario_sistema = InventarioSistema::where('inventario_id', $inventario->id)->first();
+        if ($inventario != null) {
+            $inventario_sistema = InventarioSistema::where('inventario_id', $inventario->id)->first();
+        }
         $total_eliminacion = 0;
 
         if ($request->estado == "Con Eliminacion") {
@@ -203,12 +222,16 @@ class EliminacionController extends Controller
                 $eliminacion->fecha = Carbon::now()->format('Y-m-d');
                 $eliminacion->user_id = $user->id;
                 $eliminacion->sucursal_id = $user->sucursals[0]->id;
-                $eliminacion->inventario_id = $inventario->id;
+                if ($inventario != null) {
+                    $eliminacion->inventario_id = $inventario->id;
+                }
                 $eliminacion->turno_id = $request->turno;
                 $eliminacion->estado = $request->estado;
                 $eliminacion->save();
 
-                $total_inventario_actualizado = $inventario_sistema->total;
+                if ($inventario != null) {
+                    $total_inventario_actualizado = $inventario_sistema->total;
+                }
                 foreach (session('lista_eliminacion') as $id => $item) {
                     $total_eliminacion += $item['subtotal'];
                     $detalle_eliminacion = new DetalleEliminacion();
@@ -221,7 +244,7 @@ class EliminacionController extends Controller
                     $detalle_eliminacion->eliminacion_id = $eliminacion->id;
                     $detalle_eliminacion->save();
 
-                   /*  $detalle_inventario_sistema = DetalleInventarioSistema::where('inventario_sistema_id', $inventario_sistema->id)->where('producto_id', $item['producto_id'])->first();
+                    /*  $detalle_inventario_sistema = DetalleInventarioSistema::where('inventario_sistema_id', $inventario_sistema->id)->where('producto_id', $item['producto_id'])->first();
                     if (!is_null($detalle_inventario_sistema)) {
                         $total_inventario_actualizado -= $detalle_inventario_sistema->subtotal;
                         $detalle_inventario_sistema->stock = $detalle_inventario_sistema->stock - $detalle_eliminacion->cantidad;
@@ -240,7 +263,7 @@ class EliminacionController extends Controller
                     } */
                 }
                 $eliminacion->update(['total' => $total_eliminacion]);
-       /*          $inventario_sistema->update(['total' => $total_inventario_actualizado]); */
+                /*          $inventario_sistema->update(['total' => $total_inventario_actualizado]); */
                 session()->forget('lista_eliminacion');
                 return response()->json(
                     [
@@ -257,7 +280,9 @@ class EliminacionController extends Controller
                 $eliminacion->estado = $request->estado;
                 $eliminacion->save();
 
-                $total_inventario_actualizado = $inventario_sistema->total;
+                if($inventario!=null){
+                    $total_inventario_actualizado = $inventario_sistema->total;
+                }
                 foreach (session('lista_eliminacion') as $id => $item) {
                     $total_eliminacion += $item['subtotal'];
                     $detalle_eliminacion = new DetalleEliminacion();
@@ -269,7 +294,7 @@ class EliminacionController extends Controller
                     $detalle_eliminacion->plato_id = $item['plato_id'];
                     $detalle_eliminacion->eliminacion_id = $eliminacion->id;
                     $detalle_eliminacion->save();
-                   /*  $detalle_inventario_sistema = DetalleInventarioSistema::where('inventario_sistema_id', $inventario_sistema->id)->where('producto_id', $item['producto_id'])->first();
+                    /*  $detalle_inventario_sistema = DetalleInventarioSistema::where('inventario_sistema_id', $inventario_sistema->id)->where('producto_id', $item['producto_id'])->first();
                     if (!is_null($detalle_inventario_sistema)) {
                         $total_inventario_actualizado -= $detalle_inventario_sistema->subtotal;
                         $detalle_inventario_sistema->stock = $detalle_inventario_sistema->stock - $detalle_eliminacion->cantidad;
@@ -286,7 +311,7 @@ class EliminacionController extends Controller
                     } */
                 }
                 $eliminacion->update(['total' => $total_eliminacion]);
-              /*   $inventario_sistema->update(['total' => $total_inventario_actualizado]); */
+                /*   $inventario_sistema->update(['total' => $total_inventario_actualizado]); */
 
                 session()->forget('lista_eliminacion');
                 return response()->json(
@@ -409,11 +434,10 @@ class EliminacionController extends Controller
         $fecha_fin = $request->fecha_final;
         $user_rol = Auth::user()->roles[0]->id;
         if ($user_rol == 3) {
-            
+
             $eliminaciones = Eliminacion::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_fin)->get();
         } else {
             $eliminaciones = Eliminacion::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_fin)->get();
-            
         }
 
         return view('eliminaciones.index', compact('eliminaciones'));

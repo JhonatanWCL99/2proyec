@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -43,16 +41,24 @@ class Venta extends Model
         $fecha = Carbon::now()->toDateString();
 
         if (isset($fecha_inicio) && isset($fecha_fin)){
-            $sql = "select ventas.id , ventas.fecha_venta , ventas.hora_venta , turnos_ingreso_id as turno , ventas.tipo_pago, ventas.total_venta, ventas.estado
-                from ventas where ventas.fecha_venta
+            $sql = "select (@rownum:=@rownum+1) AS nro_registro,ventas.id , ventas.fecha_venta ,users.name as user, ventas.hora_venta , turnos_ingreso_id as turno , ventas.tipo_pago, ventas.total_venta, ventas.estado,
+                ventas.numero_factura,ventas.lugar , ventas.nro_transaccion,turnos_ingresos.turno
+                from (SELECT @rownum:=0) r,ventas 
+                inner join users on users.id= ventas.user_id
+                inner join turnos_ingresos on turnos_ingresos.id= ventas.turnos_ingreso_id
+                where ventas.fecha_venta
                 between $fecha_inicio and $fecha_fin
-                and sucursal_id = $sucursal";
+                and ventas.sucursal_id = $sucursal";
             $plates = DB::select($sql);
             return $plates; 
             
         }else{
-            $sql = "select ventas.id , ventas.fecha_venta , ventas.hora_venta , turnos_ingreso_id as turno , ventas.tipo_pago , ventas.total_venta , ventas.estado from ventas           
-            where ventas.fecha_venta between $fecha and $fecha and sucursal_id = $sucursal";       
+            $sql = "select (@rownum:=@rownum+1) AS nro_registro,ventas.id , ventas.fecha_venta , users.name as user, ventas.hora_venta , turnos_ingreso_id as turno , ventas.tipo_pago , ventas.total_venta , ventas.estado, 
+            ventas.numero_factura,ventas.lugar, ventas.nro_transaccion,turnos_ingresos.turno
+            from (SELECT @rownum:=0) r,ventas  
+            inner join users on users.id= ventas.user_id       
+            inner join turnos_ingresos on turnos_ingresos.id= ventas.turnos_ingreso_id
+            where ventas.fecha_venta between $fecha and $fecha and ventas.sucursal_id = $sucursal";       
             $plates = DB::select($sql);
             return $plates; 
         }
@@ -135,8 +141,9 @@ class Venta extends Model
 
     public function sales_for_id($id_venta){
 
-        $venta= Venta::selectRaw("ventas.numero_factura, clientes.contador_visitas, autorizaciones.nro_autorizacion, ventas.sucursal_id as sucursal,  ventas.codigo_control,  clientes.telefono,autorizaciones.fecha_fin,autorizaciones.nit,ventas.fecha_venta,ventas.hora_venta,
+        $venta= Venta::selectRaw("ventas.numero_factura, clientes.contador_visitas, autorizaciones.nro_autorizacion, ventas.sucursal_id as sucursal,   sucursals.nombre as sucursal_nombre, ventas.codigo_control,  clientes.telefono,autorizaciones.fecha_fin,autorizaciones.nit,ventas.fecha_venta,ventas.hora_venta,
         clientes.nombre,clientes.ci_nit, ventas.total_venta , ventas.tipo_pago,ventas.qr,clientes.telefono")
+                ->join('sucursals','sucursals.id','=','ventas.sucursal_id')
                 ->Leftjoin('clientes','clientes.id','=','ventas.cliente_id')
                 ->Leftjoin('autorizaciones','autorizaciones.id','=','ventas.autorizacion_id')
                 ->where('ventas.id','=',$id_venta)

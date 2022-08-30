@@ -157,7 +157,7 @@ class PedidoController extends Controller
     {
         if (isset($request->producto_id)) {
             $producto = Producto::find($request->producto_id);
-            //dd($producto);
+            //dd($producto); 
             $producto_proveedor = Producto_Proveedor::where('producto_id', $request->producto_id)->first();
             //dd($producto_proveedor);
             if (is_null($producto_proveedor)) {
@@ -202,7 +202,7 @@ class PedidoController extends Controller
             /* Recibo por Inputs */
             "cantidad_solicitada" => $request->detallePedido['cantidad_solicitada'],
             "precio" => $request->detallePedido['precio'],
-            "subtotal_solicitado" => $request->detallePedido['subtotal_solicitado'],
+            "subtotal_solicitado" =>$request->detallePedido['cantidad_solicitada']*$request->detallePedido['precio'],
             "producto_id" => $producto->id,
             "producto_nombre" => $producto->nombre,
             "unidad_medida" => $unidad_medida,
@@ -262,7 +262,6 @@ class PedidoController extends Controller
 
     public function actualizarPedidoEnviado(Request $request)
     {
-        //dd($request);
         $pedido = Pedido::find($request->pedido_id);
         $nuevospedidos = $request->agregarNuevos;
 
@@ -489,7 +488,7 @@ class PedidoController extends Controller
     {
         $fecha = Carbon::now()->toDateString();
 
-        $pedidos_detalle = DB::select("select sucursals.nombre as sucursal_nombre,
+        $pedidos_detalle = DB::select("SELECT sucursals.nombre as sucursal_nombre,
             productos.nombre as NombreProducto, unidades_medidas_ventas.nombre as um,
             sum(detalle_pedidos.cantidad_enviada) as cantidadenviado,
             detalle_pedidos.precio as precio,
@@ -503,5 +502,25 @@ class PedidoController extends Controller
             GROUP BY productos.nombre,sucursals.nombre, detalle_pedidos.precio,unidades_medidas_ventas.nombre");
 
         return view('pedidos_producciones.detalleReporteP', compact('pedidos_detalle', 'fecha_inicial', 'fecha_final'));
+    }
+
+    public function total_insumos_solicitados(Request $request){
+        $categoria_insumos = Categoria::all();
+
+        $fecha_inicial =$request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+        $categoria_id = $request->categoria_id;
+
+        $insumos_solicitados = Producto::selectRaw('productos.nombre, detalle_pedidos.cantidad_solicitada, detalle_pedidos.cantidad_enviada')
+        ->join('pedidos','pedidos.producto_id','=','productos.id')
+        ->join('detalle_pedidos','detalle_pedidos.pedido_id','=','productos.id')
+        ->join('categorias','categorias.producto_id','=','productos.id')
+        ->where('productos.estado',1)
+        ->where('productos.categoria_id',$categoria_id)
+        ->whereBetween('pedidos.fecha_pedido',[$fecha_inicial,$fecha_final])
+        ->get();
+
+        return view('pedidos.total_insumos_solicitados', compact('categoria_insumos','insumos_solicitados'));
+        
     }
 }

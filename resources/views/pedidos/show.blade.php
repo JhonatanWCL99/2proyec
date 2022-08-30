@@ -53,12 +53,15 @@
                             <tr>
                                 <th> Estado Pedido:</th>
 
-                                @if ($pedido->estado==1)
-                                <td> <span class="badge badge-warning"> Recibido </span></td>
-                                @endif
-                                @if ($pedido->estado==0)
-                                <td class="badge badge-success"> Entregado</td>
-                                @endif
+                                @if ($pedido->estado == 'S' || $pedido->estado == 'P' || $pedido->estado == '0' )
+                                        <th> Pendiente </span></th>
+                                        @elseif($pedido->estado == 'E' || $pedido->estado == '1' )
+                                        <th >
+                                           En Espera 
+                                        </th>
+                                        @elseif($pedido->estado =='A')
+                                        <th > Aceptado</th>
+                                        @endif
                             </tr>
                             <tr>
                                 <th> Realizado Por</th>

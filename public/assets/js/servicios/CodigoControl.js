@@ -16,25 +16,26 @@ import generateVerhoeff from "../servicios/Verhoeff.js";
 
    
             
-let authorizationNumber = document.getElementById("nro_autorizacion").value;
-let invoiceNumber = document.getElementById("nro_factura").value;
-let nitci = document.getElementById("nit").value;
-let dosageKey = document.getElementById("llave").value;
-let dateOfTransaction = document.getElementById("fecha").value;
-let transactionAmount = document.getElementById("monto").value;
-
+let authorizationNumber = document.getElementById("nro_autorizacion");
+let invoiceNumber = document.getElementById("nro_factura");
+let nitci = document.getElementById("nit");
+let dosageKey = document.getElementById("llave");
+console.log(dosageKey);
+let dateOfTransaction = document.getElementById("fecha");
+let transactionAmount = document.getElementById("monto");
 
 let codigo_verificado = document.getElementById("codigo_verificado");
 let generar_codigo = document.getElementById("generar_codigo");
 
 generar_codigo.addEventListener("click",function(){
+    console.log('llave '+dosageKey.value);
     let date = new Date(document.getElementById("fecha").value);
-    codigo_verificado.value= generateControlCode(authorizationNumber,
-        invoiceNumber,
-        nitci,
-        date.getFullYear()+(date.getMonth()+1).toString()+date.getDay(),
-        document.getElementById("monto").value,
-        dosageKey)
+    codigo_verificado.value= generateControlCode(authorizationNumber.value,
+        invoiceNumber.value,
+        nitci.value,
+      dateOfTransaction.value ,
+        transactionAmount.value,
+        dosageKey.value)
 })
 
 function generateControlCode(
@@ -159,7 +160,6 @@ function generateControlCode(
     var sumProduct = tmp1 + tmp2 + tmp3 + tmp4 + tmp5;
     //se obtiene base64
     var base64SIN = convertBase64(sumProduct);
-
     /* ========== PASO 6 ============= */
     //Aplicar el AllegedRC4 a la anterior expresión obtenida
     return encryptMessageRC4(base64SIN, dosageKey + fiveDigitsVerhoeff);
@@ -185,6 +185,7 @@ function addVerhoeffDigit(value, max) {
  * @param {String} value cadena con valor numerico de la forma 123 | 123.4 | 123,4
  * @return {String} numero redondeado
  */
+
 function roundUp(value) {
     //reemplaza (,) por (.)
     var value2 = value.replace(",", ".");

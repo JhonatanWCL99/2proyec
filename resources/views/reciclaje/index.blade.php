@@ -9,7 +9,7 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12">
-                @role('Encargado')
+                @role('Super Admin|Encargado')
                 <div class="card-body">
                     <div class="table-responsive" style="overflow-x: hidden">
                         <form action="{{route('reciclajes.filtrarreciclaje')}}" method="POST">

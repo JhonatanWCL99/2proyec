@@ -21,6 +21,7 @@
                         <table class="table table-bordered" id="table">
                             <thead>
                                 <th style="text-align: center; "> Producto </th>
+                                <th style="text-align: center; "> Cantidad Solicitada </th>
                                 <th style="text-align: center; "> Cantidad Enviada </th>
                                 <th style="text-align: center; "> Unidad Medida </th>
                                 <th style="text-align: center;">Precio</th>
@@ -28,22 +29,33 @@
                             </thead>
                             <tbody>
                                 
-                                @php $total_pagos =0; @endphp
-                                @foreach($pedidos_detalle as $pago)
-                                @php $total_pagos+=$pago->TotalEnviada @endphp
+                                @php 
+                                $total_enviado_bs =0;
+                                $total_solicitado_kilos =0;
+                                $total_enviado_kilos =0;
+                                @endphp
+                                @foreach($pedidos_detalle as $detalle)
+                                @php 
+                                $total_solicitado_kilos += $detalle->cantidad_solicitada;
+                                $total_enviado_kilos += $detalle->cantidadenviado;
+                                $total_enviado_bs +=$detalle->TotalEnviada;
+                                 @endphp
                                 <tr>
-                                    <td class="text-center">{{$pago->NombreProducto}}</td>
-                                    <td class="text-center">{{$pago->cantidadenviado}}</td>
-                                    <td class="text-center">{{ isset($pago->um)? $pago->um : 'Sin UM'}}</td>
-                                    <td class="text-center">{{$pago->precio}} Bs</td>
-                                    <td class="text-center table-success">{{$pago->TotalEnviada}} Bs</td>
+                                    <td class="text-center">{{$detalle->NombreProducto}}</td>
+                                    <td class="text-center">{{$detalle->cantidad_solicitada}}</td>
+                                    <td class="text-center">{{$detalle->cantidadenviado}}</td>
+                                    <td class="text-center">{{ isset($detalle->um)? $detalle->um : 'Sin UM'}}</td>
+                                    <td class="text-center">{{$detalle->precio}} Bs</td>
+                                    <td class="text-center table-success">{{$detalle->TotalEnviada}} Bs</td>
                                 </tr>
                                 @endforeach
                                 
                             </tbody>
                             <tfoot>
-                                <th style="text-align: center;" colspan="4" class="table-info">Total Enviado</th>
-                                <th style="text-align: center;" class="table-success">{{ $total_pagos}} Bs</th>
+                                <th style="text-align: center;" colspan="" class="table-info">Totales:</th>
+                                <th style="text-align: center;" class="table-success">{{ $total_solicitado_kilos}} Kg</th>
+                                <th style="text-align: center;" class="table-success">{{ $total_enviado_kilos}} Kg</th>
+                                <th style="text-align: center;" colspan="3" class="table-success">{{ $total_enviado_bs}} Bs</th>
                             </tfoot>
                         </table>
                     </div>

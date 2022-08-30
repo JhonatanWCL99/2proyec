@@ -20,8 +20,10 @@
                                     <th>ID</th>
                                     <th>Fecha inicio</th>
                                     <th>Fecha fin</th>
+                                    
                                     <th>Personal asignado</th>
                                     <th>Funcionario encargado</th>
+                                    <th>Estado</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
@@ -33,8 +35,17 @@
                                             </td>
                                             <td>{{ $vacacion->fecha_inicio }}</td>
                                             <td>{{ $vacacion->fecha_fin }}</td>
+                                            
                                             <td>{{ $vacacion->user->name }} </td>
                                             <td>{{ $vacacion->detalleVacacion->user->name }} </td>
+                                            <td> 
+                                                @if($vacacion->estado==0)           
+                                                <!-- <span class="badge badge-warning"> SOLICITADO </span> -->
+                                                <button class="btn btn-warning" onclick="cambiarEstado('{{$vacacion->id}}')">Aceptar Solicitud </button>
+                                                @else
+                                                <span class="badge badge-success"> ACEPTADO </span>
+                                                @endif                                                                                                                                                                                
+                                            </td>
                                             <td>
                                                 <div class="dropdown" style="position: absolute;">
                                                     <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -64,6 +75,15 @@
 </section>
 @endsection
 @section('scripts')
+
+<script>
+    let ruta_index = "{{ route('vacaciones.index') }}";
+
+    let ruta_cambiarestado = "{{route('vacaciones.cambiarestado','')}}";
+
+    const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+</script>
+
 @section('page_js')
     <script>
         $('#table').DataTable({
@@ -101,6 +121,67 @@
                 },
             ]
         });
+
+        function cambiarEstado(e) {
+            Swal.fire({
+                title: 'Solicitud de vacacion ',
+                text: "Aceptar solicitud de vacacion ? ",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(ruta_cambiarestado + '/'  +e, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            id: e
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-Token": csrfToken,
+                        },
+                    })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        if(data.status){
+                            iziToast.success({
+                                title: 'SUCCESS!',
+                                message: 'Vacacion Aceptada',
+                                position: "topRight",
+                                timeout: 1500,
+                                onClosed() {
+                                    window.location.href = ruta_index;
+                                }
+                            })
+                        }else{
+                            iziToast.warning({
+                                title: 'WARNING!',
+                                message: 'SOMETHING WENT WRONG!',
+                                position: "topRight",
+                                timeout: 1500,                                
+                            })
+                        }
+                       
+                    })
+                    .catch((error) => {
+                        iziToast.error({
+                            title: "ERROR",
+                            message: "Error al aceptar la vacacion",
+                            position: "topRight",
+                            timeout: 1500,
+
+                        });
+                    });
+
+                }
+            })
+        }
+
     </script>
     <script type="application/javascript">
         function deleteItem(e) {

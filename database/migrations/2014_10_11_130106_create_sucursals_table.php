@@ -19,6 +19,8 @@ class CreateSucursalsTable extends Migration
             $table->string('direccion');
             $table->string('correo')->nullable();
             $table->string('nro_fiscal');
+            $table->integer('codigo_fiscal');
+
             $table->boolean('estado');
 
 

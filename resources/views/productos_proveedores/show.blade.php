@@ -19,6 +19,11 @@
                 <div class="card-body">
                     <table class="table table-bordered table-striped ">
                         <tbody >
+                        
+                        @php 
+                        $fecha_formateada = \Carbon\Carbon::parse($producto_proveedor->fecha)->format('m-d-Y');
+                        @endphp
+                        
                         <tr>
                             <th>Proveedor Nombre</th>
                                 <td><span class="badge badge-primary">{{$producto_proveedor->proveedor->nombre }}</span></td>
@@ -31,7 +36,7 @@
 
                             <tr>
                                 <th>Unidad Medida</th>
-                                @if($producto_proveedor->producto->unidad_medida_compra->nombre )
+                                @if(isset($producto_proveedor->producto->unidad_medida_compra->nombre) )
                                 <td>{{ $producto_proveedor->producto->unidad_medida_compra->nombre }}</td>
                                 @else 
                                 <td>SIN UM</td>
@@ -45,7 +50,7 @@
                            
                             <tr>
                                 <th>Fecha Asignado</th>
-                                <td>{{ $producto_proveedor->fecha}}</td>
+                                <td>{{$fecha_formateada}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -77,7 +82,7 @@
                                         @foreach($historial_productos as $historial)
                                         <tr>
                                              @php 
-                                                $fecha_formateada = \Carbon\Carbon::parse($historial->fecha_compra)->format('d-m-Y');
+                                                $fecha_formateada = \Carbon\Carbon::parse($historial->fecha_compra)->format('m-d-Y');
                                              @endphp
                                             <td style="text-align: center;">{{  $fecha_formateada }}</td>
                                             <td style="text-align: center;">{{$historial->precio_compra}} Bs</td>    

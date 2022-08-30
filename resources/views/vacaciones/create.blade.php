@@ -70,6 +70,18 @@
 
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="estado">Estado<span
+                                                        class="required">*</span></label>
+                                                <select  id="" name="estado" class="form-control" required>                                                    
+                                                    <option value="1">HABILITADO</option>
+                                                    <option value="0">DESHABILITADO</option>                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-md-6">
                                         <button type="submit" class="btn btn-primary">Guardar</button>

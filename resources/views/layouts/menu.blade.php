@@ -19,18 +19,20 @@
         <li class="dropdown {{ $activePage === 'formulario' ? ' active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users titulo"></i> <span class="titulo">Ventas</span></a>
                 <ul class="dropdown-menu ">
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.index') }}" class="nav-link" >Registro de Dosificacion</a></li>
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.reporteVentas') }}" class="nav-link" >Reporte de Ventas</a></li>
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.reporteTransacciones') }}" class="nav-link" >Reporte de Transacciones</a></li>
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizaciones.verificar_codigo') }}" class="nav-link" >Verificar Codigo Control</a></li>
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizaciones.ventas_fiscales') }}" class="nav-link" >Reporte Ventas Fiscales</a></li>
-                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('pedidos_producciones.reporte_inventario') }}" class="nav-link" >Reporte Inventario Fiscal</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.index') }}" class="nav-link">Registro de Dosificacion</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.reporteVentas') }}" class="nav-link">Reporte de Ventas</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizacion.reporteTransacciones') }}" class="nav-link">Reporte de Transacciones</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizaciones.verificar_codigo') }}" class="nav-link">Verificar Codigo Control</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizaciones.ventas_fiscales') }}" class="nav-link">Reporte Ventas Fiscales</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('pedidos_producciones.reporte_inventario') }}" class="nav-link">Reporte Inventario Fiscal</a></li>
+                        <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('horarios.planillaHorarios') }}" class="nav-link">Planilla Horario</a></li>
                         
-        
+
+
                 </ul>
         </li>
         @endrole
-   
+
 
         @role('Super Admin|Contabilidad|Encargado')
         <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'productos' || $activePage === 'productos_proveedores'? ' active': '' }}">
@@ -51,7 +53,7 @@
         </li>
         @endrole
 
-                        
+
         @role('Super Admin')
         <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'platos' || $activePage === 'platos'? ' active': '' }}">
                 <a href="inventario" class="nav-link has-dropdown "><i class="fas fa-hamburger"></i><span>Menu Semanal</span></a>
@@ -99,7 +101,9 @@
                         <li class="nav-item{{ $activePage == 'sanciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('sanciones.index') }}">Sanciones</a></li>
                         <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('vacaciones.index') }}">Vacaciones</a></li>
                         <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('observaciones.index') }}">Observaciones</a></li>
-                       
+                        <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('manos_obras.reporteManoObraSucursal') }}">MO Sucursales</a></li>
+                        <li class="nav-item{{ $activePage == 'horario' ? ' active' : '' }}"><a class="nav-link" href="{{ route('horarios.planillaHorarios') }}">Carga Horaria</a></li>        
+                        
                         <li class="nav-item "> <a href="{{ route('personales.vencimientoContratos') }}">Vencimiento de Contratos </a> </li>
                         @endrole
                 </ul>
@@ -140,17 +144,35 @@
                 <a href="" class="nav-link has-dropdown"><i class="fas fa-building"></i> <span> Sucursales</span></a>
                 @role('Super Admin|Contabilidad|Encargado|Almacen|RRHH')
                 <ul class="dropdown-menu">
-                         @role('Super Admin|Contabilidad|RRHH')
-                        <li class="nav-item "> <a href="{{ route('retrasosFaltas.index') }}" > Retrasos y Faltas </a> </li>
-                        <li class="nav-item "> <a href="{{route('tareas.index')}}" > Actividades </a> </li>                        
-                        <li class="nav-item "> <a href="{{ route('manos_obras.index') }}" > Costo mano de Obra </a> </li>
-                        <li class="nav-item "> <a href="{{ route('evaluaciones.index') }}" > Criterios Evaluación </a> </li>
-                        <li class="nav-item "> <a href="{{ route('personales.listaevaluaciones') }}" > Evaluaciones </a> </li>
-                        <li class="nav-item "> <a href="{{ route('personales.mostrarUsuarios') }}" >Sgmt. de Actividades</a> </li>
-                        <li class="nav-item "> <a href="{{ route('menus_semanales.reporteMenu') }}" >Reporte Menu </a> </li>
+                        @role('Super Admin|Contabilidad|RRHH')
+                        <li class="nav-item "> <a href="{{ route('retrasosFaltas.index') }}"> Retrasos y Faltas </a> </li>
+                        <li class="nav-item "> <a href="{{route('tareas.index')}}"> Actividades </a> </li>
+                        <li class="nav-item "> <a href="{{ route('manos_obras.index') }}"> Costo mano de Obra </a> </li>
+                        <li class="nav-item "> <a href="{{ route('evaluaciones.index') }}"> Criterios Evaluación </a> </li>
+                        <li class="nav-item "> <a href="{{ route('personales.listaevaluaciones') }}"> Evaluaciones </a> </li>
+                        <li class="nav-item "> <a href="{{ route('personales.mostrarUsuarios') }}">Sgmt. de Actividades</a> </li>
+                        <li class="nav-item "> <a href="{{ route('menus_semanales.reporteMenu') }}">Reporte Menu </a> </li>
                         @endrole
-                        <li class="nav-item "> <a href="{{route('personales.listaTareas')}}" > Mis Tareas </a> </li>
+                        <li class="nav-item "> <a href="{{route('personales.listaTareas')}}"> Mis Tareas </a> </li>
                 </ul>
                 @endrole
         </li>
         @endrole
+
+        <li class="dropdown">
+                <a href="" class="nav-link has-dropdown"><i class="fas fa-bookmark"></i> <span>Reportes</span></a>
+                <ul class="dropdown-menu">
+                        <li class="nav-item"> <a href="{{ route('ventas.ventas_sucursal') }}">Ventas por Sucursal</a> </li>
+                </ul>
+
+        </li>
+
+        <li class="dropdown">
+                <a href="" class="nav-link has-dropdown"><i class="fas fa-bookmark"></i> <span>Siat</span></a>
+                <ul class="dropdown-menu">
+                        <li class="nav-item"> <a href="{{ route('cuis.index') }}">Cuis</a> </li>
+                        <li class="nav-item"> <a href="{{ route('cufd.index') }}">Cufd</a> </li>
+                        <li class="nav-item"> <a href="{{ route('puntos_ventas.index') }}">Punto Venta</a> </li>
+                </ul>
+
+        </li>

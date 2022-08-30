@@ -24,12 +24,13 @@ class PedidoProduccionController extends Controller
 
     public function index()
     {
+        $fecha = Carbon::now()->toDateString();
         $sucursales = Sucursal::all();
         $user_rol = Auth::user()->roles[0]->id;
         if ($user_rol == 3) {
             $pedidos_producciones = PedidoProduccion::where('sucursal_usuario_id', Auth::user()->sucursals[0]->id)->get();
         } else {
-            $pedidos_producciones = PedidoProduccion::all();
+            $pedidos_producciones = PedidoProduccion::where('fecha_pedido',$fecha)->get();
         }
         return view('pedidos_producciones.index', compact('pedidos_producciones', 'sucursales'));
     }
@@ -43,25 +44,16 @@ class PedidoProduccionController extends Controller
     {
 
         $fecha_actual = Carbon::now()->locale('es')->addDay(1)->isoFormat('dddd');
-       /*  dd($fecha_actual); */
 
         $pedidos_producciones = PedidoProduccion::all();
         $menu_semanal = MenuSemanal::where('dia', $fecha_actual)->first();
-/* 
-        dd($menu_semanal); */
 
         return view('pedidos_producciones.create', compact('pedidos_producciones', 'menu_semanal', 'fecha_actual'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        /* dd($request); */
+
         $user_log = Auth::id();
         $user = User::find($user_log);
 
@@ -104,12 +96,6 @@ class PedidoProduccionController extends Controller
         );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $pedido = PedidoProduccion::find($id);
@@ -117,42 +103,31 @@ class PedidoProduccionController extends Controller
         return view('pedidos_producciones.show', compact('pedido'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+        $fecha_actual = Carbon::now()->locale('es')->addDay(1)->isoFormat('dddd');
+        
+        $menu_semanal = MenuSemanal::where('dia', $fecha_actual)->first();
+        
+        $pedido = PedidoProduccion::find($id);
+        $categorias = Categoria::all();
+        
+        //dd($pedido->detalle_pedido_produccion[0]->plato);
+        
+        return view('pedidos_producciones.editar',compact('pedido','categorias' ,'menu_semanal', 'fecha_actual'));
+
+    }
+    
     public function update(Request $request, $id)
     {
-        //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy($id)
     {
         PedidoProduccion::destroy($id);
         return response()->json(['success' => true], 200);
     }
-
-
 
     public function agregarPlato(Request $request)
     {
@@ -188,13 +163,31 @@ class PedidoProduccionController extends Controller
 
     public function obtenerCosto(Request $request)
     {
-
         if (isset($request->plato_id)) {
             $costo = Plato::select('costo_plato')->where('id', $request->plato_id)->get();
-
             return response()->json(
                 [
                     'costo_plato' => $costo,
+                    'success' => true
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'success' => false
+                ]
+            );
+        }
+    }
+
+    public function obtenerCostoPlato(Request $request)
+    {
+        if (isset($request->plato_id)) {
+            $costo = Plato::where('id', $request->plato_id)->first();
+            return response()->json(
+                [
+                    'plato' => $costo,
+                    'um'=>$costo->unidad_medida_compra->nombre,
                     'success' => true
                 ]
             );
@@ -397,6 +390,7 @@ class PedidoProduccionController extends Controller
 
 
         return view('pedidos_producciones.index', compact('pedidos_producciones', 'filtrado', 'sucursales'));
+        
     }
 
     public function reporteProduccionEnviada(Request $request)
@@ -408,17 +402,13 @@ class PedidoProduccionController extends Controller
 
             $fecha = Carbon::now()->toDateString();
 
-            $pedidos_producciones = DB::select("SELECT  platos.nombre ,sucursals.nombre as sucursal_nombre, pedidos_produccion.sucursal_usuario_id as sucursal_id,
+            $pedidos_producciones = DB::select("SELECT  sucursals.nombre as sucursal_nombre, pedidos_produccion.sucursal_usuario_id as sucursal_id,
             SUM(pedidos_produccion.total_solicitado) as TotalProduccionSolicitada, 
-            SUM(pedidos_produccion.total_enviado) as TotalProduccionEnviada,
-            sum(detalle_pedidos_produccion.cantidad_solicitada) as cantidad_kilos_solicitados,
-            sum(detalle_pedidos_produccion.cantidad_enviada) as cantidad_kilos_enviados
+            SUM(pedidos_produccion.total_enviado) as TotalProduccionEnviada
             from pedidos_produccion 
-            JOIN detalle_pedidos_produccion on detalle_pedidos_produccion.pedido_produccion_id = pedidos_produccion.id
-            JOIN platos on platos.id = detalle_pedidos_produccion.plato_id
             join sucursals on sucursals.id = pedidos_produccion.sucursal_usuario_id
             WHERE pedidos_produccion.fecha_pedido  BETWEEN '$fecha_inicial' and '$fecha_final' 
-            GROUP by sucursals.nombre,platos.nombre,pedidos_produccion.sucursal_usuario_id;");
+            GROUP by sucursals.nombre,pedidos_produccion.sucursal_usuario_id");
             
 
             $pedidos =  DB::select("SELECT sucursals.nombre as sucursal_nombre,
@@ -436,17 +426,13 @@ class PedidoProduccionController extends Controller
             $fecha_final = Carbon::now()->toDateString();
             $fecha = Carbon::now()->toDateString();
 
-            $pedidos_producciones = DB::select(" SELECT platos.nombre ,sucursals.nombre as sucursal_nombre,pedidos_produccion.sucursal_usuario_id as sucursal_id,
+            $pedidos_producciones = DB::select(" SELECT sucursals.nombre as sucursal_nombre,pedidos_produccion.sucursal_usuario_id as sucursal_id,
             SUM(pedidos_produccion.total_solicitado) as TotalProduccionSolicitada, 
-            SUM(pedidos_produccion.total_enviado) as TotalProduccionEnviada,
-            sum(detalle_pedidos_produccion.cantidad_solicitada) as cantidad_kilos_solicitados,
-            sum(detalle_pedidos_produccion.cantidad_enviada) as cantidad_kilos_enviados
+            SUM(pedidos_produccion.total_enviado) as TotalProduccionEnviada
             from pedidos_produccion 
-            JOIN detalle_pedidos_produccion on detalle_pedidos_produccion.pedido_produccion_id = pedidos_produccion.id
-            JOIN platos on platos.id = detalle_pedidos_produccion.plato_id
             join sucursals on sucursals.id = pedidos_produccion.sucursal_usuario_id
             WHERE pedidos_produccion.fecha_pedido  BETWEEN '$fecha_inicial' and '$fecha_final' 
-            GROUP by sucursals.nombre,platos.nombre,pedidos_produccion.sucursal_usuario_id");
+            GROUP by sucursals.nombre,pedidos_produccion.sucursal_usuario_id");
             
 
                     $pedidos =  DB::select("SELECT sucursals.nombre as sucursal_nombre,
@@ -463,8 +449,9 @@ class PedidoProduccionController extends Controller
 
     public function verDetalleReporteProduccion($sucursal_id, $fecha_inicial, $fecha_final)
     {
-        $pedidos_detalle = DB::select("select sucursals.nombre as sucursal_nombre,
+        $pedidos_detalle = DB::select("SELECT sucursals.nombre as sucursal_nombre,
             platos.nombre as NombreProducto, unidades_medidas_ventas.nombre as um,
+            sum(detalle_pedidos_produccion.cantidad_solicitada) as cantidad_solicitada,
             sum(detalle_pedidos_produccion.cantidad_enviada) as cantidadenviado,
             detalle_pedidos_produccion.precio as precio,
             SUM(detalle_pedidos_produccion.subtotal_enviado) as TotalEnviada 

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\AutorizacionController;
 use App\Models\CategoriaPlato;
 use App\Models\Compra;
 use App\Models\DetalleVenta;
@@ -17,6 +18,10 @@ use App\Models\PlatoSucursal;
 use App\Models\Turno;
 use App\Models\ParteProduccion;
 use Illuminate\Support\Facades\DB;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionCodigos;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\SiatConfig;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +33,10 @@ use Illuminate\Support\Facades\DB;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+
+    
 
 Route::post('/login_sales', [AuthController::class, 'login']);
 
@@ -44,7 +53,7 @@ Route::get('get_transaction', [\App\Http\Controllers\Api\TurnoController::class,
 Route::get('check_open_turn', [\App\Http\Controllers\Api\TurnoController::class, 'check_open_turn'])->name('check_open_turn');
 
 Route::get('get_open_turn', [\App\Http\Controllers\Api\TurnoController::class, 'get_open_turn'])->name('get_open_turn');
-
+Route::post('turn_register', [\App\Http\Controllers\Api\TurnoController::class, 'turn_register'])->name('turn_register');
 
 
 
@@ -135,47 +144,6 @@ Route::post('comprobeishon_turn', function (Request $request) {
         'turno_id' => $turno_am,
 
     ];
-    return response($response, 200)->header('Content-Type', 'application/json');
-});
-
-Route::post('turn_register', function (Request $request) {
-
-    $user = $request->user_id;
-    $sucursal = $request->sucursal_id;
-    $fecha = Carbon::now()->format('Y-m-d');
-    $turno_am = DB::select("select turno from turnos_ingresos where fecha = '$fecha' and user_id = '$user' and turno = 0");
-    if ($turno_am == null) {
-        $turno = new TurnoIngreso();
-        $turno->fecha = Carbon::now();
-        $turno->estado = 1; /* Si es abierto y cerrado el turno */
-        $turno->turno = 0;  /* AM  */
-        $turno->hora_inicio = Carbon::now()->format('H:i:s');
-        $turno->user_id = $user;
-        $turno->sucursal_id = $sucursal;
-        $turno->nro_transacciones = 0;
-        $turno->save();
-
-        $response = [
-            'success' => true,
-            'tt' => $turno_am,
-            'turno_id' => $turno->id
-        ];
-    } else {
-        $turno = new TurnoIngreso();
-        $turno->fecha = Carbon::now();
-        $turno->estado = 1; /* Si es abierto y cerrado el turno */
-        $turno->turno = 1;  /* PM */
-        $turno->hora_inicio = Carbon::now()->format('H:i:s');
-        $turno->user_id = $user;
-        $turno->sucursal_id = $sucursal;
-        $turno->save();
-
-        $response = [
-            'success' => true,
-            'tt' => $turno_am,
-            'turno_id' => $turno->id,
-        ];
-    }
     return response($response, 200)->header('Content-Type', 'application/json');
 });
 
@@ -406,3 +374,50 @@ Route::get('filter_client_phone', function (Request $request) {
     ];
     return response($response, 200)->header('Content-Type', 'application/json');
 });
+
+
+
+/*REGISTRAR PUNTO DE VENTA*/
+Route::get('registroPuntoVenta', [\App\Http\Controllers\Api\FacturacioEnLineaController::class, 'registroPuntoVentaAPI']);
+
+/*ETAPA 1 : OBTENER CUIS*/
+Route::get('obtenerCuis', [\App\Http\Controllers\Api\FacturacioEnLineaController::class, 'obtenerCuisAPI']);
+
+
+/*ETAPA 2 : SINCRONIZACION DE CATALOGOS*/
+Route::get('sincronizarCatalogos', [\App\Http\Controllers\Api\FacturacioEnLineaController::class, 'sincronizarListaLeyendasFacturaAPI']);
+
+/* ETAPA 3 OBTENER CODIGO CUFD */
+Route::get('obtenerCufdAPI', [\App\Http\Controllers\Api\FacturacioEnLineaController::class, 'obtenerCufdAPI']);
+
+
+Route::get('sincronizarTotalTipoEmisionAPI', [\App\Http\Controllers\Api\FacturacioEnLineaController::class, 'sincronizarTotalTipoEmisionAPI']);
+
+Route::get('sincronizarTiposDocumentoSector', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'sincronizarTiposDocumentoSector']); 
+
+Route::get('ejecutar_pruebas_catalogos', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'ejecutar_pruebas_catalogos']); 
+
+
+ Route::get('sincronizarListadoTotalActividades', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'sincronizarListadoTotalActividades']);  
+
+ Route::get('sincronizarListaLeyendasFactura', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'sincronizarListaLeyendasFactura']);  
+
+ Route::get('sincronizarFechaHora', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'sincronizarFechaHora']);  
+
+ /*ETAPA 4 EMISION INDIVIDUAL*/  
+ Route::get('emisionIndividual', [\App\Http\Controllers\Siat\EmisionIndividualController::class, 'emisionIndividual']);  
+
+ /* 5TA ETAPA EVENTOS SIGNIFICATIVOS */
+
+ Route::get('generar_evento_significativo', [\App\Http\Controllers\Siat\EventoSignificativoController::class, 'generar_evento_significativo']);  
+
+
+  /*ETAPA 6 EMISION POR PAQUETES*/  
+ Route::get('emisionPaquetes', [\App\Http\Controllers\Siat\EmisionPaqueteController::class, 'emisionPaquetes']);  
+
+ /* ETAPA 7 ANULACION FACTURAS */
+ Route::get('test_anulacion_factura', [\App\Http\Controllers\Siat\AnulacionFacturaController::class, 'test_anulacion_factura']);  
+
+ /* ETAPA 8 FIRMA DIGITAL */
+
+ Route::get('generar_firma_digital', [\App\Http\Controllers\Siat\FirmaDigitalController::class, 'generar_firma_digital']);  

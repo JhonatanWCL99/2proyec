@@ -36,6 +36,7 @@ class AuthController extends Controller
                 'codigo'=>Auth::user()->codigo,
                 'sucursal' => Auth::user()->sucursals[0]->id,
                 'sucursal_nombre' => Auth::user()->sucursals[0]->nombre,
+                'codigo_fiscal' => Auth::user()->sucursals[0]->codigo_fiscal,
                 'rol' => Auth::user()->roles[0]->id,
                 'cargo' =>Auth::user()->cargosucursals[0]->nombre_cargo,
                 'error'=>null,
@@ -72,6 +73,7 @@ class AuthController extends Controller
        }else{
            $credentials=request(['codigo']);
             if(!Auth::attempt($credentials)){
+
                 return response()->json(['error'=>'datos invalidos']);
             }
             $user=User::where('codigo',$request->codigo)->first();

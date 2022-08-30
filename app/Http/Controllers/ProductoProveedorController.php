@@ -146,9 +146,9 @@ class ProductoProveedorController extends Controller
         $producto = $producto_proveedor->producto;
 
        /*  dd($producto); */
-        if($producto->categoria_id!=8){
+       /*  if($producto->categoria_id!=8){
             return redirect()->route('productos_proveedores.index')->with('editar','false');
-        }
+        } */
         return view('productos_proveedores.edit', compact('producto_proveedor'));
     }
 

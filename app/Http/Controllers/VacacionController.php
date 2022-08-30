@@ -46,6 +46,7 @@ class VacacionController extends Controller
 
         $vacacion->fecha_inicio = $request->get('fecha_inicio');
         $vacacion->fecha_fin = $request->get('fecha_fin');
+        $vacacion->estado = $request->get('estado');
         $vacacion->user_id = $request->get('usuario_solicitante');
         $vacacion->save();
 
@@ -103,6 +104,7 @@ class VacacionController extends Controller
 
         $vacacion->fecha_inicio = $request->get("fecha_inicio");
         $vacacion->fecha_fin = $request->get("fecha_fin");
+        $vacacion->estado = $request->get("estado");
         $vacacion->save();
         $detalleVacacion = DetalleVacacion::where('vacacion_id', $vacacion->id)->first();
 
@@ -158,6 +160,7 @@ class VacacionController extends Controller
 
         $vacacion->fecha_inicio = $request->get("fecha_inicio");
         $vacacion->fecha_fin = $request->get("fecha_fin");
+        $vacacion->estado = $request->get("estado");
         $vacacion->user_id = $user->id;
         $vacacion->save();
 
@@ -176,5 +179,15 @@ class VacacionController extends Controller
         }
 
         return redirect()->route('personales.showDetalleContrato',$user->id);
+    }
+
+    function cambiarestado(Request $request){
+        $vacacion = Vacacion::findOrfail($request->id);
+            $vacacion->update([
+                'estado' => 1,
+            ]);
+        
+        return response()->json([ 'status' => true]);
+        
     }
 }

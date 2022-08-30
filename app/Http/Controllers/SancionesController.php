@@ -25,6 +25,14 @@ class SancionesController extends Controller
         return view('sanciones.index', compact('sanciones'));
     }
 
+    public function filtrarSanciones(Request $request){
+        $fecha_inicial =$request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+
+        $sanciones = Sanciones::whereBetween('fecha', [$fecha_inicial, $fecha_final])->get();
+        return view('sanciones.index', compact('sanciones'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

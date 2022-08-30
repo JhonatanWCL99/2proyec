@@ -183,7 +183,7 @@ class AsignarStockController extends Controller
             ->join('productos', 'productos.id', '=', 'detalles_inventario.producto_id')
             ->join('stock_ideal', 'stock_ideal.sucursal_id', '=', 'sucursals.id')
             ->join('detalles_stock_ideal', 'detalles_stock_ideal.asignar__stock_id', '=', 'stock_ideal.id')
-            ->groupBy(['sucursals.id', 'sucursals.nombre', 'productos.id', 'productos.nombre', 'detalles_inventario.stock', 'detalles_stoc k_ideal.cantidad', 'detalles_stock_ideal.producto_id', 'detalles_inventario.producto_id'])
+            ->groupBy(['sucursals.id', 'sucursals.nombre', 'productos.id', 'productos.nombre', 'detalles_inventario.stock', 'detalles_stock_ideal.cantidad', 'detalles_stock_ideal.producto_id', 'detalles_inventario.producto_id'])
             ->where('productos.categoria_id', '=', 9)
             ->whereDate('inventarios.fecha', '=', $fecha_anterior)
             ->get();

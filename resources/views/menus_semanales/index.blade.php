@@ -53,7 +53,7 @@
                                                         </form>
                                                     </li>
                                                 </ul>
-                                               
+                                            
                                             </div>
                                         </td>
                                     </tr>
@@ -66,8 +66,8 @@
             </div>
         </div>
     </div>
-
 </section>
+
 @endsection
 @section('scripts')
 
@@ -133,6 +133,7 @@
 
     }
 </script>
+
 <script>
     $('#table').DataTable({
         language: {
@@ -167,7 +168,5 @@
         ]
     });
 </script>
-
-
 
 @endsection

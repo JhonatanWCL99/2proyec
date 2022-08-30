@@ -21,7 +21,7 @@
 
 
                                         <label for="exampleInputEmail1">Fecha </label>
-                                        <input type="date" class="form-control" name="fecha" id="fecha" >
+                                        <input type="text" class="form-control" name="fecha" id="fecha" >
                                     </div>
 
                                     <div class="form-group">

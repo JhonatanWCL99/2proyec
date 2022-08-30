@@ -88,22 +88,30 @@
                         @php
                         $total =0;
                         @endphp
+
                         @if (session('menus_semanales'))
-                        @foreach (session('menus_semanales') as $indice => $value)
-                        <tr>  
-                            <td style="text-align: center;"> {{ $value['dia'] }}</td>
-                            <td style="text-align: center;">{{$value['plato_nombre']}} </td>
-                            <td style="text-align: center;"> {{ $value['categoria_plato'] }}</td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-danger" onclick="eliminar({{ $indice }});"><i class="fas fa-trash"></i></button>
-                            </td>
-                            
-                        </tr>
-                        @endforeach
+
+                            @php
+                                //dd( session('menus_semanales') );
+                            @endphp
+
+                            @foreach (session('menus_semanales') as $indice => $value)
+                            <tr>  
+                                <td style="text-align: center;"> {{ $value['dia'] }}</td>
+                                <td style="text-align: center;">{{ $value['plato_nombre'] }} </td>
+                                <td style="text-align: center;"> {{ isset($value['categoria_plato'])?$value['categoria_plato'] : 'NINGUNO' }}</td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-danger" onclick="eliminar({{ $indice }});"><i class="fas fa-trash"></i></button>
+                                </td>
+                                
+                            </tr>
+                            @endforeach
+
                         @endif
                        {{--  <tr>
                             <td colspan="6" style="text-align: center;" class="table-danger">Total: {{ number_format($total,3) }} Bs</td>
                         </tr> --}}
+
                     </tbody>
                 </table>
             </div>
@@ -135,10 +143,8 @@
     let ruta_agregar_plato = "{{ route('menus_semanales.agregarPlato') }}";
     let ruta_eliminar_plato = "{{ route('menus_semanales.eliminarPlato') }}";
     let ruta_guardar_menu = "{{ route('menus_semanales.store') }}";
-
     
     let ruta_menu_index = "{{ route('menus_semanales.index') }}";
-
     
 </script>
 

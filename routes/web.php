@@ -35,7 +35,8 @@
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\Auth;
     use App\Http\Controllers\MenuCalificacionController;
-    use App\Http\Controllers\VentaController;
+use App\Http\Controllers\Siat\RegistrarPuntoVentaController;
+use App\Http\Controllers\VentaController;
     /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -142,9 +143,11 @@
     });
 
     /*Rutas Inventario*/
+    Route::resource('inventarios', InventarioController::class);
+    Route::post('/inventarios/filtrarinventario', [InventarioController::class, 'filtrarinventario'])->name('inventarios.filtrarInventario');
+    Route::get('/inventarios/showInventarioSistema/{id}', [InventarioController::class, 'showInventarioSistema'])->name('inventarios.showInventarioSistema');
     Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad']], function () {
 
-        Route::resource('inventarios', InventarioController::class);
         Route::post('/inventarios/obtenerInsumos', [App\Http\Controllers\InventarioController::class, 'obtenerInsumos'])->name('inventarios.obtenerInsumos');
         Route::post('/inventarios/guardarDetalleInventario', [App\Http\Controllers\InventarioController::class, 'guardarDetalleInventario'])->name('inventarios.guardarDetalleInventario');
         Route::post('/inventarios/obtenerUM', [InventarioController::class, 'obtenerUM'])->name('inventarios.obtenerUM');
@@ -152,9 +155,7 @@
         Route::post('/inventarios/obtenerPrecio', [InventarioController::class, 'obtenerPrecios'])->name('inventarios.obtenerPrecios');
         Route::post('/inventarios/obtenerProductoxId', [InventarioController::class, 'obtenerProductosxId'])->name('inventarios.obtenerProductosxId');
         Route::post('/inventarios/eliminarDetalle', [InventarioController::class, 'eliminarDetalle'])->name('inventarios.eliminarDetalle');
-        Route::post('/inventarios/filtrarinventario', [InventarioController::class, 'filtrarinventario'])->name('inventarios.filtrarInventario');
         Route::post('/inventarios/actualizarInventario', [InventarioController::class, 'actualizarInventarios'])->name('inventarios.actualizarInventario');
-        Route::get('/inventarios/showInventarioSistema/{id}', [InventarioController::class, 'showInventarioSistema'])->name('inventarios.showInventarioSistema');
         
     
     });
@@ -245,6 +246,7 @@
         Route::get('/personales/evaluaciones/reporteEvaluaciones', [App\Http\Controllers\UserController::class, 'reporteEvaluaciones'])->name('personales.reporteEvaluaciones');
         Route::get('/personales/evaluaciones/evaluacionesUsuario/{id}', [App\Http\Controllers\UserController::class, 'evaluacionesUsuario'])->name('personales.evaluacionesUsuario');
         Route::post('/personales/evaluaciones/evaluacionesUsuario/{id}', [App\Http\Controllers\UserController::class, 'filtrarEvaluacionUsuario'])->name('personales.filtrarEvaluacionUsuario');
+        
     });
 
     Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Encargado|Almacen|Atencion']], function () {
@@ -276,6 +278,7 @@
     /*Rutas Sanciones  1*/
     Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Contabilidad']], function () {
         Route::get('/sanciones', [App\Http\Controllers\SancionesController::class, 'index'])->name('sanciones.index');
+        Route::get('/sanciones/filtrar', [App\Http\Controllers\SancionesController::class, 'filtrarSanciones'])->name('sanciones.filtrarSanciones');
         Route::get('/sanciones/create', [App\Http\Controllers\SancionesController::class, 'create'])->name('sanciones.create');
         Route::post('/sanciones', [App\Http\Controllers\SancionesController::class, 'store'])->name('sanciones.store');
         Route::get('/sanciones/show/{id}', [App\Http\Controllers\SancionesController::class, 'show'])->name('sanciones.show');
@@ -293,6 +296,7 @@
         Route::post('/funcionarios', [App\Http\Controllers\HorarioController::class, 'funcionarios'])->name('sucursal.funcionarios');
         Route::get('horarios/reporteHorario', [App\Http\Controllers\HorarioController::class, 'reporteHorario'])->name('horarios.reporteHorario');
         Route::get('/planillaHorarios', [App\Http\Controllers\HorarioController::class, 'planillaHorarios'])->name('horarios.planillaHorarios');
+      
         Route::post('/planillaHorarios', [App\Http\Controllers\HorarioController::class, 'obtenerFuncionarios'])->name('horarios.obtenerFuncionarios');
     });
 
@@ -316,6 +320,8 @@
     /*Rutas vacaciones ?*/
     Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH']], function () {
         Route::resource('vacaciones', VacacionController::class);
+        Route::post('/vacaciones/cambiarestado/{id}', [App\Http\Controllers\VacacionController::class, 'cambiarestado'])->name('vacaciones.cambiarestado');
+
     });
 
     /*Rutas Roles ?*/
@@ -470,6 +476,8 @@
         Route::get('/pedidos/verDetalleReporte/{sucursal_id}/{fecha_inicial}/{fecha_final}', [App\Http\Controllers\PedidoController::class, 'verDetalleReporte'])->name('pedidos.verDetalleReporte');
         Route::get('/pedidos/verDetalleReporteProduccion/{sucursal_id}/{fecha_inicial}/{fecha_final}', [App\Http\Controllers\PedidoProduccionController::class, 'verDetalleReporteProduccion'])->name('pedidos.verDetalleReporteProduccion');
 
+        Route::get('/pedidos/total_insumos_solicitados', [App\Http\Controllers\PedidoController::class, 'total_insumos_solicitados'])->name('pedidos.total_insumos_solicitados');
+
     });
 
     Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
@@ -527,6 +535,7 @@
     Route::post('/costos_cuadriles/registrarCajaChica', [App\Http\Controllers\CostoCuadrilController::class, 'registrarCajaChica'])->name('costos_cuadriles.registrarCajaChica');
     Route::post('/costos_cuadriles/agregarDetalle', [App\Http\Controllers\CostoCuadrilController::class, 'agregarDetalle'])->name('costos_cuadriles.agregarDetalle');
     Route::post('/costos_cuadriles/eliminarDetalle', [App\Http\Controllers\CostoCuadrilController::class, 'eliminarDetalle'])->name('costos_cuadriles.eliminarDetalle');
+    Route::post('/costos_cuadriles/filtrarCortes', [CostoCuadrilController::class, 'filtrarCortes'])->name('costos_cuadriles.filtrarCortes');
 
     /* Keperis Rutas 1* */
 
@@ -578,6 +587,7 @@
         Route::post('/pedidos_producciones', [App\Http\Controllers\PedidoProduccionController::class, 'store'])->name('pedidos_producciones.store');
         Route::post('pedidos_producciones/create/guardarPedido', [App\Http\Controllers\PedidoProduccionController::class, 'store'])->name('pedidos_producciones.guardarPedido');
         Route::post('pedidos_producciones/create/obtenerCosto', [App\Http\Controllers\PedidoProduccionController::class, 'obtenerCosto'])->name('pedidos_producciones.obtenerCosto');
+        Route::post('pedidos_producciones/create/obtenerCostoPlato', [App\Http\Controllers\PedidoProduccionController::class, 'obtenerCostoPlato'])->name('pedidos_producciones.obtenerCostoPlato');
         Route::post('pedidos_producciones/create/agregarPlato', [App\Http\Controllers\PedidoProduccionController::class, 'agregarPlato'])->name('pedidos_producciones.agregarPlato');
         Route::post('platos_sucursales/create/eliminarPlato', [App\Http\Controllers\PedidoProduccionController::class, 'eliminarPlato'])->name('pedidos_producciones.eliminarPlato');
         Route::get('/pedidos_producciones/show/{id}', [App\Http\Controllers\PedidoProduccionController::class, 'show'])->name('pedidos_producciones.show');
@@ -613,7 +623,7 @@
         Route::post('partes_producciones/create/obtenerPrecios', [App\Http\Controllers\ParteProduccionController::class, 'obtenerPrecios'])->name('partes_producciones.obtenerPrecios');
         Route::get('/partes_producciones/show/{id}', [App\Http\Controllers\ParteProduccionController::class, 'show'])->name('partes_producciones.show');
         Route::post('partes_producciones/eliminarInsumo', [App\Http\Controllers\ParteProduccionController::class, 'eliminarInsumo'])->name('partes_producciones.eliminarInsumo');
-
+        Route::post('/partes_producciones/filtrarpartes_producciones', [ParteProduccionController::class, 'filtrarpartes_producciones'])->name('partes_producciones.filtrarpartes_producciones');
         Route::get('/partes_producciones/edit/{id}', [App\Http\Controllers\ParteProduccionController::class, 'edit'])->name('partes_producciones.edit');
         Route::delete('/partes_producciones/{id}', [\App\Http\Controllers\ParteProduccionController::class, 'destroy'])->name('partes_producciones.destroy');
         Route::put('/partes_producciones/{id}', [App\Http\Controllers\ParteProduccionController::class, 'update'])->name('partes_producciones.update');
@@ -632,6 +642,9 @@
         Route::put('/manos_obras/{id}', [App\Http\Controllers\ManoObraController::class, 'update'])->name('manos_obras.update');
         Route::post('manos_obras/create/agregarFuncionario', [App\Http\Controllers\ManoObraController::class, 'agregarFuncionario'])->name('manos_obras.agregarFuncionario');
         Route::post('manos_obras/eliminarFuncionario', [App\Http\Controllers\ManoObraController::class, 'eliminarFuncionario'])->name('manos_obras.eliminarFuncionario');
+        Route::get('/manos_obras/reporteManoObraSucursal/', [App\Http\Controllers\ManoObraController::class, 'reporteManoObraSucursal'])->name('manos_obras.reporteManoObraSucursal');
+        Route::get('/manos_obras/detalle_mo_sucursal/{sucursal_id}', [App\Http\Controllers\ManoObraController::class, 'detalle_mo_sucursal'])->name('manos_obras.detalle_mo_sucursal');
+        
         
     });
 
@@ -644,16 +657,24 @@
         Route::get('/autorizaciones/verificar_codigo', [App\Http\Controllers\AutorizacionController::class, 'verificar_cod_control'])->name('autorizaciones.verificar_codigo');
         Route::get('/autorizaciones/ventas_fiscales', [App\Http\Controllers\AutorizacionController::class, 'ventas_fiscales'])->name('autorizaciones.ventas_fiscales');
         Route::get('/autorizaciones/ventas_fiscales', [App\Http\Controllers\AutorizacionController::class, 'ventas_fiscales'])->name('autorizaciones.ventas_fiscales');
-        
-       
-        
-
-      
-        
+          
         //reporteVentas
     });
 
     //formulariodoficacion
+    Route::get('/reportes/ventas_sucursal', [App\Http\Controllers\VentaController::class, 'ventas_sucursal'])->name('ventas.ventas_sucursal');
 
+
+    /* RUTAS FACTURACION EN LINEA */
+    Route::get('/cuis/index', [App\Http\Controllers\Siat\CuisController::class, 'index'])->name('cuis.index');
+    Route::get('/cuis/create', [App\Http\Controllers\Siat\CuisController::class, 'create'])->name('cuis.create');
+    Route::post('/cuis', [App\Http\Controllers\Siat\CuisController::class, 'store'])->name('cuis.store');
+    Route::get('/cufd/index', [App\Http\Controllers\Siat\CufdController::class, 'index'])->name('cufd.index');
+
+        /* REGISTRO PUNTO VENTA */
+    Route::resource('puntos_ventas', RegistrarPuntoVentaController::class);
+
+    /* Sincronizar Catalogos */
+    Route::get('/sincronizar_catalogos/ejecutar_pruebas_catalogos', [App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'ejecutar_pruebas_catalogos'])->name('sincronizar_catalogos.ejecutar_pruebas_catalogos');
 
 

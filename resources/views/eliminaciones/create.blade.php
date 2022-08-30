@@ -66,15 +66,7 @@
                                             @foreach($categorias as $categoria)
                                             <optgroup label="{{Str::upper( $categoria->nombre)}}">
                                                 @foreach($categoria->productos as $producto)
-                                                    @if($inventario_sistema!=null)
-                                                        @foreach($inventario_sistema->detalle_inventarios as $detalle)
-                                                            @if($producto->id == $detalle->producto_id)
-                                                                <option value="{{$producto->id}}">{{$producto->nombre}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    @else
-                                                        <option value="{{$producto->id}}">{{$producto->nombre}}</option>
-                                                    @endif
+                                                <option value="{{$producto->id}}">{{$producto->nombre}}</option>
                                                 @endforeach
                                             </optgroup>
                                             @endforeach
@@ -83,13 +75,11 @@
                                     <div id="proddd">
                                         <select name="producto_prod" id="producto_prod" class="form-select" style="width: 100%;">
                                             <option value="sin_seleccionar" id="sin_seleccionar">Seleccionar Producto</option>
-                                            @foreach($categorias_produccion as $categoria)
-                                            <optgroup label="{{Str::upper( $categoria->nombre)}}">
-                                                @foreach($categoria->platos as $producto)
+                             
+                                                @foreach($platos as $producto)
                                                 <option value="{{$producto->id}}">{{$producto->nombre}}</option>
                                                 @endforeach
-                                            </optgroup>
-                                            @endforeach
+            
                                         </select>
                                     </div>
                                     <p class="text-left text-danger d-none" id="errorproducto">Debe seleccionar un producto</p>
@@ -179,7 +169,7 @@
                     <div class="card-footer">
                         <div class=" text-center">
                             <button type="button" class="btn btn-primary" id="registrar_eliminacion">Registrar Eliminacion</button>
-                            <a  class="btn btn-danger" id="cancelar" href="{{route('eliminaciones.index')}}">Cancelar </a>
+                            <a class="btn btn-danger" id="cancelar" href="{{route('eliminaciones.index')}}">Cancelar </a>
                         </div>
                     </div>
                 </div>

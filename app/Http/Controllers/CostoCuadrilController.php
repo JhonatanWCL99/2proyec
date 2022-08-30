@@ -172,8 +172,13 @@ class CostoCuadrilController extends Controller
     }
 
     public function filtrarCortes(Request $request){
-        $fecha_inicial = $request->fecha;
-        $cortes = CostoCuadril::where('fecha',$fecha_inicial)->get();
-        return view();
-    }
+        $fecha_actual = Carbon::now()->toDateString();
+        $fecha_inicial = $request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+        $costos_cuadriles = CostoCuadril::whereBetween('fecha',[$fecha_inicial,$fecha_final])->get();
+
+        $cortes = CostoCuadril::whereBetween('fecha',[$fecha_inicial,$fecha_final])->get();
+
+        return view('costos_cuadriles.index', compact('cortes', 'fecha_inicial','costos_cuadriles'));   
+     }
 }

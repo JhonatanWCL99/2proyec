@@ -53,7 +53,7 @@
                             <div class="col-md-8 datos-empresa">
                                 <table class="table table-bordered">
                                     <tbody>
-                                        <h4 style="font-size:21px;color: #6777ef ;" align="center">Datos en la Empresa</h4>
+                                        <h4 style="font-size:21px;color: #6777ef ;" align= "center">Datos en la Empresa</h4>
                                         <tr>
                                             <th>Codigo</th>
                                             <td>{{ $user->codigo }}</td>

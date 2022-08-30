@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body">
                       <div class="table-responsive" style="overflow-x: hidden">
-                        <form action="" method="POST">
+                        <form action="{{route('costos_cuadriles.filtrarCortes')}}" method="POST">
                           @csrf
                           <div class="row">
                             <div class="col-md-12">

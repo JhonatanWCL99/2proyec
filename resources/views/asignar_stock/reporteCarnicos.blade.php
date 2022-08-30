@@ -95,7 +95,7 @@
                       @endif
                     @endif
                   @endforeach
-                  @if($auxfila==false)
+                  @if($auxfila===false)
                     <td style="text-align:center ;"> 0 </td>
                   @endif
                   @php 

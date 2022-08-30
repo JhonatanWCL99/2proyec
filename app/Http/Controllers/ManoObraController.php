@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\DetalleManoObra;
 use App\Models\ManoObra;
+use App\Models\RegistroAsistencia;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Sucursal;
+use App\Models\TurnoIngreso;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 class ManoObraController extends Controller
@@ -183,6 +186,90 @@ class ManoObraController extends Controller
             'success' => true,
         ]);
     }
+
+    public function reporteManoObraSucursal(){
+
+        $fecha = Carbon::now()->toDateString();
+        $sucursales = Sucursal::all();
+
+        return view('manos_obras.reporteManoObraSucursal',compact('sucursales','fecha'));
+    }
+
+    public function detalle_mo_sucursal($sucursal_id, Request $request){
+
+        $fecha = Carbon::now()->toDateString();
+        $fecha_inicial = $request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+
+        if(isset($request->fecha_inicial) && isset($request->fecha_final)){
+            
+                    $detalles_manos_obras_am = RegistroAsistencia::selectRaw('sum(horas_trabajadas) as horas_trabajadas_am, sucursals.nombre as sucursal_nombre')
+                    ->join('sucursals','sucursals.id','=','registro_asistencia.sucursal_id')
+                    ->whereBetween('fecha', [$fecha_inicial,$fecha_final])
+                    ->where('turno',0)
+                    ->where('sucursal_id','=',$sucursal_id)
+                    ->groupBy('sucursals.nombre')
+                    ->get();
+
+                    $ventas_dia_am = TurnoIngreso::selectRaw('sum(ventas)')
+                    ->whereBetween('fecha',[$fecha_inicial,$fecha_final])
+                    ->where('turno',0)
+                    ->where('sucursal_id',$sucursal_id)
+                    ->get();
+                    
+                    $detalles_manos_obras_pm = RegistroAsistencia::selectRaw('sum(horas_trabajadas) as horas_trabajadas_pm')
+                    ->whereBetween('fecha', [$fecha_inicial,$fecha_final])
+                    ->where('turno',1)
+                    ->where('sucursal_id','=',$sucursal_id)
+                    ->get();
+
+                    
+                    $ventas_dia_pm = TurnoIngreso::selectRaw('sum(ventas)')
+                    ->whereBetween('fecha',[$fecha_inicial,$fecha_final])
+                    ->where('turno',1)
+                    ->where('sucursal_id',$sucursal_id)
+                    ->get();
+
+        }else{
+                    $detalles_manos_obras_am = RegistroAsistencia::selectRaw('sum(horas_trabajadas) as horas_trabajadas_am, sucursals.nombre as sucursal_nombre')
+                    ->join('sucursals','sucursals.id','=','registro_asistencia.sucursal_id')
+                    ->whereBetween('fecha', [$fecha,$fecha])
+                    ->where('turno',0)
+                    ->where('sucursal_id','=',$sucursal_id)
+                    ->groupBy('sucursals.nombre')
+                    ->get();
+
+                    $ventas_dia_am = TurnoIngreso::selectRaw('sum(ventas) as ventas_am')
+                    ->whereBetween('fecha',[$fecha,$fecha])
+                    ->where('turno',0)
+                    ->where('sucursal_id',$sucursal_id)
+                    ->get();
+                    
+                    
+                    $detalles_manos_obras_pm = RegistroAsistencia::selectRaw('sum(horas_trabajadas) as horas_trabajadas_pm')
+                    ->whereBetween('fecha', [$fecha,$fecha])
+                    ->where('turno',1)
+                    ->where('sucursal_id','=',$sucursal_id)
+                    ->get();
+
+                    $ventas_dia_pm = TurnoIngreso::selectRaw('sum(ventas) as ventas_pm')
+                    ->whereBetween('fecha',[$fecha,$fecha])
+                    ->where('turno',1)
+                    ->where('sucursal_id',$sucursal_id)
+                    ->get();
+        }
+
+        return view('manos_obras.detalle_mo_sucursal',compact(
+            'fecha',
+            'detalles_manos_obras_am',
+            'detalles_manos_obras_pm',
+            'ventas_dia_am',
+            'ventas_dia_pm',
+           
+        )
+    );
+    }
+
 
     
 }

@@ -9,7 +9,7 @@ class Vacacion extends Model
 {
     use HasFactory;
     protected $table='vacaciones';
-    protected $fillable=['fecha_inicio','fecha_fin','user_id'];
+    protected $fillable=['fecha_inicio','fecha_fin','estado','user_id'];
 
     public function user(){
         return $this->belongsTo(User::class);

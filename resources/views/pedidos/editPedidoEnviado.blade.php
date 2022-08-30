@@ -71,6 +71,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -88,15 +89,16 @@
                                     <p class="text-left text-danger d-none" id="errorproducto">Debe seleccionar un producto</p>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <button id="agregar_nuevo_producto" class="btn btn-primary ">Agregar </button>
+                                    <button id="agregar_insumo" class="btn btn-primary ">Agregar </button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -162,7 +164,7 @@
                     </div>
                     <div class="card-footer">
                         <div class=" text-center">
-                            <button type="button" class="btn btn-primary" id="actualizar_pedido_enviado">Actualizar Pedido</button>
+                            <button type="button" class="btn btn-primary" id="actualizar_pedido">Actualizar Pedido</button>
                             <a href="{{ route('pedidos.index') }}" type="button" class="btn btn-danger" id="cancelar">Cancelar </a>
                         </div>
                     </div>

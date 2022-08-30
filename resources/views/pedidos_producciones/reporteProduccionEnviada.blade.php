@@ -59,9 +59,7 @@
 
                                 <th style="text-align: center;"> Sucursal </th>
                                 <th style="text-align: center;"> Produccion Solicitada </th>
-                                <th style="text-align: center;"> Produccion Solicitada Kg</th>
                                 <th style="text-align: center;"> Produccion Enviada </th>
-                                <th style="text-align: center;"> Produccion Enviada Kg</th>
                                 <th style="text-align: center;"> Ver Detalle </th>
 
 
@@ -70,23 +68,23 @@
                             <tbody>
                                 @php
                                 $totalSolicitado=0;
-                                $totalSolicitadoKilos=0;
+                                
                                 $totalEnviado=0;
-                                $totalEnviadoKilos=0;
+                                
                                 @endphp
                                 @foreach($pedidos_producciones as $pedido_produccion)
                                 <tr>
                                     @php
                                     $totalSolicitado+=$pedido_produccion->TotalProduccionSolicitada;
-                                    $totalSolicitadoKilos += $pedido_produccion->cantidad_kilos_solicitados;
+                                   
                                     $totalEnviado+=$pedido_produccion->TotalProduccionEnviada;
-                                    $totalEnviadoKilos += $pedido_produccion->cantidad_kilos_enviados;
+                             
                                     @endphp
                                     <td style="text-align: center;">{{$pedido_produccion->sucursal_nombre }}</td>
                                     <td style="text-align: center;">{{$pedido_produccion->TotalProduccionSolicitada}} Bs</td>
-                                    <td style="text-align: center;">{{$pedido_produccion->cantidad_kilos_solicitados}} Kg</td>
+                                    
                                     <td style="text-align: center;">{{$pedido_produccion->TotalProduccionEnviada}} Bs</td>
-                                    <td style="text-align: center;">{{$pedido_produccion->cantidad_kilos_enviados}} Kg</td>
+                                    
 
                                     <td style="text-align: center;"><a href="{{ route('pedidos.verDetalleReporteProduccion',[$pedido_produccion->sucursal_id,$fecha_inicial,$fecha_final])}}" class="btn btn-info btn-sm" target="_blank"> <i class="fa fa-eye"></i> </a></td>
 
@@ -96,9 +94,9 @@
                             <tfoot>
                                 <td style="text-align: center;">Totales:</td>
                                 <td style="text-align: center;">{{$totalSolicitado}} Bs</td>
-                                <td style="text-align: center;">{{$totalSolicitadoKilos}} Kg</td>
+                                
                                 <td style="text-align: center;">{{$totalEnviado}} Bs</td>
-                                <td style="text-align: center;">{{$totalEnviadoKilos}} Kg</td>
+                                
                             </tfoot>
 
                         </table>
@@ -142,10 +140,11 @@
                                     @php
                                     $totalSolicitado+=$pedido->TotalInsumosSolicitada;
                                     $totalEnviado+=$pedido->TotalInsumosEnviado;
+
                                     @endphp
                                     <td style="text-align: center;">{{$pedido->sucursal_nombre }}</td>
                                     <td style="text-align: center;">{{$pedido->TotalInsumosSolicitada}} Bs</td>
-                                    <td style="text-align: center;">{{$pedido->TotalInsumosEnviado}} Bs</td>
+                                    <td style="text-align: center;">{{$pedido->TotalInsumosEnviado}} Bs</td> 
                                     <td style="text-align: center;"><a href="{{ route('pedidos.verDetalleReporte',[$pedido->sucursal_id,$fecha_inicial,$fecha_final])}}" class="btn btn-info btn-sm" target="_blank"> <i class="fa fa-eye"></i> </a></td>
 
                                 </tr>

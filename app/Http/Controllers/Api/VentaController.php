@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use App\Models\Autorizacion;
 use App\Models\Cliente;
@@ -38,7 +36,7 @@ class VentaController extends Controller
                     $cliente->ci_nit = $request->nit_ci;
                     $cliente->empresa = $request->empresa;
                     $cliente->telefono = $request->telefono;
-                    $cliente->contador_visitas = $sucursal==17?$cantidad_visitas:0;//17 PIRAI, sino sera 0 sus visitas
+                    $cliente->contador_visitas = $sucursal==18?$cantidad_visitas:0;//17 PIRAI, sino sera 0 sus visitas
                     $cliente->save();
                 } else {
                     $cantidad_visitas = intval($cliente->contador_visitas) + 1;
@@ -53,7 +51,7 @@ class VentaController extends Controller
                     }
                     if ($cliente->nombre != $request->cliente || $cliente->empresa != $request->empresa || $cliente->telefono != $request->telefono) {
                     }
-                    $cliente->contador_visitas =$sucursal==17?$cantidad_visitas:0;
+                    $cliente->contador_visitas =$sucursal==18?$cantidad_visitas:0;
                     $cliente->save();
                 }
             }
@@ -122,7 +120,7 @@ class VentaController extends Controller
 
             $registro_visita = RegistroVisita::create([
                 'fecha' => $fecha,
-                'registro_contador' =>$sucursal==17? $cantidad_visitas:0,//HABILITADO PARA PIRAI, SINO SERA 0
+                'registro_contador' =>$sucursal==18? $cantidad_visitas:0,//HABILITADO PARA PIRAI, SINO SERA 0
                 'cliente_id' => $cliente->id,
                 'venta_id' => $venta->id,
             ]);

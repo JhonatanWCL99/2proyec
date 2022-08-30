@@ -24,17 +24,24 @@ use Illuminate\Support\Facades\Auth;
 
 class InventarioController extends Controller
 {
-    
-    public function index()
-    {
-        $user_rol = Auth::user()->roles[0]->id;
-        if ($user_rol == 3) {
-            $inventarios = Inventario::where('sucursal_id', Auth::user()->sucursals[0]->id)
-                ->whereDate('fecha',Carbon::now()->toDateString())
-                ->get();
-        } else {
-            $inventarios = Inventario::whereDate('fecha',Carbon::now()->toDateString())->get();
 
+    public function index()
+
+    {
+
+
+        if (auth()->check() != false) {
+            $user_rol = Auth::user()->roles[0]->id;
+            if ($user_rol == 3) {
+                $inventarios = Inventario::where('sucursal_id', Auth::user()->sucursals[0]->id)
+                    ->whereDate('fecha', Carbon::now()->toDateString())
+                    ->get();
+            } else {
+
+                $inventarios = Inventario::whereDate('fecha', Carbon::now()->toDateString())->get();
+            }
+        } else {
+            $inventarios = Inventario::whereDate('fecha', Carbon::now()->toDateString())->get();
         }
 
         return view('inventarios.index', compact('inventarios'));
@@ -50,19 +57,20 @@ class InventarioController extends Controller
         $productos = Producto::all();
         $turnos = Turno::all();
         $unidades_medidades = UnidadMedidaCompra::all();
+
+
         $last_inventario = Inventario::where('sucursal_id', Auth::user()->sucursals[0]->id)->orderBy('id', 'desc')->count();
-        
+
         if ($last_inventario == null) {
             $last_inventario = 1;
         } else {
             $last_inventario = $last_inventario + 1;
         }
 
-        //dd($categorias[0]->producto  );
-        
+
         $fecha_actual = Carbon::now()->locale('es')->isoFormat('dddd, D MMMM Y');
-        
-        return view('inventarios.create', compact('usuarios', 'sucursales', 'categorias', 'fecha_actual', 'last_inventario', 'turnos', 'unidades_medidades', 'productos','categorias_produccion'));
+
+        return view('inventarios.create', compact('usuarios', 'sucursales', 'categorias', 'fecha_actual', 'last_inventario', 'turnos', 'unidades_medidades', 'productos', 'categorias_produccion'));
     }
 
     /**
@@ -82,16 +90,16 @@ class InventarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showInventarioSistema($id)
-    {        
+    {
         /*Mostrar Inventario Sistema*/
         $inventario_original = Inventario::find($id);
-        $inventario = InventarioSistema::where('inventario_id',$inventario_original->id)->first();
+        $inventario = InventarioSistema::where('inventario_id', $inventario_original->id)->first();
         return view('inventarios.show', compact('inventario'));
     }
 
     public function show($id)
-    {        
-       /*  dd($id); */
+    {
+        /*  dd($id); */
         /*Mostrar Inventario Sistema*/
         $inventario = Inventario::find($id);
         return view('inventarios.show', compact('inventario'));
@@ -106,7 +114,7 @@ class InventarioController extends Controller
     public function edit($id)
     {
         /*Editar Inventario Sistema*/
-       /*  dd('hola '. $id); */
+        /*  dd('hola '. $id); */
         $inventario = Inventario::find($id);
         //dd($inventario->detalle_inventarios[0]->producto->nombre);
         $categorias = Categoria::all();
@@ -186,8 +194,8 @@ class InventarioController extends Controller
             $nueva_subtotal = $nuevo_precio * $nueva_cantidad;
             $nueva_UM_nombre = "Und";
             $nueva_UM_id = 8;
-            $json=[$filete_en_unidades,$precio_por_unidad_filete,$nuevo_precio,$nueva_cantidad,$nueva_subtotal];
-           /*  dd($json); */
+            $json = [$filete_en_unidades, $precio_por_unidad_filete, $nuevo_precio, $nueva_cantidad, $nueva_subtotal];
+            /*  dd($json); */
         }
 
         /*CHULETA DE CERDO DE 200 GR*/
@@ -223,9 +231,9 @@ class InventarioController extends Controller
             $nueva_UM_id = 8;
         }
 
-         /*POLLO BRASA*/
+        /*POLLO BRASA*/
 
-         if ($producto_id == 200) {
+        if ($producto_id == 200) {
             $filete_en_unidades = $request->detalleInventario['stock'] * 8;
             $precio_por_unidad_filete = $subtotal / $filete_en_unidades;
             $nuevo_precio = 26.49;
@@ -246,8 +254,8 @@ class InventarioController extends Controller
             $nueva_UM_id = 8;
         }
 
-         /*PLATANOS*/
-         if ($producto_id == 45) {
+        /*PLATANOS*/
+        if ($producto_id == 45) {
             $filete_en_unidades = $request->detalleInventario['stock'] * 64;
             $precio_por_unidad_filete = $subtotal / $filete_en_unidades;
             $nuevo_precio = $precio_por_unidad_filete;
@@ -260,7 +268,7 @@ class InventarioController extends Controller
         $detalle_inventario = [
             "producto_id" => $request->detalleInventario['producto_id'],
             "producto_nombre" => $producto->nombre,
-            "unidad_medida_id" => $nueva_UM_id ,
+            "unidad_medida_id" => $nueva_UM_id,
             "unidad_medida_nombre" => $nueva_UM_nombre,
             "stock" => $nueva_cantidad,
             "costo" => $nuevo_precio,
@@ -423,7 +431,7 @@ class InventarioController extends Controller
     {
         /*Actualizar Datos Inventario Sistema*/
         $inventario_principal = Inventario::find($request->inventario_id);
-        $inventario = InventarioSistema::where('inventario_id',$inventario_principal->id)->first();
+        $inventario = InventarioSistema::where('inventario_id', $inventario_principal->id)->first();
         $total_eliminado = 0;
         if (sizeof($request->detallesAEditar_id) != 0) {
             foreach ($request->detallesAEditar_id as $index => $detalleEditar) {
@@ -508,23 +516,28 @@ class InventarioController extends Controller
         ]);
     }
 
-    public function filtrarInventario(Request $request){
+    public function filtrarInventario(Request $request)
+    {
         $fecha_inicial = $request->fecha_inicial;
-        $fecha_fin= $request->fecha_final;
-        
-        $user_rol = Auth::user()->roles[0]->id;
-        if ($user_rol == 3) {
-            $inventarios = Inventario::whereBetween('fecha', [$fecha_inicial, $fecha_fin])->
-                            where('sucursal_id', Auth::user()->sucursals[0]->id)->get();
-        } else {
+        $fecha_fin = $request->fecha_final;
+
+        if (auth()->check() != false ) {
+            $user_rol = Auth::user()->roles[0]->id;
+            if ($user_rol == 3) {
+                $inventarios = Inventario::whereBetween('fecha', [$fecha_inicial, $fecha_fin])->where('sucursal_id', Auth::user()->sucursals[0]->id)->get();
+            } else {
+                $inventarios = Inventario::whereBetween('fecha', [$fecha_inicial, $fecha_fin])->get();
+            }
+        }else{
             $inventarios = Inventario::whereBetween('fecha', [$fecha_inicial, $fecha_fin])->get();
+
         }
+
         return view('inventarios.index', compact('inventarios'));
     }
-    
-    public function cambiarEstadoImpresion($id){
+
+    public function cambiarEstadoImpresion($id)
+    {
         $pedido = Pedido::find($id);
     }
-
-
 }

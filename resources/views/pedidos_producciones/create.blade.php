@@ -78,10 +78,10 @@
             <div class="col-sm-4">
                 <div class="card" style="height: 25.3rem ;">
                     <div class="card-header">
-                        <a data-toggle="collapse" href="#collapseMenu" role=b"button" aria-expanded="false" aria-controls="collapseExample">
+                        <a data-toggle="collapse" href="#collapseMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
                             <i class="fa fa-lg"></i>
                         </a>
-                        <h4> &nbsp Menu: {{$menu_semanal->dia}} </h4>
+                        <h4> &nbsp Menu: {{ isset($menu_semanal->dia)?$menu_semanal->dia:'SI MENU'  }} </h4>
                     </div>
                     <div class="collapse" id="collapseMenu" style="overflow:scroll;">
                         <div class="card-body">
@@ -95,15 +95,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          
-                                            @foreach ($menu_semanal->detalle_menus_semanales as $detalle)
-                                          
+                                            @if( isset($menu_semanal->detalle_menus_semanales) )
+                                            @foreach ($menu_semanal->detalle_menus_semanales as $detalle)                                          
                                             <tr>
                                              
                                                 <td class="text-center">{{ $detalle->plato->nombre}}</td>
                                                
                                             </tr>
                                             @endforeach
+                                            @else
+                                            <tr>                                             
+                                                <td class="text-center">VACIO</td>                                               
+                                            </tr>
+                                            @endif
                                           
                                         </tbody>
                                     </table>
@@ -139,24 +143,24 @@
                         @php
                         $total =0;
                         @endphp
+
                         @if (session('pedidos_producciones'))
-                        @foreach (session('pedidos_producciones') as $indice => $value)
-                        <tr>
-
-                            <td style="text-align: center;">{{$value['plato_nombre']}} </td>
-                            <td style="text-align: center;"> {{ $value['cantidad_solicitada'] }}</td>
-                            <td style="text-align: center;"> {{ $value['costo'] }}</td>
-
-                            <td style="text-align: center;">{{ $value['subtotal_solicitado'] }} Bs</td>
-                            @php
-                            $total += $value['subtotal_solicitado'];
-                            @endphp
-                            <td style="text-align: center;">
-                                <button class="btn btn-danger" onclick="eliminar({{ $indice }});"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        @endforeach
+                            @foreach (session('pedidos_producciones') as $indice => $value)
+                            <tr>
+                                <td style="text-align: center;">{{$value['plato_nombre']}} </td>
+                                <td style="text-align: center;"> {{ $value['cantidad_solicitada'] }}</td>
+                                <td style="text-align: center;"> {{ $value['costo'] }}</td>
+                                <td style="text-align: center;">{{ $value['subtotal_solicitado'] }} Bs</td>
+                                @php
+                                    $total += $value['subtotal_solicitado'];
+                                @endphp
+                                <td style="text-align: center;">
+                                    <button class="btn btn-danger" onclick="eliminar({{ $indice }});"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            @endforeach
                         @endif
+
                         <tr>
                             <td colspan="6" style="text-align: center;" class="table-info">Total: {{ number_format($total,3) }} Bs</td>
                         </tr>

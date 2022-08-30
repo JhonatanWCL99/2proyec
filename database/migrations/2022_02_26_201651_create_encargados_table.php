@@ -11,8 +11,10 @@ class CreateEncargadosTable extends Migration
      *
      * @return void
      */
+
     public function up()
     {
+
         Schema::create('encargados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
@@ -23,9 +25,10 @@ class CreateEncargadosTable extends Migration
             $table->foreign('sucursal_id')->on('sucursals')->references('id');
             $table->timestamps();
         });
-    }
 
-    /**
+    }
+                   
+    /**         
      * Reverse the migrations.
      *
      * @return void

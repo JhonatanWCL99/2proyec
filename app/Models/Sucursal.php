@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\FacturacionOnline\RegistroPuntoVenta;
+use App\Models\FacturacionOnline\SiatCui;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +11,7 @@ class Sucursal extends Model
 {
     use HasFactory;
     protected $table='sucursals';
-    protected $fillable=['nombre','direccion','correo','nro_fiscal'];
+    protected $fillable=['nombre','direccion','correo','nro_fiscal','codigo_fiscal'];
 
     public function productos_proveedores(){
         return $this->hasMany(Producto_Proveedor::class); 
@@ -77,4 +79,20 @@ class Sucursal extends Model
     public function manos_obras(){
         return $this->hasMany(ManoObra::class);
     }
+
+    public function ventas_manos_obras(){
+        return $this->hasMany(VentaManoObra::class);
+    }
+
+    public function puntas_ventas(){
+        return $this->hasMany(RegistroPuntoVenta::class);
+    }
+    public function siat_cuis(){
+        return $this->hasMany(SiatCui::class);
+    }
+
+    public function siat_cufds(){
+        return $this->hasMany(SiatCufd::class);
+    }
+
 }

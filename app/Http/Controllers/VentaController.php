@@ -14,6 +14,10 @@ class VentaController extends Controller
         return view('ventas.formdosificacion');
     }
 
+    public function ventas_sucursal(){
+        return view('reportes.ventas_sucursal');
+    }
+
     
 
 

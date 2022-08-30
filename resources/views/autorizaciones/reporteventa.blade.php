@@ -129,7 +129,7 @@
                                                                 <tr class="table-warning">     
                                                                     <td>Total</td>
                                                                     @php $ventasColumnas[sizeof($ventasColumnas)-1][0]=$sumaP; @endphp
-                                                                    @for( $ij=0;$ij<sizeof($sumaP);$ij++)
+                                                                    @for( $ij=0;$ij< sizeof($sumaP) ;$ij++)
                                                                         <td>{{  number_format( $sumaP[$ij],2 )}}</td>
                                                                         @php                                                                         
                                                                         $sumaP[$ij] =0;
@@ -158,8 +158,8 @@
                                                                 <tr class="table-warning">     
                                                                     <td>Total</td>
                                                                     @php $ventasColumnas[sizeof($ventasColumnas)-1][0]=$sumaP; @endphp
-                                                                    @for( $ij=0;$ij<sizeof($sumaP);$ij++)
-                                                                        <td>{{  number_format( $sumaP[$ij],2 )}}</td>
+                                                                    @for( $ij=0;$ij < sizeof($sumaP);$ij++)
+                                                                        <td> {{  number_format( $sumaP[$ij],2 )}}</td>
                                                                         @php                                                                         
                                                                         $sumaP[$ij] =0;
                                                                         @endphp                                                                                     
@@ -191,9 +191,11 @@
                                                             <td>0</td>
                                                     @elseif( $j==1  )       
                                                         @if($i==$fechaInicio)
+                                                            @php  //la linea de abajo creo da un bug, por ahora testearlo 
+                                                            @endphp
                                                             <td > {{ number_format( $sumaSucursalFila[sizeof($sumaSucursalFila)-1][0] ,2) }} </td>  
                                                         </tr>
-                                                        <tr>                                                                                                  
+                                                        <tr>                                                                                                                      
                                                             <td> PM </td>   
                                                             <td>0</td>
                                                         @else
@@ -205,14 +207,14 @@
                                                             <td >{{ number_format( $sumaSucursalFila[sizeof($sumaSucursalFila)-1][1] ,2 ) }}</td>      
                                                         </tr>     
                                                         <tr class="table-warning">       
-                                                            <td>Total</td>
+                                                            <td>Total</td>  
                                                             @php $ventasColumnas[sizeof($ventasColumnas)-1][0]=$sumaP; @endphp
-                                                            @for( $ij=0;$ij<sizeof($sumaP);$ij++)
-                                                                <td>{{  number_format( $sumaP[$ij],2 )}}</td>  
-                                                                @php                                                               
-                                                                $sumaP[$ij] =0;
-                                                                @endphp                                                                            
-                                                            @endfor  
+                                                            @for( $ij=0;$ij< sizeof($sumaP);$ij++)
+                                                                <td> {{ number_format( $sumaP[ $ij ],2 ) }} </td>  
+                                                                @php                                                                          
+                                                                    $sumaP[$ij] = 0;
+                                                                @endphp                                                                                              
+                                                            @endfor                         
                                                             <td>{{  number_format( ( $sumaSucursalFila[sizeof($sumaSucursalFila)-1][1]+$sumaSucursalFila[sizeof($sumaSucursalFila)-1][0]) ,2)}}</td>        
                                                         </tr>                                                                                                          
                                                         @endif
@@ -227,25 +229,26 @@
                                         @endfor
                                                                                 
                                     @endforeach 
+
                                     <tr class="table-success">                                        
                                         <td colspan="2">Totales</td>
                                         @php  
                                         $totales=array();   
-                                        for($iii=0;$iii<sizeof($ventasColumnas);$iii++){
-                                            if($iii==0){
-                                                for($ie=0;$ie<sizeof( $ventasColumnas[$iii][0] );$ie++){
+                                        for($iii=0;$iii< sizeof($ventasColumnas) ;$iii++){
+                                            if($iii == 0 ){
+                                                for($ie=0;$ie < sizeof( $ventasColumnas[$iii][0] );$ie++){
                                                     array_push($totales,$ventasColumnas[$iii][0][$ie]);
                                                 }
                                             }else{
-                                                for($ie=0;$ie<sizeof( $ventasColumnas[$iii][0] );$ie++){
+                                                for($ie=0;$ie < sizeof( $ventasColumnas[$iii][0] );$ie++){
                                                     $totales[$ie]=($ventasColumnas[$iii][0][$ie]+$totales[$ie]);
                                                 }
                                             }
                                         }
-                                        $fintotal=0;
+                                        $fintotal= 0 ;
                                         @endphp
-                                        @for($ijk=0;$ijk<sizeof($totales);$ijk++)
-                                            <td>{{ number_format($totales[$ijk],2) }}</td>
+                                        @for($ijk= 0 ; $ijk < sizeof($totales);$ijk++)
+                                            <td> {{ number_format($totales[$ijk],2) }}</td>
                                             @php  $fintotal+=$totales[$ijk]; @endphp
                                         @endfor
                                         <td>{{ number_format($fintotal,2)}}</td>

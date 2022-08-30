@@ -40,8 +40,8 @@ class TurnoIngreso extends Model
         $fecha = Carbon::now()->toDateString();
 
         if(isset($fecha_inicio) && isset($fecha_fin)){
-            $sql = "select turnos_ingresos.id, sucursals.nombre as sucursal_nombre, users.name as nombre_usuario,turnos_ingresos.fecha, turnos_ingresos.turno, turnos_ingresos.estado, turnos_ingresos.ventas 
-            FROM turnos_ingresos 
+            $sql = "select (@rownum:=@rownum+1) AS nro_registro,turnos_ingresos.id, sucursals.nombre as sucursal_nombre, users.name as nombre_usuario,turnos_ingresos.fecha, turnos_ingresos.turno, turnos_ingresos.estado, turnos_ingresos.ventas 
+            FROM (SELECT @rownum:=0) r,turnos_ingresos 
             JOIN sucursals on sucursals.id = turnos_ingresos.sucursal_id
             JOIN users on users.id = turnos_ingresos.user_id
             WHERE turnos_ingresos.fecha BETWEEN $fecha_inicio and $fecha_fin 
@@ -50,8 +50,8 @@ class TurnoIngreso extends Model
             return $lists_turns; 
             
         }else{
-            $sql = "select  sucursals.nombre as sucursal_nombre, users.name as nombre_usuario,turnos_ingresos.fecha, turnos_ingresos.turno, turnos_ingresos.estado, turnos_ingresos.ventas 
-            FROM turnos_ingresos 
+            $sql = "select  (@rownum:=@rownum+1) AS nro_registro,sucursals.nombre as sucursal_nombre, users.name as nombre_usuario,turnos_ingresos.fecha, turnos_ingresos.turno, turnos_ingresos.estado, turnos_ingresos.ventas 
+            FROM (SELECT @rownum:=0) r,turnos_ingresos 
             JOIN sucursals on sucursals.id = turnos_ingresos.sucursal_id
             JOIN users on users.id = turnos_ingresos.user_id
             WHERE turnos_ingresos.fecha BETWEEN $fecha and $fecha 

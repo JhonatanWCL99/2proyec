@@ -18,7 +18,6 @@
                     <div class="table-responsive" style="overflow-x: hidden">
                         <form action="{{route('pedidos_producciones.filtrarPedidosProduccion')}}" method="POST">
                             @csrf
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-daterange input-group" id="datepicker">
@@ -87,7 +86,6 @@
                                         <td class="text-center">{{$pedido_produccion->fecha_pedido}} </td>
                                         <td class="text-center">{{$pedido_produccion->sucursal_pedido->nombre}}</td>
 
-
                                         @if ($pedido_produccion->estado == 'S' )
                                         <td class="text-center"> <span class="badge badge-warning"> Solicitado </span></td>
                                         @elseif($pedido_produccion->estado == 'E' )
@@ -96,7 +94,6 @@
                                         <td class="text-center"> <span class="badge badge-info">Aceptado</button></td>
                                         @endif
                                         @role('Super Admin|Contabilidad')
-
                                         <td>
                                             <div class="dropdown" style="position: absolute;">
                                                 <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -104,9 +101,9 @@
                                                 </a>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                     <li>
-                                                        <a class="dropdown-item " href="{{-- {{ route('pedido_producciones.edit', $pedido_produccion->id) }} --}}">Editar</a>
+                                                        <a class="dropdown-item " href="{{ route('pedidos_producciones.edit', $pedido_produccion->id) }}">Editar</a>
                                                     </li>
-                                                    <li>
+                                                    <li></li>
                                                         <a class="dropdown-item " href="{{ route('pedidos_producciones.editarInsumos', $pedido_produccion->id) }}">Envio de Insumos</a>
                                                     </li>
                                                     <li><a href="#" class="dropdown-item" data-id="{{ $pedido_produccion->id }}" onclick="deleteItem(this)">Eliminar</a></li>
@@ -115,7 +112,6 @@
                                             </div>
                                         </td>
                                         @endrole
-
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -132,10 +128,6 @@
 
 @section('scripts')
 
-
-
-
-
 <script>
     let ruta_eliminar_pedido = "{{ route('pedidos_producciones.destroy','') }}";
     let ruta_index_pedido = "{{ route('pedidos_producciones.index') }}";
@@ -145,6 +137,7 @@
 </script>
 
 <script>
+
     function cambiarEstado(e) {
         console.log(e);
         Swal.fire({

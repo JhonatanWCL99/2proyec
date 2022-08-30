@@ -13,6 +13,29 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12">
+            @role('Super Admin|Encargado')
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow-x: hidden">
+                        <form action="{{route('partes_producciones.filtrarpartes_producciones')}}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                <label for="datepicker">Seleccione las Fechas</label>
+                                    <div class=" input-group" id="datepicker">
+                                        <span class="input-group-addon "><strong>Fecha De:</strong> </span>
+                                        <input type="date" id="fecha_inicial" class="input-sm form-control" name="fecha_inicial" value="" />
+                                        <span class="input-group-addon">A</span>
+                                        <input type="date" id="fecha_final" class="input-sm form-control" name="fecha_final" value="" />
+                                        <input class="form-control btn btn-primary float-left" type="submit" value="Filtrar Parte de Produccion" id="filtrar" name="filtrar">
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>
+                @endrole
+
                 <div class="card">
                     <div class="card-body">
                     <a class="btn btn-primary" href="{{route('partes_producciones.create')}}">Nuevo Parte Produccion </a><br><br>

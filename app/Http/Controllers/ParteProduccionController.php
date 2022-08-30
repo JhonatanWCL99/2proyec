@@ -24,11 +24,12 @@ class ParteProduccionController extends Controller
      */
     public function index()
     {
+       $fecha_actual= Carbon::now()->toDateString();
        $user_role = Auth::user()->roles[0]->id;
        if ($user_role == 3){
         $partes_producciones = ParteProduccion::where('sucursal_usuario_id', Auth::user()->sucursals[0]->id)->get();
        } else {
-        $partes_producciones = ParteProduccion::all();
+        $partes_producciones = ParteProduccion::where('fecha',$fecha_actual)->get();
        }
         
         return view('partes_producciones.index', compact('partes_producciones'));
@@ -69,7 +70,6 @@ class ParteProduccionController extends Controller
         JOIN sucursals on sucursals.id = sucursal_user.sucursal_id
         LEFT JOIN productos on productos.id = detalles_inventario.producto_id
         WHERE inventarios.id='.$ultimo_inventario[0]->id); */
-
         $productos  = Producto::all();
 
         
@@ -326,6 +326,19 @@ class ParteProduccionController extends Controller
         ]);
     }
 
+    public function filtrarpartes_producciones(Request $request)
+    {
+        $fecha_inicial = $request->fecha_inicial;
+        $fecha_fin = $request->fecha_final;
+        $user_rol = Auth::user()->roles[0]->id;
+        if ($user_rol == 3) {
 
+            $partes_producciones = ParteProduccion::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_fin)->get();
+        } else {
+            $partes_producciones = ParteProduccion::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_fin)->get();
+        }
+
+        return view('partes_producciones.index', compact('partes_producciones'));
+    }
 
 }
