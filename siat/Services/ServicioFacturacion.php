@@ -49,6 +49,7 @@ class ServicioFacturacion extends ServicioSiat
 		//die($factura->cuf);
 		$factura->validate();
 		$facturaXml = $this->buildInvoiceXml($factura);
+		/* dd($facturaXml); */
 		//print $facturaXml;
 		//$facturaXml = file_get_contents('factura.xml');
 		if( $this->debug )
@@ -72,20 +73,17 @@ class ServicioFacturacion extends ServicioSiat
 		//print_r($solicitud);die;
 		//print_r($facturaXml);die;
 		$solicitud->setBuffer($facturaXml, true);
-		$solicitud->validate();
-		
-		try
+		/* dd($factura->cabecera); */
+ 		try
 		{
 			$data = [
 				$solicitud->toArray()
 			];
-			//print_r($data);die;
-			//$this->debug($factura->toArray(), 0);
-			//$this->debug($solicitud->toArray(), 0);
+
+			/* dd($data); */
+			
 			$this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
-			//var_dump($this->wsdl);die;
 			$res = $this->callAction('recepcionFactura', $data);
-			//print_r($res);die;
 			return $res;
 		}
 		catch(\SoapFault $e)
@@ -102,7 +100,7 @@ class ServicioFacturacion extends ServicioSiat
 	 * @param int $tipoEmision
 	 * @param int $tipoFactura
 	 */
-	public function recepcionMasivaFactura(array $facturas, $tipoEmision = SiatInvoice::TIPO_EMISION_ONLINE, $tipoFactura = SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL)
+	public function recepcionMasivaFactura( array $facturas, $tipoEmision = SiatInvoice::TIPO_EMISION_ONLINE, $tipoFactura = SiatInvoice::FACTURA_DERECHO_CREDITO_FISCAL)
 	{
 		try
 		{
@@ -112,8 +110,10 @@ class ServicioFacturacion extends ServicioSiat
 			$invoiceFiles = [];
 			$invoicesXml = [];
 			//##validate invoices
+			/* dd($facturas); */
 			foreach($facturas as $factura)
 			{
+				/* dd($factura->cabecera->cufd); */
 				$factura->cabecera->cufd = $this->cufd;
 				$factura->buildCuf(0, $this->modalidad, $tipoEmision, $tipoFactura, $this->codigoControl);
 				$factura->validate();
@@ -170,6 +170,7 @@ class ServicioFacturacion extends ServicioSiat
 				throw new Exception('Invalid siat invoices, the service requires atleast one invoice');
 			$xmlInvoices = [];
 			//##validate invoices
+			/* dd($facturas); */
 			foreach($facturas as $factura)
 			{
 				//$factura->cufd = $this->cufd;
@@ -200,12 +201,13 @@ class ServicioFacturacion extends ServicioSiat
 			
 			//$solicitud->setBuffer($xmlInvoices);
 			$solicitud->setBufferFromInvoicesXml($xmlInvoices);
+			/* dd($xmlInvoices); */
 			$solicitud->validate();
 			$data = [
 				$solicitud->toArray()
 			];
 
-			/* dd($data); */
+		/* 	dd($data); */
 			
 			$this->wsdl = $facturas[0]->getEndpoint($this->modalidad, $this->ambiente);
 			$res = $this->callAction('recepcionPaqueteFactura', $data);

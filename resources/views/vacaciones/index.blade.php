@@ -19,8 +19,7 @@
                                 <thead>
                                     <th>ID</th>
                                     <th>Fecha inicio</th>
-                                    <th>Fecha fin</th>
-                                    
+                                    <th>Fecha fin</th>                                    
                                     <th>Personal asignado</th>
                                     <th>Funcionario encargado</th>
                                     <th>Estado</th>
@@ -133,11 +132,11 @@
                 confirmButtonText: 'Si, Aceptar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(ruta_cambiarestado + '/'  +e, {
+                    fetch(ruta_cambiarestado+'/'+e, {
                         method: "POST",
                         body: JSON.stringify({
                             id: e
-                        }),
+                        }), 
                         headers: {
                             "Content-Type": "application/json",
                             "X-CSRF-Token": csrfToken,

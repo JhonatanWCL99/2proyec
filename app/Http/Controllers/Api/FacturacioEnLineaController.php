@@ -59,6 +59,7 @@ class FacturacioEnLineaController extends Controller
     function obtenerCufdAPI(Request $request)
     {
         $fecha = Carbon::now()->toDateString();
+        $sucursal = Sucursal::where('codigo_fiscal',$request->codigoSucursal)->first();
         $codigoSucursal  = $request->codigoSucursal;
         $codigoPuntoVenta  = $request->codigoPuntoVenta;
         $sucursal_id = $request->sucursal_id;
@@ -72,8 +73,8 @@ class FacturacioEnLineaController extends Controller
                 'fecha_generado' => $fecha,
                 'fecha_expiracion' =>  new Carbon($response->RespuestaCuis->fechaVigencia),
                 'codigo_cui' => $response->RespuestaCuis->codigo,
-                'sucursal_id' => 1,
-                'estado' => 'O' /* Obtenido */
+                'sucursal_id' =>  $sucursal->id,
+                'estado' => 'V' /* Obtenido */
             ]);
             $resCufd =  $this->obtenerCufd($codigoPuntoVenta, $codigoSucursal, $obtener_cui->codigo_cui, true);
         } else {
@@ -87,7 +88,9 @@ class FacturacioEnLineaController extends Controller
             'direccion' => $resCufd->RespuestaCufd->direccion,
             'fecha_vigencia' => new Carbon($resCufd->RespuestaCufd->fechaVigencia),
             'fecha_generado' => $fecha,
-            'sucursal_id' => $sucursal_id,
+            'sucursal_id' => $sucursal->id,
+            'estado' => 'V' /* Obtenido */
+
         ]);
 
         return $resCufd;

@@ -421,3 +421,8 @@ Route::get('ejecutar_pruebas_catalogos', [\App\Http\Controllers\Siat\Sincronizar
  /* ETAPA 8 FIRMA DIGITAL */
 
  Route::get('generar_firma_digital', [\App\Http\Controllers\Siat\FirmaDigitalController::class, 'generar_firma_digital']);  
+
+ /* ETAPA 9 METODOS EMISION MASIVA  */
+ Route::get('generar_emision_masiva', [\App\Http\Controllers\Siat\EmisionMasivaController::class, 'generar_emision_masiva']);  
+ 
+

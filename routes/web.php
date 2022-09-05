@@ -79,7 +79,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /*Rutas Productos */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'index'])->name('productos.index');
         Route::get('/productos/create', [App\Http\Controllers\ProductoController::class, 'create'])->name('productos.create');
         Route::post('/productos', [App\Http\Controllers\ProductoController::class, 'store'])->name('productos.store');
@@ -100,7 +100,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /* Rutas Categorias*/
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categorias.index');
         Route::get('/categorias/create', [App\Http\Controllers\CategoriaController::class, 'create'])->name('categorias.create');
         Route::post('/categorias', [App\Http\Controllers\CategoriaController::class, 'store'])->name('categorias.store');
@@ -111,7 +111,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /*Rutas Producto Proveedor */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/productos_proveedores/create', [App\Http\Controllers\ProductoProveedorController::class, 'create'])->name('productos_proveedores.create');
         Route::get('/productos_proveedores/edit/{id}', [App\Http\Controllers\ProductoProveedorController::class, 'edit'])->name('productos_proveedores.edit');
         Route::post('/productos_proveedores', [App\Http\Controllers\ProductoProveedorController::class, 'store'])->name('productos_proveedores.store');
@@ -128,7 +128,7 @@ use App\Http\Controllers\VentaController;
     Route::get('/productos_proveedores/show/{id}', [App\Http\Controllers\ProductoProveedorController::class, 'show'])->name('productos_proveedores.show');
 
     /*Rutas Asignar Stock */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/asignar_stock', [App\Http\Controllers\AsignarStockController::class, 'index'])->name('asignar_stock.index');
         Route::get('/asignar_stock/create', [App\Http\Controllers\AsignarStockController::class, 'create'])->name('asignar_stock.create');
         Route::get('/asignar_stock/edit/{id}', [App\Http\Controllers\AsignarStockController::class, 'edit'])->name('asignar_stock.edit');
@@ -146,7 +146,7 @@ use App\Http\Controllers\VentaController;
     Route::resource('inventarios', InventarioController::class);
     Route::post('/inventarios/filtrarinventario', [InventarioController::class, 'filtrarinventario'])->name('inventarios.filtrarInventario');
     Route::get('/inventarios/showInventarioSistema/{id}', [InventarioController::class, 'showInventarioSistema'])->name('inventarios.showInventarioSistema');
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad|Chef Corporativo']], function () {
 
         Route::post('/inventarios/obtenerInsumos', [App\Http\Controllers\InventarioController::class, 'obtenerInsumos'])->name('inventarios.obtenerInsumos');
         Route::post('/inventarios/guardarDetalleInventario', [App\Http\Controllers\InventarioController::class, 'guardarDetalleInventario'])->name('inventarios.guardarDetalleInventario');
@@ -236,7 +236,7 @@ use App\Http\Controllers\VentaController;
     Route::get('/personales', [App\Http\Controllers\UserController::class, 'index'])->name('personales.index');
     Route::get('/personales/show/{id}', [App\Http\Controllers\UserController::class, 'showDetalleContrato'])->name('personales.showDetalleContrato');
 
-    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Contabilidad']], function () {
+    
         Route::get('personales/contratos/editarContrato/{id}', [\App\Http\Controllers\DetalleContratoController::class, 'edit'])->name('personales_contratos.edit');
         Route::put('personales/contratos/editarContrato/{id}', [\App\Http\Controllers\DetalleContratoController::class, 'update'])->name('personales_contratos.update');
         Route::delete('personales/contratos/editarContrato/{id}', [\App\Http\Controllers\DetalleContratoController::class, 'eliminar'])->name('personales_contratos.eliminar');
@@ -246,10 +246,9 @@ use App\Http\Controllers\VentaController;
         Route::get('/personales/evaluaciones/reporteEvaluaciones', [App\Http\Controllers\UserController::class, 'reporteEvaluaciones'])->name('personales.reporteEvaluaciones');
         Route::get('/personales/evaluaciones/evaluacionesUsuario/{id}', [App\Http\Controllers\UserController::class, 'evaluacionesUsuario'])->name('personales.evaluacionesUsuario');
         Route::post('/personales/evaluaciones/evaluacionesUsuario/{id}', [App\Http\Controllers\UserController::class, 'filtrarEvaluacionUsuario'])->name('personales.filtrarEvaluacionUsuario');
-        
-    });
+    
 
-    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Encargado|Almacen|Atencion']], function () {
+    
         Route::get('/personales/tareas/tarea', [App\Http\Controllers\UserController::class, 'listaTareas'])->name('personales.listaTareas');
         Route::post('/personales/tareas/saveTareas/{id}', [App\Http\Controllers\UserController::class, 'saveTareas'])->name('personales.saveTareas');
         Route::get('/personales/tareas/reporteTareas', [App\Http\Controllers\UserController::class, 'reporteTareas'])->name('personales.reporteTareas');
@@ -263,7 +262,7 @@ use App\Http\Controllers\VentaController;
         Route::post('/personales/evaluaciones/guardarEvaluaciones/{id}', [App\Http\Controllers\UserController::class, 'guardarEvaluaciones'])->name('personales.guardarEvaluaciones');
         Route::post('/personales/reportes/actividades', [App\Http\Controllers\UserController::class, 'reporteSeguimientoActividades'])->name('personales.reporteSeguimientoActividades');
         Route::get('/personales/reportes/ver', [App\Http\Controllers\UserController::class, 'mostrarUsuarios'])->name('personales.mostrarUsuarios');
-    });
+    
 
 
     /*Rutas Cargos  1 */
@@ -380,7 +379,7 @@ use App\Http\Controllers\VentaController;
         Route::post('evaluaciones/actualizar/{id}', [EvaluacionController::class, 'actualizar'])->name('evaluaciones.actualizar');
     });
     /*Rutas   1*/
-    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Chef Corporativo']], function () {
         Route::get('/categorias_platos', [App\Http\Controllers\CategoriaPlatoController::class, 'index'])->name('categorias_platos.index');
         Route::get('/categorias_platos/create', [App\Http\Controllers\CategoriaPlatoController::class, 'create'])->name('categorias_platos.create');
 
@@ -390,7 +389,7 @@ use App\Http\Controllers\VentaController;
         Route::put('/categorias_platos/{id}', [App\Http\Controllers\CategoriaPlatoController::class, 'update'])->name('categorias_platos.update');
     });
     /*Rutas   1*/
-    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|RRHH|Chef Corporativo']], function () {
         Route::get('/platos', [App\Http\Controllers\PlatoController::class, 'index'])->name('platos.index');
         Route::get('/platos/asignarReceta/{id}', [App\Http\Controllers\PlatoController::class, 'asignarReceta'])->name('platos.asignarReceta');
         Route::get('/platos/create', [App\Http\Controllers\PlatoController::class, 'create'])->name('platos.create');
@@ -403,7 +402,7 @@ use App\Http\Controllers\VentaController;
     });
     /*Rutas Asignar Platos a Sucursales */
     /*Rutas   1*/
-    Route::group(['middleware' => ['auth', 'role:Super Admin']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Chef Corporativo']], function () {
         Route::get('/platos_sucursales', [App\Http\Controllers\PlatoSucursalController::class, 'index'])->name('platos_sucursales.index');
         Route::get('/platos_sucursales/create', [App\Http\Controllers\PlatoSucursalController::class, 'create'])->name('platos_sucursales.create');
         Route::post('/platos_sucursales', [App\Http\Controllers\PlatoSucursalController::class, 'store'])->name('platos_sucursales.store');
@@ -420,7 +419,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /* Rutas Recetas 1 */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Almacen']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Almacen|Chef Corporativo']], function () {
         Route::get('/recetas', [App\Http\Controllers\PlatoProductoController::class, 'index'])->name('recetas.index');
         Route::get('/recetas/create', [App\Http\Controllers\PlatoProductoController::class, 'create'])->name('recetas.create');
         Route::post('recetas/create', [App\Http\Controllers\PlatoProductoController::class, 'obtenerPlatos'])->name('recetas.obtenerplatos');
@@ -463,7 +462,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /* Rutas 1 */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad|Chef Corporativo']], function () {
         Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('pedidos.index');
         Route::get('/pedidos/create', [App\Http\Controllers\PedidoController::class, 'create'])->name('pedidos.create');
         Route::post('/pedidos', [App\Http\Controllers\PedidoController::class, 'store'])->name('pedidos.store');
@@ -478,9 +477,16 @@ use App\Http\Controllers\VentaController;
 
         Route::get('/pedidos/total_insumos_solicitados', [App\Http\Controllers\PedidoController::class, 'total_insumos_solicitados'])->name('pedidos.total_insumos_solicitados');
 
+        Route::get('/pedidos/pedido_especial', [App\Http\Controllers\PedidoController::class, 'pedido_especial'])->name('pedidos.pedido_especial');
+        Route::post('/pedidos/pedido_especial_store', [App\Http\Controllers\PedidoController::class, 'pedido_especial_store'])->name('pedidos.pedido_especial_store');
+
+        Route::get('/productosinsumos/create', [App\Http\Controllers\ProductosInsumosController::class, 'create'])->name('productosinsumos.create');
+        Route::post('/productosinsumos/store', [App\Http\Controllers\ProductosInsumosController::class, 'store'])->name('productosinsumos.store');
+        Route::post('/pedidos/filtrarPedidos', [PedidoController::class, 'filtrarPedidos'])->name('pedidos.filtrarPedidos');
+
     });
 
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/pedidos/edit/{id}', [App\Http\Controllers\PedidoController::class, 'edit'])->name('pedidos.edit');
         Route::get('/pedidos/editPedidoEnviado/{id}', [App\Http\Controllers\PedidoController::class, 'editPedidoEnviado'])->name('pedidos.editPedidoEnviado');
         Route::delete('/pedidos/{id}', [\App\Http\Controllers\PedidoController::class, 'destroy'])->name('pedidos.destroy');
@@ -491,7 +497,7 @@ use App\Http\Controllers\VentaController;
 
         Route::post('/pedidos/actualizarPedidoEnviado', [PedidoController::class, 'actualizarPedidoEnviado'])->name('pedidos.actualizarPedidoEnviado');
         Route::post('/pedidos/filtrarZumos', [PedidoController::class, 'filtrarZumos'])->name('pedidos.filtrarZumos');
-        Route::post('/pedidos/filtrarPedidos', [PedidoController::class, 'filtrarPedidos'])->name('pedidos.filtrarPedidos');
+       
         Route::get('/pedidos/reporteZumos', [PedidoController::class, 'reporteZumos'])->name('pedidos.reporteZumos');
     });
 
@@ -546,6 +552,8 @@ use App\Http\Controllers\VentaController;
         Route::put('/keperis/{id}', [App\Http\Controllers\KeperiController::class, 'update'])->name('keperis.update');
         Route::get('/keperis/show/{id}', [App\Http\Controllers\KeperiController::class, 'show'])->name('keperis.show');
         Route::delete('/keperis/{id}', [\App\Http\Controllers\KeperiController::class, 'destroy'])->name('keperis.destroy');
+        Route::post('/keperis/filtrarKeperis', [KeperiController::class, 'filtrarKeperis'])->name('keperis.filtrarKeperis');
+        
  
     
     /*Rutas Reportes 1* */
@@ -560,7 +568,7 @@ use App\Http\Controllers\VentaController;
     });
 
     /*Rutas 1*/
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Admin']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Admin|Chef Corporativo']], function () {
         Route::get('/menus_semanales', [App\Http\Controllers\MenuSemanalController::class, 'index'])->name('menus_semanales.index');
         Route::get('/menus_semanales/create', [App\Http\Controllers\MenuSemanalController::class, 'create'])->name('menus_semanales.create');
         Route::post('/menus_semanales', [App\Http\Controllers\MenuSemanalController::class, 'store'])->name('menus_semanales.store');
@@ -581,7 +589,7 @@ use App\Http\Controllers\VentaController;
         //menuGeneralw
     });
 
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad|Chef Corporativo']], function () {
         Route::get('/pedidos_producciones', [App\Http\Controllers\PedidoProduccionController::class, 'index'])->name('pedidos_producciones.index');
         Route::get('/pedidos_producciones/create', [App\Http\Controllers\PedidoProduccionController::class, 'create'])->name('pedidos_producciones.create');
         Route::post('/pedidos_producciones', [App\Http\Controllers\PedidoProduccionController::class, 'store'])->name('pedidos_producciones.store');
@@ -599,7 +607,7 @@ use App\Http\Controllers\VentaController;
         
     });
     /* RUTA* */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Contabilidad|Chef Corporativo']], function () {
         Route::get('/pedidos_producciones/edit/{id}', [App\Http\Controllers\PedidoProduccionController::class, 'edit'])->name('pedidos_producciones.edit');
         Route::delete('/pedidos_producciones/{id}', [\App\Http\Controllers\PedidoProduccionController::class, 'destroy'])->name('pedidos_producciones.destroy');
         Route::put('/pedidos_producciones/{id}', [App\Http\Controllers\PedidoProduccionController::class, 'update'])->name('pedidos_producciones.update');
@@ -614,7 +622,7 @@ use App\Http\Controllers\VentaController;
         Route::get('/pedidos_producciones/reporte_inventario', [App\Http\Controllers\PedidoProduccionController::class, 'reporte_inventario'])->name('pedidos_producciones.reporte_inventario');
     });
     /*RUTA Parte Produccion* */
-    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad']], function () {
+    Route::group(['middleware' => ['auth', 'role:Super Admin|Encargado|Contabilidad|Chef Corporativo']], function () {
         Route::get('/partes_producciones', [App\Http\Controllers\ParteProduccionController::class, 'index'])->name('partes_producciones.index');
         Route::get('/partes_producciones/create', [App\Http\Controllers\ParteProduccionController::class, 'create'])->name('partes_producciones.create');
         Route::post('/partes_producciones', [App\Http\Controllers\ParteProduccionController::class, 'store'])->name('partes_producciones.store');
@@ -676,5 +684,11 @@ use App\Http\Controllers\VentaController;
 
     /* Sincronizar Catalogos */
     Route::get('/sincronizar_catalogos/ejecutar_pruebas_catalogos', [App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'ejecutar_pruebas_catalogos'])->name('sincronizar_catalogos.ejecutar_pruebas_catalogos');
+
+    /* Anular Facturas */
+    Route::get('/anulacion_facturas/index', [App\Http\Controllers\Siat\AnulacionFacturaController::class, 'index'])->name('anulacion_facturas.index');
+    Route::get('/anulacion_facturas/test_anulacion_factura', [App\Http\Controllers\Siat\AnulacionFacturaController::class, 'test_anulacion_factura'])->name('anulacion_facturas.test_anulacion_factura');
+    Route::post('/anulacion_facturas/filtrar_facturas', [AsignarStockController::class, 'filtrar_facturas'])->name('anulacion_facturas.filtrar_facturas');
+    //filtrar_facturas
 
 

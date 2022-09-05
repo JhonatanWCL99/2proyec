@@ -43,6 +43,7 @@
                                     @php $fecha_formateada_nacimiento = date('d-m-Y', strtotime($user->fecha_nacimiento)); @endphp
                                     {{$fecha_formateada_nacimiento}} <br>
                                     Celular de Referencial : {{ $user->celular_referencia }} <br><br>
+                                    
 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                         Agregar Garante</button>
@@ -263,11 +264,137 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="justify-content: center;">
+                        <h4 style="font-size:21px;color: #6777ef; "> Resultados Evaluaciones de: {{$user->name}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Comunicacion (Amabilidad)</th>
+                                    @if(isset($user->detalleContratos[count($user->detalleContratos)-1]))
+                                    @php
+                                    $ultimo_contrato = $user->detalleContratos[count($user->detalleContratos)-1];
+                                    $fecha_formateada_inicio = date('d-m-Y', strtotime($ultimo_contrato->fecha_inicio_contrato));
+                                    $fecha_formateada_fin = date('d-m-Y', strtotime($ultimo_contrato->fecha_fin_contrato));
+                                    @endphp
+                                    <td>
+                                        Tipo contrato : {{$ultimo_contrato->contrato->tipo_contrato}} , &nbsp Fecha Contrato: {{$fecha_formateada_inicio}} a {{$fecha_formateada_fin}} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_contratos"> Ver Más</a>
+                                    </td>
+                                    @else
+                                    <td class="alerta" style="color:#FC544B;">
+                                        Sin Contrato &nbsp &nbsp
+                                    </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{ route('personales.editContratoUser', $user->id)}}" class="btn btn-primary"><i class="fa fa-solid fa-folder-plus fa-lg"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Coordinacion (Orden y Limpieza)</th>
+                                    @if(isset($user->bonos[count($user->bonos)-1]))
+                                    @php
+                                    $ultimo_bono = $user->bonos[count($user->bonos)-1];
+                                    @endphp
+                                    <td> Bono: {{ $ultimo_bono->monto }} Bs. &nbsp
+                                        Motivo: {{ $ultimo_bono->motivo}} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_bonos"> Ver Más</a>
+                                    </td>
+                                    @else
+                                    <td> No cuenta con bonos </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{ route('personales.editBonoUser', $user->id)}}" class="btn btn-primary"></i> <i class="fa fa-solid fa-bold fa-lg"></i> </a>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Cooperacion </th>
+                                    @if(isset($user->sanciones[count($user->sanciones)-1]))
+                                    @php
+                                    $ultima_sancion = $user->sanciones[count($user->sanciones)-1];
+                                    $fecha_formateada = date('d-m-Y', strtotime($ultima_sancion->fecha));
+                                    @endphp
+                                    <td> Fecha: {{$fecha_formateada}} ,&nbsp Tipo de sancion: {{ $ultima_sancion->categoriaSancion->nombre }}, &nbsp Otorgada por: {{ $ultima_sancion->detalleSancion->user->name }} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_sanciones"> Ver Más</a>
+                                    </td>
+                                    @else
+                                    <td> No cuenta con sanciones </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{route('personales.editSanctionsUser',$user->id)}}" class="btn btn-primary"> <i class="fa fa-solid fa-user-minus "></i> </a>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Conocimiento (Cumplimiento)</th>
+                                    @if(isset($user->descuentos[count($user->descuentos)-1]))
+                                    @php
+                                    $ultimo_descuento = $user->descuentos[count($user->descuentos)-1];
+                                    @endphp
+
+                                    @php $descuento_fecha = date('d-m-Y', strtotime($ultimo_descuento->fecha)); @endphp
+                                    <td> Fecha: {{$descuento_fecha}} ,&nbsp Monto: {{ $ultimo_descuento->monto }}Bs. , &nbsp Motivo: {{ $ultimo_descuento->motivo }} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_descuentos"> Ver Más</a>
+                                        <!-- <a href="">Ver Mas</a> -->
+                                    </td>
+
+                                    @else
+                                    <td> No cuenta con descuentos </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{route('personales.editDescountUser',$user->id)}}" class="btn btn-primary"> <i class="fa fa-solid fa-minus fa-lg"></i></a>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Compromiso</th>
+                                    @if(isset($user->vacaciones[count($user->vacaciones)-1]))
+                                    @php
+                                    $ultima_vacacion = $user->vacaciones[count($user->vacaciones)-1];
+                                    $fecha_vacacion_inicio = date('d-m-Y', strtotime($ultima_vacacion->fecha_inicio));
+                                    $fecha_vacacion_fin = date('d-m-Y', strtotime($ultima_vacacion->fecha_fin));
+                                    @endphp
+                                    <td>
+                                        Fecha inicio: {{$fecha_vacacion_inicio }},&nbsp Fecha fin: {{ $fecha_vacacion_fin}},&nbsp Otorgado por: {{ $ultima_vacacion->detalleVacacion->user->name }} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_vacaciones"> Ver Más </a>
+                                    </td>
+                                    @else
+                                    <td> No se le otorgaron vacaciones </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{ route('personales_vacaciones.agregarVacacion',$user->id)}}" class="btn btn-primary"><i class="fa fa-plane-departure "></i> </a>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Carisma con el Cliente</th>
+                                    @if(isset($user->vacaciones[count($user->vacaciones)-1]))
+                                    @php
+                                    $ultima_vacacion = $user->vacaciones[count($user->vacaciones)-1];
+                                    $fecha_vacacion_inicio = date('d-m-Y', strtotime($ultima_vacacion->fecha_inicio));
+                                    $fecha_vacacion_fin = date('d-m-Y', strtotime($ultima_vacacion->fecha_fin));
+                                    @endphp
+                                    <td>
+                                        Fecha inicio: {{$fecha_vacacion_inicio }},&nbsp Fecha fin: {{ $fecha_vacacion_fin}},&nbsp Otorgado por: {{ $ultima_vacacion->detalleVacacion->user->name }} &nbsp <a href="" class="fa fa-eye" data-toggle="modal" data-target="#modal_vacaciones"> Ver Más </a>
+                                    </td>
+                                    @else
+                                    <td> No se le otorgaron vacaciones </td>
+                                    @endif
+                                    <td style="text-align: center;">
+                                        <a href="{{ route('personales_vacaciones.agregarVacacion',$user->id)}}" class="btn btn-primary"><i class="fa fa-plane-departure "></i> </a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 </section>
 
 
 {{-- Modal para ver Detalle del garante Asignado --}}
-
 
 @endsection
 

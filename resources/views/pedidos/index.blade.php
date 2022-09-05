@@ -11,7 +11,7 @@
     <div class="section-body">
         <div class="row">
             <div class="card">
-                @role('Super Admin|Contabilidad')
+                @role('Super Admin|Contabilidad|Chef Corporativo')
                 <div class="card-header">
                     <h4>Seleccione la fecha a Filtrar</h4>
                 </div>
@@ -62,11 +62,11 @@
                                     <th class="text-center" style="color: #424242;">Usuario</th>
                                     <th class="text-center" style="color: #424242;">Total Solicitado</th>
                                     <th class="text-center" style="color: #424242;">Total Enviado</th>
-                                    @role('Super Admin|Contabilidad')
+                                    @role('Super Admin|Contabilidad|Chef Corporativo')
                                     <th class="text-center" style="color: #424242;">Estado</th>
                                     @endrole
                                     <th class="text-center" style="color: #424242;">Opciones</th>
-                                    @role('Super Admin|Contabilidad')
+                                    @role('Super Admin|Contabilidad|Chef Corporativo')
                                     <th class="text-center" style="color: #fff;"></th>
                                     @endrole
 
@@ -107,7 +107,7 @@
                                         <td class="text-center"> <span class="badge badge-success">Aceptado</span></td>
                                         @endif
 
-                                        @role('Super Admin|Contabilidad')
+                                        @role('Super Admin|Contabilidad|Chef Corporativo')
 
                                         @if($pedido->estado_impresion=="N")
                                         <td style="text-align: center;"> <a href="{{ route('pedidos.VaucherPdf', $pedido->id) }}" class="btn btn-light btn-sm " style="border-radius: 8px;color:red">PDF</a></td>
@@ -116,7 +116,7 @@
                                         @endif
                                     @endrole
                                       
-                                    @role('Super Admin|Contabilidad')
+                                    @role('Super Admin|Contabilidad|Chef Corporativo')
 
                                         <td>
                                             <div class="dropdown" style="position: absolute;">

@@ -63,7 +63,7 @@
                                     <th class="text-center" style="color: #424242;">Fecha Entrega</th>
                                     <th class="text-center" style="color: #424242;">A Sucursal </th>
                                     <th class="text-center" style="color: #424242;">Estado</th>
-                                    @role('Super Admin|Contabilidad')
+                                    @role('Super Admin|Contabilidad|Chef Corporativo')
                                     <th style="color: #fff;"></th>
                                     @endrole
                                 </thead>
@@ -93,7 +93,7 @@
                                         @elseif($pedido_produccion->estado =='A')
                                         <td class="text-center"> <span class="badge badge-info">Aceptado</button></td>
                                         @endif
-                                        @role('Super Admin|Contabilidad')
+                                        @role('Super Admin|Contabilidad|Chef Corporativo')
                                         <td>
                                             <div class="dropdown" style="position: absolute;">
                                                 <a href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

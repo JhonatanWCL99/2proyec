@@ -1,38 +1,38 @@
 <?php
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaCompraVenta;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\CompraVenta;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetail;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionCodigos;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionSincronizacion;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionComputarizada;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionElectronica;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\SiatFactory;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaComercialExportacion;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\Hotel;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\TasaCero;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\Hospitales;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\CompraVenta;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetail;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ServicioBasico;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SectorEducativo;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaHotel;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\EntidadFinanciera;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailHotel;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaTasaCero;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ComercialExportacion;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailHospital;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaHospitales;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaCompraVenta;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailTuristico;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaServicioBasico;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionCodigos;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaSectorEducativo;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ServicioTuristicoHospedaje;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ComercialExportacionServicio;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaEntidadFinanciera;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionElectronica;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaComercialExportacion;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionComputarizada;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionSincronizacion;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailComercialExportacion;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaServicioTuristicoHospedaje;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailTuristico;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ServicioTuristicoHospedaje;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaTasaCero;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\TasaCero;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaSectorEducativo;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaHotel;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailHotel;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaHospitales;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\InvoiceDetailHospital;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaComercialExportacionServicio;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SectorEducativo;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\Hotel;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\Hospitales;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ComercialExportacionServicio;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ServicioBasico;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaServicioBasico;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\EntidadFinanciera;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaEntidadFinanciera;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\SiatFactory;
 
 function test_log($data, $destFile = null)
 {
@@ -526,7 +526,7 @@ function testFirma($sucursal, $puntoventa, SiatInvoice $factura, $tipoFactura)
 	$service->setPublicCertificateFile($config->pubCert);
 	$service->debug = !true;
 	
-	$tipoEmision 			= SiatInvoice::TIPO_EMISION_ONLINE;
+	$tipoEmision = SiatInvoice::TIPO_EMISION_ONLINE;
 	$res = $service->recepcionFactura($factura, $tipoEmision, $tipoFactura);
 	
 	return $res;

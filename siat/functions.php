@@ -16,9 +16,10 @@ function formatXML($xmlFilepath)
 {
 	if( is_array($xmlFilepath) || is_object($xmlFilepath) )
 		return false;
-	
+	/* dd($xmlFilepath); */
+	/* 	dd(simplexml_load_string($xmlFilepath)); */	
 	$loadxml = is_file($xmlFilepath) ? simplexml_load_file($xmlFilepath) : ( simplexml_load_string($xmlFilepath) );
-	
+
 	$dom = new DOMDocument('1.0');
 	$dom->preserveWhiteSpace = false;
 	$dom->formatOutput = true;
@@ -30,6 +31,7 @@ function formatXML($xmlFilepath)
 }
 function sb_siat_debug($str, $isXml = false)
 {
+	/* dd($str,$isXml); */
 	print_r( $isXml ? formatXML($str) : $str);
 }
 /**

@@ -27,24 +27,22 @@ class CuisController extends Controller
 
     public function store(Request $request)
     {
-       /*  $codigoPuntoVenta = RegistroPuntoVenta::where('sucursal_id', $request->sucursal_id)->first();
-        if (is_null($codigoPuntoVenta)) {
-            return response()->json(["error" => "No Existe Punto de Venta Registrado"]);
-        } */
         $cuisService = new CuisService();
-
-        $response = $cuisService->obtenerCuis(0,  $request->sucursal_id);
-        $cuisService->createCuis($response, $request->sucursal_id);
-        if (isset($response->RespuestaCuis->mensajesList)) {
-
-            if ($response->RespuestaCuis->mensajesList->codigo == 980) {
-                return redirect()->route('cuis.index');
+        $sucursal = Sucursal::find($request->sucursal_id);
+        $response = $cuisService->obtenerCuis(0,  $sucursal->codigo_fiscal);
+        $respCrearCuis = $cuisService->createCuis($response, $request->sucursal_id);
+        if ($respCrearCuis['status']) {
+            if (isset($response->RespuestaCuis->mensajesList)) {
+                if ($response->RespuestaCuis->mensajesList->codigo == 980) {
+                    return redirect()->route('cuis.index');
+                } else {
+                    return response()->json(["status" => false, "error" => "No se pudo obtener el Cuis"]);
+                }
             } else {
-                return response()->json(["error" => "No Se pudo guardar el cuis"]);
+                return response()->json(["status" => false, "error" => "Sin Codigo de Respuesta"]);
             }
-        } else {
-            return response()->json(["error"=>"Sin Codigo de Respuesta"]);
-
+        }else{
+           return $respCrearCuis;
         }
     }
 }

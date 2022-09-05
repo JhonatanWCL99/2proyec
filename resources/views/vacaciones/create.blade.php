@@ -76,8 +76,8 @@
                                                 <label for="estado">Estado<span
                                                         class="required">*</span></label>
                                                 <select  id="" name="estado" class="form-control" required>                                                    
-                                                    <option value="1">HABILITADO</option>
-                                                    <option value="0">DESHABILITADO</option>                                                    
+                                                    <option value="1">ACEPTADO</option>
+                                                    <option value="0">SOLICITADO</option>                                                    
                                                 </select>
                                             </div>
                                         </div>

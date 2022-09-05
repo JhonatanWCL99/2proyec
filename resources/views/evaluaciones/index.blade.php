@@ -19,7 +19,7 @@
                
                       
                     <div class="card-body">
-                        @role('Super Admin')
+                        @role('Super Admin|RRHH')
                           <a class="btn btn-warning  float-right" href="{{ route('personales.reporteEvaluaciones') }}">Resultados</a>
                     
                         <a class="btn btn-primary " href="{{route('evaluaciones.create')}}">Nuevo criterio de evaluación</a><br><br>

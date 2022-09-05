@@ -35,39 +35,39 @@ class EmisionPaqueteController extends Controller
     public function emisionPaquetes()
     {
         $sucursal = 0;
-        $puntoventa = 0;
+        $puntoventa = 1;
         $cantidad = 500;
-        $codigoEvento = 5;
+        $codigoEvento = 1;
         $fecha_generica = Carbon::now();
         $sucursal_db = Sucursal::where('codigo_fiscal', $sucursal)->first();
         $cufd_bd = SiatCufd::where('sucursal_id', $sucursal_db->id)->orderBy('fecha_generado', 'desc')->first();
-        $cufdAntiguo = $cufd_bd;
+        $cufdAntiguo = $cufd_bd->codigo;
         $codigoControlAntiguo     = $cufd_bd->codigo_control;
-        $fechaInicio     = (new Carbon($cufd_bd->fecha_generado))->format("Y-m-d\TH:i:s.v");
-        $fechaFin        = (new Carbon())->subMinutes(2)->format("Y-m-d\TH:i:s.v");
-
-        $cafc            = null; //'101B4283AAD6D';
-        $resEvento         = null;
+        $cafc            = "1011917833B0D"; //'101B4283AAD6D';
+        /* $resEvento         = null; */
         $resCuis         = $this->cuisService->obtenerCuis($puntoventa, $sucursal);
         $resCufd        = $this->cufdService->obtenerCufd($puntoventa, $sucursal, $resCuis->RespuestaCuis->codigo);
-        $evento         = $this->emisionPaqueteService->obtenerListadoEventos($sucursal, $puntoventa, $codigoEvento);
-        $evento or die('Evento no encontrado');
-
-        $pvfechaInicio     = $fechaInicio;
-        $pvfechaFin        = $fechaFin;
+        
         /* for ($i = 0; $i < 70; $i++) { */
         # code...
 
-        $resEvento         = $resEvento ?: $this->emisionPaqueteService->registroEvento(
+        $pvfechaInicio 	= (new Carbon($cufd_bd->fecha_generado))->format("Y-m-d\TH:i:s.v");
+		$pvfechaFin		= (new Carbon())->subMinutes(2)->subSeconds(30)->format("Y-m-d\TH:i:s.v");
+       /*  dd($pvfechaInicio,$pvfechaFin); */
+        $evento         = $this->emisionPaqueteService->obtenerListadoEventos($sucursal, $puntoventa, $codigoEvento);
+        /* $evento or die('Evento no encontrado'); */
+        $resEvento         = $this->emisionPaqueteService->registroEvento(
             $resCuis->RespuestaCuis->codigo,
             $resCufd->RespuestaCufd->codigo,
             $sucursal,
             $puntoventa,
             $evento,
-            $cufdAntiguo->codigo,
-            $fechaInicio,
-            $fechaFin
+            $cufdAntiguo,
+            $pvfechaInicio,
+            $pvfechaFin
         );
+		return $resEvento;
+
         if (!isset($resEvento->RespuestaListaEventos->codigoRecepcionEventoSignificativo)) {
             print_r($resEvento);
             die("No se pudo registrar el evento significativo\n");
@@ -81,13 +81,13 @@ class EmisionPaqueteController extends Controller
             $this->configService->codigoActividad,
             $this->configService->codigoProductoSin,
             $pvfechaInicio,
-            $cufdAntiguo
+            $cufdAntiguo->codigo
         );
 
 
         $res = $this->emisionPaqueteService->testPaquetes($sucursal, $puntoventa, $facturas, $codigoControlAntiguo, $this->configService->tipoFactura, $resEvento->RespuestaListaEventos, $cafc);
         if (isset($res->RespuestaServicioFacturacion->codigoRecepcion)) {
-            $res = $this->emisionPaqueteService->testRecepcionPaquete($sucursal, $puntoventa, $this->configService->documentoSector, $this->cofigService->tipoFactura, $res->RespuestaServicioFacturacion->codigoRecepcion);
+            $res = $this->emisionPaqueteService->testRecepcionPaquete($sucursal, $puntoventa, $this->configService->documentoSector, $this->configService->tipoFactura, $res->RespuestaServicioFacturacion->codigoRecepcion);
             print_r($res);
         }
 

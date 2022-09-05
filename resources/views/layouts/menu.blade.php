@@ -15,7 +15,7 @@
         @endrole
 
 
-        @role('Super Admin')
+        @role('Super Admin|Contabilidad')
         <li class="dropdown {{ $activePage === 'formulario' ? ' active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users titulo"></i> <span class="titulo">Ventas</span></a>
                 <ul class="dropdown-menu ">
@@ -26,7 +26,7 @@
                         <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('autorizaciones.ventas_fiscales') }}" class="nav-link">Reporte Ventas Fiscales</a></li>
                         <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('pedidos_producciones.reporte_inventario') }}" class="nav-link">Reporte Inventario Fiscal</a></li>
                         <li class="nav-item{{ $activePage == 'roles' ? ' active' : '' }}"><a href="{{ route('horarios.planillaHorarios') }}" class="nav-link">Planilla Horario</a></li>
-                        
+
 
 
                 </ul>
@@ -68,12 +68,19 @@
         @endrole
 
 
-        @role('Super Admin|Encargado|Contabilidad')
+        @role('Super Admin|Encargado|Contabilidad|Chef Corporativo')
         <li class="dropdown {{ $activePage === 'categorias' || $activePage === 'platos' || $activePage === 'platos'? ' active': '' }}">
                 <a href="inventario" class="nav-link has-dropdown "><i class="fas fa-shopping-basket"></i><span>Pedidos</span></a>
                 <ul class="dropdown-menu">
                         <li class="nav-item{{ $activePage == 'categorias_plato' ? ' active' : '' }}"><a href="{{ route('pedidos.index') }}">Pedidos Insumos</a></li>
                         <li class="nav-item{{ $activePage == 'categorias_plato' ? ' active' : '' }}"><a href="{{ route('pedidos_producciones.index') }}">Pedidos Produccion</a></li>
+
+                        @role('Chef Corporativo|Super Admin')
+                        <li class="nav-item{{ $activePage == 'categorias_plato' ? ' active' : '' }}"><a href="{{ route('pedidos.pedido_especial') }}">Insumos Cdp</a></li>
+
+                        <li class="nav-item{{ $activePage == 'categorias_plato' ? ' active' : '' }}"><a href="{{ route('pedidos_producciones.index') }}">Produccion Cdp</a></li>
+                        @endrole
+
                         @role('Super Admin|Contabilidad')
                         <li class="nav-item "> <a href="{{ route('pedidos.reporteZumos') }}">Hoja de Zumos y Salzas </a> </li>
                         <li class="nav-item "> <a href="{{route('pedidos_producciones.reporteProduccion')}}">Hoja de Produccion </a> </li>
@@ -102,8 +109,8 @@
                         <li class="nav-item{{ $activePage == 'vacaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('vacaciones.index') }}">Vacaciones</a></li>
                         <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('observaciones.index') }}">Observaciones</a></li>
                         <li class="nav-item{{ $activePage == 'observaciones' ? ' active' : '' }}"><a class="nav-link" href="{{ route('manos_obras.reporteManoObraSucursal') }}">MO Sucursales</a></li>
-                        <li class="nav-item{{ $activePage == 'horario' ? ' active' : '' }}"><a class="nav-link" href="{{ route('horarios.planillaHorarios') }}">Carga Horaria</a></li>        
-                        
+                        <li class="nav-item{{ $activePage == 'horario' ? ' active' : '' }}"><a class="nav-link" href="{{ route('horarios.planillaHorarios') }}">Carga Horaria</a></li>
+
                         <li class="nav-item "> <a href="{{ route('personales.vencimientoContratos') }}">Vencimiento de Contratos </a> </li>
                         @endrole
                 </ul>
@@ -117,7 +124,6 @@
                 <ul class="dropdown-menu">
                         <li class="nav-item{{ $activePage == 'mantenimiento' ? ' active' : '' }}"><a class="nav-link " href="{{ route('mantenimiento.index') }}">Registro</a></li>
                         <li class="nav-item{{ $activePage == 'mantenimiento' ? ' active' : '' }}"><a class="nav-link " href="{{ route('mantenimiento.index') }}">Detalle</a></li>
-
                 </ul>
         </li>
         @endrole
@@ -139,7 +145,7 @@
         </li>
         @endrole
 
-        @role('Super Admin|Almacen|RRHH|Contabilidad|Atencion')
+        @role('Super Admin|Almacen|RRHH|Contabilidad|Atencion|Encargado')
         <li class="dropdown">
                 <a href="" class="nav-link has-dropdown"><i class="fas fa-building"></i> <span> Sucursales</span></a>
                 @role('Super Admin|Contabilidad|Encargado|Almacen|RRHH')
@@ -149,11 +155,12 @@
                         <li class="nav-item "> <a href="{{route('tareas.index')}}"> Actividades </a> </li>
                         <li class="nav-item "> <a href="{{ route('manos_obras.index') }}"> Costo mano de Obra </a> </li>
                         <li class="nav-item "> <a href="{{ route('evaluaciones.index') }}"> Criterios Evaluación </a> </li>
-                        <li class="nav-item "> <a href="{{ route('personales.listaevaluaciones') }}"> Evaluaciones </a> </li>
+
                         <li class="nav-item "> <a href="{{ route('personales.mostrarUsuarios') }}">Sgmt. de Actividades</a> </li>
                         <li class="nav-item "> <a href="{{ route('menus_semanales.reporteMenu') }}">Reporte Menu </a> </li>
                         @endrole
                         <li class="nav-item "> <a href="{{route('personales.listaTareas')}}"> Mis Tareas </a> </li>
+                        <li class="nav-item "> <a href="{{ route('personales.listaevaluaciones') }}"> Evaluaciones </a> </li>
                 </ul>
                 @endrole
         </li>
@@ -166,13 +173,14 @@
                 </ul>
 
         </li>
-
+        @role('Super Admin')
         <li class="dropdown">
                 <a href="" class="nav-link has-dropdown"><i class="fas fa-bookmark"></i> <span>Siat</span></a>
                 <ul class="dropdown-menu">
                         <li class="nav-item"> <a href="{{ route('cuis.index') }}">Cuis</a> </li>
                         <li class="nav-item"> <a href="{{ route('cufd.index') }}">Cufd</a> </li>
                         <li class="nav-item"> <a href="{{ route('puntos_ventas.index') }}">Punto Venta</a> </li>
+                        <li class="nav-item"> <a href="{{ route('anulacion_facturas.index') }}">Anular Facturas</a> </li>
                 </ul>
-
         </li>
+        @endrole

@@ -160,7 +160,7 @@ class VacacionController extends Controller
 
         $vacacion->fecha_inicio = $request->get("fecha_inicio");
         $vacacion->fecha_fin = $request->get("fecha_fin");
-        $vacacion->estado = $request->get("estado");
+        $vacacion->estado = "S";
         $vacacion->user_id = $user->id;
         $vacacion->save();
 
@@ -184,7 +184,7 @@ class VacacionController extends Controller
     function cambiarestado(Request $request){
         $vacacion = Vacacion::findOrfail($request->id);
             $vacacion->update([
-                'estado' => 1,
+                'estado' =>  "A",
             ]);
         
         return response()->json([ 'status' => true]);

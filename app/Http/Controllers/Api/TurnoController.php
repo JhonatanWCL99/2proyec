@@ -8,6 +8,7 @@ use App\Models\Venta;
 use Carbon\Carbon;
 use App\Models\Siat\SiatCui;
 use App\Models\Siat\SiatCufd;
+use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,9 +39,8 @@ class TurnoController extends Controller
    public function turn_register (Request $request) {
         $user = $request->user_id;
         $user_id = User::find($request->user_id);
-        $sucursal = $request->sucursal_id;
-        $codigoSucursal  = $request->codigoSucursal;
-        $codigoPuntoVenta  = $request->codigoPuntoVenta;
+        $sucursal = Sucursal::find($request->sucursal_id);
+        $codigoPuntoVenta  = 0;
         $fecha_generado_cufd = Carbon::now()->toDateTimeString();
         $fecha = Carbon::now()->format('Y-m-d H:i');
         $turno_am = DB::select("select turno from turnos_ingresos where fecha = '$fecha' and user_id = '$user' and turno = 0");
@@ -51,34 +51,30 @@ class TurnoController extends Controller
             $turno->turno = 0;  /* AM  */
             $turno->hora_inicio = Carbon::now()->format('H:i:s');
             $turno->user_id = $user;
-            $turno->sucursal_id = $sucursal;
+            $turno->sucursal_id = $sucursal->id;
             $turno->nro_transacciones = 0;
             $turno->save();
 
             /* CREA CUFD CUANDO SE INGRESA NUEVO TURNO */
-        
-            $cuis = SiatCui::where('sucursal_id', $codigoSucursal)->first();
+
+            $cuis = SiatCui::where('sucursal_id', $sucursal->id)->first();
     
             if (is_null($cuis)) {
-                $response =  $this->obtenerCuis($codigoPuntoVenta, $codigoSucursal);
+                $response =  $this->obtenerCuis($codigoPuntoVenta, $sucursal->codigo_fiscal);
                 $obtener_cui = SiatCui::create([
                     'fecha_generado' => $fecha,
                     'fecha_expiracion' =>  new Carbon($response->RespuestaCuis->fechaVigencia),
                     'codigo_cui' => $response->RespuestaCuis->codigo,
-                    'sucursal_id' => 1,
-                    'estado' => 'O' /* Obtenido */
+                    'sucursal_id' => $sucursal->id,
+                    'estado' => 'V' /* Vigente */
                 ]);
-                $resCufd =  $this->obtenerCufd($codigoPuntoVenta, $codigoSucursal, $obtener_cui->codigo_cui, true);
+                $resCufd =  $this->obtenerCufd($codigoPuntoVenta, $sucursal->codigo_fiscal, $obtener_cui->codigo_cui, true);
             } else {
-                $resCufd =  $this->obtenerCufd($codigoPuntoVenta, $codigoSucursal, $cuis->codigo_cui, true);
+                $resCufd =  $this->obtenerCufd($codigoPuntoVenta, $sucursal->codigo_fiscal, $cuis->codigo_cui, true);
             }
-
-          /*   return response()->json([
-                "RespuestaCufd"=>$resCufd,
-            ]); */
              
             $guardar_cufd = SiatCufd::create([
-                'estado'=>"H",
+                'estado'=>"V",
                 'codigo' => $resCufd->RespuestaCufd->codigo,
                 'codigo_control' => $resCufd->RespuestaCufd->codigoControl,
                 'direccion' => $resCufd->RespuestaCufd->direccion,
@@ -91,6 +87,7 @@ class TurnoController extends Controller
             $response = [
                 'success' => true,
                 'tt' => $turno_am,
+                'responseSiat'=>$resCufd,
                 'turno_id' => $turno->id
             ];
         } else {
@@ -109,6 +106,7 @@ class TurnoController extends Controller
                 'turno_id' => $turno->id,
             ];
         }
+        return response()->json($response);
        
     }
     

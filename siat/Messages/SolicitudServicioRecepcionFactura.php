@@ -29,7 +29,10 @@ class SolicitudServicioRecepcionFactura extends SolicitudRecepcion
 		//$this->archivo = base64_encode(gzencode($binaryBuffer, 9, FORCE_GZIP));
 		//$this->archivo 		= $compress ? gzencode($binaryBuffer, 9, FORCE_GZIP) : $binaryBuffer;
 		$this->archivo 		= $compress ? gzcompress($binaryBuffer, 9, FORCE_GZIP) : $binaryBuffer;
+		/* dd($this->archivo); */
 		$this->hashArchivo 	= hash('sha256', $this->archivo, !true);
+		/* dd($this->hashArchivo); */
+
 	}
 	public function setBufferFromFiles(array $files)
 	{
@@ -50,6 +53,7 @@ class SolicitudServicioRecepcionFactura extends SolicitudRecepcion
 			$localname = sprintf("invoice-%d.xml", $i);
 			$tar->addFromString($localname, $xml);
 		}
+		/* dd($package); */
 		$this->setBuffer(file_get_contents($package));
 		//unlink($package);
 	}

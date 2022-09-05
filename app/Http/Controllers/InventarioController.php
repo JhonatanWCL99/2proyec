@@ -29,7 +29,6 @@ class InventarioController extends Controller
 
     {
 
-
         if (auth()->check() != false) {
             $user_rol = Auth::user()->roles[0]->id;
             if ($user_rol == 3) {

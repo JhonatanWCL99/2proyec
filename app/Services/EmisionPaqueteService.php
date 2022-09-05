@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Models\Siat\EventoSignificativo;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionSincronizacion;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
-use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionComputarizada;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\SiatFactory;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOperaciones;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionComputarizada;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionSincronizacion;
 
 class EmisionPaqueteService
 {
@@ -49,7 +49,6 @@ class EmisionPaqueteService
 
     function registroEvento($cuis, $cufd, $sucursal, $puntoventa, object $evento, $cufdAntiguo, $fechaInicio, $fechaFin)
     {
-        /* dd($evento); */
         $serviceOps = new ServicioOperaciones();
         $serviceOps->setConfig((array)$this->configService->config);
         $serviceOps->cuis = $cuis;
@@ -63,11 +62,12 @@ class EmisionPaqueteService
             $sucursal,
             $puntoventa
         );
+       
         return $resEvent;
     }
 
-    function construirFacturas($sucursal, $puntoventa, int $cantidad, $documentoSector, $codigoActividad, $codigoProductoSin, &$fechaEmision = null, $cufdAntiguo = null, $cafc = null)
-    {
+    function construirFacturas($sucursal, $puntoventa, int $cantidad, $documentoSector, $codigoActividad, $codigoProductoSin, &$fechaEmision = null, $cufdAntiguo = null, $cafc = null){
+       
         $facturas = [];
         for ($i = 0; $i < $cantidad; $i++) {
             $factura = $this->emisionIndividualService->construirFactura($puntoventa, $sucursal, $this->configService->config->modalidad, $documentoSector, $codigoActividad, $codigoProductoSin);
@@ -103,13 +103,13 @@ class EmisionPaqueteService
             $tipoFactura,
             $cafc
         );
-        $this->test_log("RESULTADO RECEPCION PAQUETE\n=============================");
+       /*  return dd($res); */
+        $this->test_log("ZZZ RESULTADO RECEPCION PAQUETE\n=============================");
         $this->test_log($res);
         return $res;
     }
 
-    function testRecepcionPaquete($codigoSucursal, $codigoPuntoVenta, $documentoSector, $tipoFactura, $codigoRecepcion)
-    {
+    function testRecepcionPaquete($codigoSucursal, $codigoPuntoVenta, $documentoSector, $tipoFactura, $codigoRecepcion){
 
         $resCuis =  $this->cuisService->obtenerCuis($codigoPuntoVenta, $codigoSucursal);
         $resCufd =  $this->cufdService->obtenerCufd($codigoPuntoVenta, $codigoSucursal, $resCuis->RespuestaCuis->codigo);
@@ -124,7 +124,7 @@ class EmisionPaqueteService
 
         while ($res->RespuestaServicioFacturacion->codigoDescripcion == 'PENDIENTE') {
             echo "REINTENTANTO RESPUESTA RECEPCION PAQUETE\n=====================\n";
-            $res = testRecepcionPaquete($codigoSucursal, $codigoPuntoVenta, $documentoSector, $tipoFactura, $codigoRecepcion);
+            $res = $this->testRecepcionPaquete($codigoSucursal, $codigoPuntoVenta, $documentoSector, $tipoFactura, $codigoRecepcion);
         }
         echo "RESPUESTA RECEPCION PAQUETE\n=====================\n";
         print_r($res);
@@ -133,8 +133,6 @@ class EmisionPaqueteService
 
     function test_log($data, $destFile = null)
     {
-     
-
         $filename = __DIR__ . '/nit-' . $this->configService->config->nit . ($destFile ? '-' . $destFile : '') . '.log';
         $fh = fopen($filename, is_file($filename) ? 'a+' : 'w+');
         fwrite($fh, sprintf("[%s]#\n%s\n", date('Y-m-d H:i:s'), print_r($data, 1)));

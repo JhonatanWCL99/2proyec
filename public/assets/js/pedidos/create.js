@@ -70,7 +70,6 @@ guardar_pedido.addEventListener("click", (e) => {
             message: "Debe seleccionar la fecha",
             position: "topCenter",
             timeout: 1500,
-           
         });
 
     }

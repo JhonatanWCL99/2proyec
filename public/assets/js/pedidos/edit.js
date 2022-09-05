@@ -80,15 +80,20 @@ $(document).ready(function () {
 
     /*ACTUALIZA LOS SUBTOTALES Y EL TOTAL INVENTARIO*/
     $("body").on("keyup", ".stock", function () {
-        for (let i in stocks_input) {
+        
+        for (let i in stocks_input) 
+        {
             let stock = stocks_input[i];
             let precio = preciosos[i];
             
             let td_subtotal = td_subtotales[i];
             td_subtotal.innerHTML = stock.value * precio.innerHTML;
         }
+        
         let total = 0;
-        for (let j in td_subtotales) {
+        
+        for (let j in td_subtotales) 
+        {
             if (
                 td_subtotales[j].innerHTML !== undefined &&
                 !isNaN(td_subtotales[j].innerHTML)
@@ -96,7 +101,9 @@ $(document).ready(function () {
                 total += parseFloat(td_subtotales[j].innerHTML);
             }
         }
+
         td_total_pedido.innerHTML = total;
+
     });
 
     $("#producto")

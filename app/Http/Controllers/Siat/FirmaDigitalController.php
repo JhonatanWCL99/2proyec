@@ -10,7 +10,6 @@ use App\Services\FirmaDigitalService;
 
 class FirmaDigitalController extends Controller
 {
-
     public function generar_firma_digital(){
         $firma_digital = new FirmaDigitalService();
         $res = $firma_digital->pruebasFirma();

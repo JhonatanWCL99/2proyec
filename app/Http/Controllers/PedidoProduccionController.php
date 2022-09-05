@@ -468,11 +468,8 @@ class PedidoProduccionController extends Controller
         return view('pedidos_producciones.detalleReporteP', compact('pedidos_detalle', 'fecha_inicial', 'fecha_final'));
     }
 
-
-
-    public function reporte_inventario(Request $request){
-
-        
+    public function reporte_inventario(Request $request)
+    {        
         $fecha = Carbon::now()->toDateString();
         
         $fecha_inicial = $request->fecha_inicial;
@@ -522,4 +519,14 @@ class PedidoProduccionController extends Controller
         return view('pedidos_producciones.reporte_inventario', compact('inventarios','fecha','fecha_inicial','fecha_final'));
 
     }
+
+    public function produccion_especial(){
+
+    }
+
+    public function produccion_especial_store(Request $request){
+
+    }
+
+
 }

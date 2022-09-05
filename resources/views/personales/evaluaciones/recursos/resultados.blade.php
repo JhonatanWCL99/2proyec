@@ -1,4 +1,4 @@
-     <div class="card">
+      <div class="card">
          <div class="card-header">
              <p style="float: right;">
                  RESULTADOS, @php $fecha_formateada = strtoupper(\Carbon\Carbon::parse($fecha)->isoFormat('dddd, D MMMM Y')); @endphp

@@ -1,9 +1,6 @@
 <?php
 namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services;
-
 use Exception;
-
-
 class ServicioSiat
 {
 	const MOD_ELECTRONICA_ENLINEA = 1;
@@ -54,8 +51,7 @@ class ServicioSiat
 		if( $endpoint )
 			$this->endpoint = $endpoint;
 	}
-	public function setConfig(array $data)
-	{
+	public function setConfig(array $data){
 		$this->codigoSistema 	= isset($data['codigoSistema']) ? $data['codigoSistema'] : null;
 		$this->ambiente			= isset($data['ambiente']) ? $data['ambiente'] : null;
 		$this->modalidad		= isset($data['modalidad']) ? $data['modalidad'] : null;
@@ -89,17 +85,32 @@ class ServicioSiat
 	}
 	protected function callAction($action, $data, $soapHeaders = [], $httpHeaders = [])
 	{
+		
 		$headers = array_merge([
 			'apikey: TokenApi ' . $this->token,
 		], $httpHeaders);
+		 /* dd($headers,$httpHeaders);  */
 		
 		$context =[
 			'http' => [
 				'header' => implode("\r\n", $headers),
 			]
 		];
+		 /* dd($context,$headers);  */
+
+		
 		$stream_context = stream_context_create($context);
-		$client = new \SoapClient($this->wsdl, ['trace' => 1, 'stream_context' => $stream_context]);
+		
+		/* ini_set('default_socket_timeout', 5000); */
+		$client = new \SoapClient($this->wsdl, [
+			'trace' => 1, 
+			'stream_context' => $stream_context,
+			/* 'connection_timeout' => 5000,
+			'cache_wsdl' => WSDL_CACHE_NONE,
+			'keep_alive' => false,
+			'compression'   => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | SOAP_COMPRESSION_DEFLATE, */
+		]);
+		/* dd($client); */
 		try
 		{
 			/*
@@ -107,9 +118,10 @@ class ServicioSiat
 				new \SoapHeader('soap', 'apikey', $tokenDelegado),
 			]);
 			*/
-			
+			/* dd($action,$data); */
 			//$this->debug($data, 0);
 			$res = $client->__soapCall($action, $data);
+			/* dd($res); */
 			$this->debug("CABECERAS SOLICITUD\n================\n", 0);
 			$this->debug($client->__getLastRequestHeaders(), 0);
 			$this->debug("DATOS SOLICITUD\n================\n", 0);
@@ -120,7 +132,7 @@ class ServicioSiat
 		}
 		catch(\SoapFault $e)
 		{
-			$error = "($action)ERROR: " . $e->getMessage() . "URL:" . $this->wsdl . "\n\n";
+			$error = "($action)ERROR: " . $e->getMessage() . " URL:" . $this->wsdl . "\n\n";
 			$this->debug($client->__getLastRequestHeaders(), 0);
 			$this->debug($client->__getLastRequest(), 0);
 			$this->debug($error);

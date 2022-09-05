@@ -2,16 +2,14 @@
 namespace App\Services;
 
 use App\Models\Siat\SiatCui;
+use App\Models\Siat\SiatCufd;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\SiatInvoice;
+use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Request;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionComputarizada;
 
 
 
 Class AnulacionFacturaService{
-
-    public $configService;
-
-
     public function __construct()
     {
         $this->cuisService = new CuisService();
@@ -20,20 +18,19 @@ Class AnulacionFacturaService{
         $this->emisionIndividualService = new EmisionIndividualService();
     }
 
-    function pruebasAnulacion(){
-    $sucursal =0;
+    function pruebasAnulacion(Request $request){
+		$sucursal =0;
+		$factura = $request->factura_id;
+		$motivo = $request->codigo_clasificador;
 
 	foreach ([0] as $puntoventa) {
 		$resCuis 	= SiatCui::first();
-		$resCufd	= $this->cufdService->obtenerCufd($puntoventa, $sucursal, $resCuis->codigo_cui, true);
-
+		$resCufd = SiatCufd::first();
+			
 		for ($i = 0; $i < 125; $i++) {
-			$factura = $this->emisionIndividualService->construirFactura($puntoventa, $sucursal, $this->configService->config->modalidad, $this->configService->documentoSector, $this->configService->codigoActividad, $this->configService->codigoProductoSin);
 			$res = $this->emisionIndividualService->testFactura($sucursal, $puntoventa, $factura, $this->configService->tipoFactura);
-			/* print_r($res); */
 			if ($res->RespuestaServicioFacturacion->codigoEstado == 908) {
-				$resa = $this->testAnular(1, $factura->cabecera->cuf, $sucursal, $puntoventa, $this->configService->tipoFactura, SiatInvoice::TIPO_EMISION_ONLINE, $this->configService->documentoSector);
-				/* print_r($resa); */
+				$resa = $this->testAnular($motivo, $factura->cuf, $sucursal, $puntoventa, $this->configService->tipoFactura, SiatInvoice::TIPO_EMISION_ONLINE, $this->configService->documentoSector);
 			}
 			if ($i == 100)
 				sleep(10);
@@ -43,19 +40,17 @@ Class AnulacionFacturaService{
 	die;
 }
 
-function testAnular($motivo, $cuf, $sucursal, $puntoventa, $tipoFactura, $tipoEmision, $documentoSector)
-{
-	
-	
-	$resCuis = $this->cuisService->obtenerCuis($puntoventa, $sucursal);
-	$resCufd = $this->cufdService->obtenerCufd($puntoventa, $sucursal, $resCuis->RespuestaCuis->codigo);
+function testAnular($motivo, $cuf, $sucursal, $puntoventa, $tipoFactura, $tipoEmision, $documentoSector){
+	$resCuis 	= SiatCui::first();
+	$resCufd = SiatCufd::first();
 	
 	$service = new ServicioFacturacionComputarizada();
 	$service->setConfig((array)$this->configService->config);
-	$service->cuis = $resCuis->RespuestaCuis->codigo;
-	$service->cufd = $resCufd->RespuestaCufd->codigo;
+	$service->cuis = $resCuis->codigo_cui;
+	$service->cufd = $resCufd->codigo;
 	
 	$res = $service->anulacionFactura($motivo, $cuf, $sucursal, $puntoventa, $tipoFactura, $tipoEmision, $documentoSector);
+	/* dd($res); */
 	
 	return $res;
 }

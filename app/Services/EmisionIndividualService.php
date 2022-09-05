@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Siat\SiatCufd;
+use App\Models\Siat\SiatCui;
+use App\Models\Sucursal;
+use Carbon\Carbon;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaCompraVenta;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaComercialExportacion;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Invoices\ElectronicaServicioTuristicoHospedaje;
@@ -45,9 +49,8 @@ class EmisionIndividualService
         $this->configService = new ConfigService();
     }
 
-    function construirFactura($codigoPuntoVenta = 0, $codigoSucursal = 0, $modalidad = 0, $documentoSector = 1, $codigoActividad = '620100', $codigoProductoSin = '')
+    function construirFactura($codigoPuntoVenta = 0, $codigoSucursal = 0, $modalidad = 0, $documentoSector = 1, $codigoActividad = '620100', $codigoProductoSin = '', $dataFactura = [])
     {
-
         $subTotal = 0;
         $factura = null;
         $detailClass = InvoiceDetail::class;
@@ -55,59 +58,9 @@ class EmisionIndividualService
         if ($modalidad == ServicioSiat::MOD_ELECTRONICA_ENLINEA) {
             if ($documentoSector == DocumentTypes::FACTURA_COMPRA_VENTA)
                 $factura = new ElectronicaCompraVenta();
-            else if ($documentoSector == DocumentTypes::FACTURA_COMERCIAL_EXPORTACION) {
-                $factura = new ElectronicaComercialExportacion();
-                $detailClass = InvoiceDetailComercialExportacion::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SERVICIO_TURISTICO) {
-                $factura = new ElectronicaServicioTuristicoHospedaje();
-                $detailClass = InvoiceDetailTuristico::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_TASA_CERO_LIBROS) {
-                $factura = new ElectronicaTasaCero();
-                //$detailClass = InvoiceDetailTuristico::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SECTOR_EDUCATIVO) {
-                $factura = new ElectronicaSectorEducativo();
-            } else if ($documentoSector == DocumentTypes::FACTURA_HOTELES) {
-                $factura = new ElectronicaHotel();
-                $detailClass = InvoiceDetailHotel::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_HOSPITALES) {
-                $factura = new ElectronicaHospitales();
-                $detailClass = InvoiceDetailHospital::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_COM_EXPORT_SERVICIOS) {
-                $factura = new ElectronicaComercialExportacionServicio();
-                //$detailClass = InvoiceDetailComercialExportacion::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SERV_BASICOS) {
-                $factura = new ElectronicaServicioBasico();
-            } else if ($documentoSector == DocumentTypes::FACTURA_ENT_FINANCIERA) {
-                $factura = new ElectronicaEntidadFinanciera();
-            }
         } else {
             if ($documentoSector == DocumentTypes::FACTURA_COMPRA_VENTA)
                 $factura = new CompraVenta();
-            else if ($documentoSector == DocumentTypes::FACTURA_COMERCIAL_EXPORTACION) {
-                $factura = new ComercialExportacion();
-                $detailClass = InvoiceDetailComercialExportacion::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SERVICIO_TURISTICO) {
-                $factura = new ServicioTuristicoHospedaje();
-                $detailClass = InvoiceDetailTuristico::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_TASA_CERO_LIBROS) {
-                $factura = new TasaCero();
-                //$detailClass = InvoiceDetailTuristico::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SECTOR_EDUCATIVO) {
-                $factura = new SectorEducativo();
-            } else if ($documentoSector == DocumentTypes::FACTURA_HOTELES) {
-                $factura = new Hotel();
-                $detailClass = InvoiceDetailHotel::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_HOSPITALES) {
-                $factura = new Hospitales();
-                $detailClass = InvoiceDetailHospital::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_COM_EXPORT_SERVICIOS) {
-                $factura = new ComercialExportacionServicio();
-                //$detailClass = InvoiceDetailComercialExportacion::class;
-            } else if ($documentoSector == DocumentTypes::FACTURA_SERV_BASICOS) {
-                $factura = new ServicioBasico();
-            } else if ($documentoSector == DocumentTypes::FACTURA_ENT_FINANCIERA) {
-                $factura = new EntidadFinanciera();
-            }
         }
 
         for ($i = 0; $i < 2; $i++) {
@@ -139,7 +92,7 @@ class EmisionIndividualService
             $factura->detalle[] = $detalle;
         }
         $factura->cabecera->razonSocialEmisor    = $this->configService->config->razonSocial;
-        $factura->cabecera->municipio            = 'La Paz';
+        $factura->cabecera->municipio            = 'Santa Cruz de la Sierra';
         $factura->cabecera->telefono            = '88867523';
         $factura->cabecera->numeroFactura        = rand(1, 1000);
         $factura->cabecera->codigoSucursal        = $codigoSucursal;
@@ -222,18 +175,33 @@ class EmisionIndividualService
 
     function testFactura($sucursal, $puntoventa, SiatInvoice $factura, $tipoFactura)
     {
+        $fecha_actual = Carbon::now();
 
+        $sucursal_DB = Sucursal::where('codigo_fiscal', $sucursal)->first();
 
-        $resCuis = $this->cuisService->obtenerCuis($puntoventa, $sucursal);
-        $resCufd = $this->cufdService->obtenerCufd($puntoventa, $sucursal, $resCuis->RespuestaCuis->codigo);
+        $cuis = SiatCui::where('sucursal_id', $sucursal_DB->id)
+            ->where('estado', 'V')
+            ->orderBy('id', 'desc')->first();
+        $cufd = SiatCufd::where('sucursal_id', $sucursal_DB->id)
+            ->whereDate('fecha_vigencia', '>=', $fecha_actual)
+            ->first();
 
-        echo "Codigo CUIS: ", $resCuis->RespuestaCuis->codigo, "\n";
-        echo "Codigo CUFD: ", $resCufd->RespuestaCufd->codigo, "\n";
-        echo "Codigo Control: ", $resCufd->RespuestaCufd->codigoControl, "\n";
+        /*  dd($cufd); */
 
-        $service = SiatFactory::obtenerServicioFacturacion($this->configService->config, $resCuis->RespuestaCuis->codigo, $resCufd->RespuestaCufd->codigo, $resCufd->RespuestaCufd->codigoControl);
-        $service->codigoControl = $resCufd->RespuestaCufd->codigoControl;
+        $service = SiatFactory::obtenerServicioFacturacion($this->configService->config, $cuis->codigo_cui, $cufd->codigo, $cufd->codigo_control);
+        $service->codigoControl = $cufd->codigo_control;
         $res = $service->recepcionFactura($factura, SiatInvoice::TIPO_EMISION_ONLINE, $tipoFactura);
+        $this->test_log("RESULTADO RECEPCION FACTURA\n=============================");
+        $this->test_log($res);
         return $res;
+    }
+
+    function test_log($data, $destFile = null)
+    {
+        $filename = __DIR__ . '/nit-' . $this->configService->config->nit . ($destFile ? '-' . $destFile : '') . '.log';
+        $fh = fopen($filename, is_file($filename) ? 'a+' : 'w+');
+        fwrite($fh, sprintf("[%s]#\n%s\n", date('Y-m-d H:i:s'), print_r($data, 1)));
+        fclose($fh);
+        print_r($data);
     }
 }

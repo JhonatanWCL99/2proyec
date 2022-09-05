@@ -37,7 +37,7 @@ class SincronizarCatalogosController extends Controller
     {
         $sucursal = $sucursal_id;
         $count = 0;
-        $puntoventa = 0;
+        $puntoventa = 1;
         $cuisService = new CuisService();
         $resCuis     = $cuisService->obtenerCuis($puntoventa, $sucursal, true);
         $service     = new ServicioFacturacionSincronizacion($resCuis->RespuestaCuis->codigo);

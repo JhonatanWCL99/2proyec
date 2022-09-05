@@ -30,6 +30,10 @@ class Producto extends Model
         return $this->hasOne(DetalleCompra::class);
     }
 
+    public function productos_insumos(){
+        return $this->hasMany( ProductosInsumos::class);
+    }
+
     public function unidad_medida_compra(){
         return $this->belongsTo(UnidadMedidaCompra::class);
     }

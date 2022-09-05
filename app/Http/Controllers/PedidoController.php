@@ -12,8 +12,10 @@ use App\Models\Pedido;
 use App\Models\Producto;
 use App\Models\Producto_Proveedor;
 use App\Models\Sucursal;
+use App\Models\ProductosInsumos;
 use App\Models\User;
 use App\Models\CategoriaPlato;
+use App\Models\InsumosDias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -523,4 +525,83 @@ class PedidoController extends Controller
         return view('pedidos.total_insumos_solicitados', compact('categoria_insumos','insumos_solicitados'));
         
     }
+
+    public function pedido_especial()
+    {
+        $categorias = Categoria::all();
+        $productos = Producto::all();
+        $fecha_actual = Carbon::now()->addDay(1)->locale('es')->isoFormat('dddd');
+        
+        //dd($fecha_actual); jhonatan ? 
+
+        $dia = InsumosDias::where('dia',$fecha_actual)->first();
+        
+        //dd($dia->id);
+        
+        $productos_predefinidos= ProductosInsumos::where('insumos_dias_id',1)
+        ->orWhere('insumos_dias_id',$dia->id)
+        ->get();
+        
+        /* dd($productos_predefinidos); */
+
+        /*where( 'insumos_dias_id',1 )
+            ->where('insumos_dias_id',$dia->id )->get() */
+        
+        //dd($productos_predefinidos);
+
+        //echo sizeof(  $productos_predefinidos[0]->producto->productos_proveedores)>0?'si':'no';
+        //echo $productos_predefinidos[0]->producto->unidad_medida_compra->nombre;
+        //dd($productos_predefinidos[0]->producto->productos_proveedores[0]); 
+        return view( 'pedidos.pedido_especial' , compact('categorias','productos','productos_predefinidos'));
+    
+    }
+
+    public function pedido_especial_store( Request $request )
+    {
+        //guardar pedido
+        $user_log = Auth::id();
+        $user = User::find($user_log);
+        $pedido = new Pedido();
+        $pedido->fecha_actual = Carbon::now()->toDateString();
+    
+        $pedido->fecha_pedido = $request->fecha_pedido;
+        $pedido->estado = 'P'; //CREADO EN PENDIENTE
+        $pedido->user_id = Auth::id();
+        $pedido->sucursal_principal_id = $user->sucursals[0]->id;
+        $pedido->sucursal_secundaria_id = 2;
+        $pedido->save();
+        $total = 0; 
+
+        $subtotales=$request->subtotales;
+        $stock=$request->stocks;
+        $productos=$request->idproductos;
+        $precios = $request->precios;
+
+        //dd($subtotales);
+
+        foreach ($productos as $index =>  $item) {
+                    
+            if($stock[$index]>0){
+                $detalle_pedido = new DetallePedido();    
+                $total += floatval($subtotales[$index]);
+                $detalle_pedido->cantidad_solicitada = $stock[$index];
+                $detalle_pedido->precio = $precios[$index];
+                $detalle_pedido->subtotal_solicitado = $subtotales[$index];
+                $detalle_pedido->producto_id = $item;
+                $detalle_pedido->pedido_id = $pedido->id;
+                $detalle_pedido->save();
+            }
+        }
+        
+        $pedido->update([
+            'total_solicitado' =>  $total,
+        ]); 
+
+        return response()->json(
+            [
+                'success' => true
+            ]
+        );
+    }
+
 }

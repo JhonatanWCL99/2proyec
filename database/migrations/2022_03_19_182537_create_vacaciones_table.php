@@ -17,7 +17,7 @@ class CreateVacacionesTable extends Migration
             $table->id();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
-            $table->boolean('estado');
+            $table->string('estado');
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->on('users')->references('id');

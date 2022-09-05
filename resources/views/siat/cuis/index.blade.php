@@ -17,10 +17,10 @@
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{route('cuis.create')}}">Nuevo Cuis</a><br><br>
                         <div class="table-responsive">
-                            <table class="table table-striped mt-15" id="table">
+                            <table class="table table-striped" id="table">
                                 <thead style="background-color: #6777ef;">
-                                    <th style="color: #fff;text-align:center">Cuis Generado</th>
                                     <th style="color: #fff;text-align:center">Sucursal</th>
+                                    <th style="color: #fff;text-align:center">Cuis Generado</th>
                                     <th style="color: #fff;text-align:center">Fecha de Creacion</th>
                                     <th style="color: #fff;text-align:center">Fecha de Expiracion</th>
                                     <th style="color: #fff;text-align:center">Estado</th>
@@ -28,11 +28,17 @@
                                 <tbody>
                                     @foreach ($cuis as $cui)
                                     <tr>
-                                        <td style="text-align:center">{{$cui->codigo_cui}}</td>
                                         <td style="text-align:center">{{$cui->sucursal->nombre}}</td>
+                                        <td style="text-align:center">{{$cui->codigo_cui}}</td>
                                         <td style="text-align:center">{{$cui->fecha_generado}}</td>
                                         <td style="text-align:center">{{$cui->fecha_expiracion}}</td>
-                                        <td style="text-align:center">{{$cui->estado==0?"Vigente":"Vencido"}}</td>
+                                        <td style="text-align:center">
+                                            @if($cui->estado=='V')
+                                            <span class="badge badge-success">Vigente</span>
+                                            @else
+                                            <span class="badge badge-danger">Caducado</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

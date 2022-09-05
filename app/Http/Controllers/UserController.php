@@ -397,14 +397,16 @@ class UserController extends Controller
     {
         //dd($request);
         $user = User::find($id);
+        
         $fecha_actual = Carbon::now()->format('Y-m-d');
-
-
+        
+        
         $tareas = Tarea::where('cargo_id', '=', $user->cargosucursales[0]->id)
         ->where('sucursal_id', Auth::user()->sucursals[0]->id)
         ->where('dia_semana', $fecha_actual)
         ->orWhere('dia_semana', 'todos')
         ->get();
+        /* dd($tareas); */
         $user->tareas()->attach($request->tareas);
         $pivot = TareaUser::where('user_id', $user->id)->whereDate('created_at', $fecha_actual)->get();
 

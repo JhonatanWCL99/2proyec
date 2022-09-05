@@ -174,17 +174,18 @@
         </div>
     </div>
 </section>
+
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="{{ URL::asset('assets/js/pedidos/edit.js') }}"></script>
 
+<script type="text/javascript" src="{{ URL::asset('assets/js/pedidos/edit.js') }}"></script>
 <script>
-    let ruta_obtener_precios = "{{route('pedidos.obtenerPrecios')}}"
-    let ruta_actualizarPedido =
-        "{{ route('pedidos.actualizarPedido') }}";
+    let ruta_obtener_precios = "{{route('pedidos.obtenerPrecios')}}";
+    let ruta_actualizarPedido = "{{ route('pedidos.actualizarPedido') }}";
     let ruta_inventarios_index = "{{ route('pedidos.index') }}";
 </script>
+
 @endsection
 @section('page_css')
 <link href="{{ asset('assets/css/inventarios/edit.css') }}" rel="stylesheet" type="text/css" />

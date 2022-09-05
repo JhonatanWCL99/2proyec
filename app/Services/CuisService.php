@@ -27,20 +27,21 @@ class CuisService
         if (isset($response->RespuestaCuis->mensajesList)) {
             if ($response->RespuestaCuis->mensajesList->codigo == 980) {
                 $siatcui = SiatCui::where('codigo_cui', $response->RespuestaCuis->codigo)->first();
-
                 if (is_null($siatcui)) {
                     $obtener_cui = SiatCui::create([
                         'fecha_generado' => $fecha,
                         'fecha_expiracion' =>  new Carbon($response->RespuestaCuis->fechaVigencia),
                         'codigo_cui' => $response->RespuestaCuis->codigo,
                         'sucursal_id' => $sucursal_id,
+                        'estado'=>'V'
                     ]);
+                    return ["status"=>true];
                 }else{
-                    return response()->json(["error"=>"Ya existe un Cuis Vigente"]);
+                    return ["status"=>false,"error"=>"Ya existe un Cuis Vigente"];
                 }
             }
         }else{
-            return response()->json(["error"=>"Sin Codigo de Respuesta"]);
+            return ["status"=>false,"error"=>"Sin Codigo de Respuesta"];
         }
     }
 

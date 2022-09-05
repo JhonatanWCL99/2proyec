@@ -15,8 +15,17 @@ class KeperiController extends Controller
      */
     public function index()
     {
-        $keperis= Keperi::all();
+        $keperis= Keperi::latest()->take(5)->get();
+        
         return view('keperis.index',compact('keperis'));
+    }
+
+    public function filtrarKeperis(Request $request){
+        $fecha_inicial = $request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+        $keperis = Keperi::whereBetween('fecha',[$fecha_inicial,$fecha_final])->get();
+
+        return view('keperis.index',compact('keperis'));    
     }
 
     /**
@@ -114,6 +123,8 @@ class KeperiController extends Controller
         //
     }
 
+       
+    
     public function reporteCentroProduccion (){
         return view('keperis.reporte');
     }

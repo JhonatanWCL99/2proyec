@@ -15,6 +15,44 @@
     <div class="section-body">
         <div class="row">
             <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Seleccione la fecha a Filtrar</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow-x: hidden">
+                            <form action="{{route('keperis.filtrarKeperis')}}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            <span class="input-group-addon "><strong>Fecha De:</strong> </span>
+                                            <input type="date" id="fecha_inicial" class="input-sm form-control" name="fecha_inicial" value="" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="input-daterange input-group" id="datepicker">
+                                            <span class="input-group-addon "><strong>A:</strong> </span>
+                                            <input type="date" id="fecha_final" class="input-sm form-control" name="fecha_final" value="" required/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <div class="col-md-4" style="margin: 0 auto;">
+                                        <input class="form-control btn btn-primary" type="submit" value="Filtrar" id="filtrar" name="filtrar">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <a class="btn btn-outline-info" href="{{route('keperis.create')}}">Nueva Gestion</a><br><br>
@@ -36,7 +74,7 @@
                                     <th class="text-center" style="color: #fff;">Keperi Enviado</th>
                                     <th class="text-center" style="color: #fff;">Diferencia Keperi</th>
                                     <th class="text-center" style="color: #fff;">% Deshidratacion</th>
-                                    <th class="text-center" style="color: #fff;">% Deshidratado despues Cocido</th>
+                                    {{-- <th class="text-center" style="color: #fff;">% Deshidratado despues Cocido</th> --}}
                                     <th class="text-center" style="color: #fff;">% Rendimiento</th>
                                     <th style="color: #fff;"></th>
                                 </thead>
@@ -46,7 +84,8 @@
                                         @php
                                         
                                         $deshidratado_cocido = $keperi->cantidad_sellado/$keperi->cantidad_crudo-1;
-                                        $hidratado_marinado = +($keperi->cantidad_crudo / $keperi->cantidad_marinado-1)*100;
+                                        /* $hidratado_marinado = +($keperi->cantidad_crudo / $keperi->cantidad_marinado-1)*100; */
+                                        $hidratado_marinado = (($keperi->cantidad_marinado/$keperi->cantidad_crudo)-1)*100;
                                         $diferencia = $keperi->cantidad_sellado - $keperi->cantidad_enviado;
                                         $deshidratado = (($keperi->cantidad_crudo - $keperi->cantidad_sellado)/$keperi->cantidad_crudo ) *100 ;
                                         $inflado = ( $keperi->cantidad_crudo/ $keperi->cantidad_marinado) *100 ;
@@ -56,15 +95,12 @@
                                         @endphp
                                    
                                        <td class="text-center">{{$keperi->fecha}} </td>
-                                   
-                                       
-                                   
                                         <td class="text-center">{{$keperi->nombre_usuario}} </td>
                                         <td class="text-center">{{$keperi->cantidad_kilos}} kg </td>
                                         <td class="text-center">{{$keperi->cantidad_crudo}} kg </td>
                                         <td class="text-center">{{$keperi->cantidad_marinado }} kg </td>
 
-                                        <td class="text-center">{{number_format($hidratado_marinado,2)  }} %</td>
+                                        <td class="text-center"> <span class="badge badge-success">^</span> {{number_format($hidratado_marinado,2)}} %</td>
                                         <td class="text-center">{{$keperi->cantidad_cocido }} kg </td>
                                         
                                         <td class="text-center">{{$keperi->cantidad_sellado }} kg </td>
@@ -75,8 +111,8 @@
                                         @endif
 
                                         <td class="text-center">{{$diferencia}} kg </td>
-                                        <td class="text-center">{{ number_format($deshidratado,2)}} % </td>
-                                        <td class="text-center">{{ number_format($deshidratado_cocido,2)}} % </td>
+                                        <td class="text-center"> <span class="badge badge-danger"> - </span> {{ number_format($deshidratado,2)}} % </td>
+                                        {{-- <td class="text-center">{{ number_format($deshidratado_cocido,2)}} % </td> --}}
                                         <td class="text-center">{{ number_format($rendimiento,2)}} % </td>
                                        
                                        
