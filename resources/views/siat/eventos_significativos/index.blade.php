@@ -1,11 +1,12 @@
 @extends('layouts.app', ['activePage' => 'anular_facturas', 'titlePage' => 'Anular Facturas'])
 @section('content')
+@include('siat.anulaciones_facturas.modal')
 @section('css')
 @endsection
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Anular Facturas</h3>
+        <h3 class="page__heading">Registro de Ventas Por Contingencia</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -16,19 +17,30 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" style="overflow-x: hidden">
-                            <form action="{{route('anulacion_facturas.filtrar_facturas')}}" method="POST">
+                            <form action="{{route('eventos_significativos.filtrarEventosSignificativos')}}" method="POST"> 
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-daterange input-group" id="datepicker">
                                             <span class="input-group-addon "><strong>Fecha De:</strong> </span>
                                             <input type="date" id="fecha_inicial" class="input-sm form-control" name="fecha_inicial" value="" required />
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-daterange input-group" id="datepicker">
                                             <span class="input-group-addon "><strong>A:</strong> </span>
                                             <input type="date" id="fecha_final" class="input-sm form-control" name="fecha_final" value="" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon "><strong>Contingencia:</strong> </span>
+                                            <select name="evento_significativo_id" id="evento_significativo_id" class="form-control selectric">
+                                                @foreach($eventos_significativos as $evento_significativo)
+                                                    <option value="{{$evento_significativo->codigo_clasificador}}">{{$evento_significativo->descripcion}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -42,6 +54,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sucursal">Contingencias</label>
+                                <select name="sucursal" id="sucursal" class="form-select">
+                                    @foreach($eventos_significativos as $evento_significativo)
+                                    <option value="{{$evento_significativo->codigo_clasificador}}">{{$evento_significativo->descripcion}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_actual">Fecha Inicio Contingencia</label>
+                                <input type="date" class="form-control" name="fecha_inicio" value="{{ $fecha_actual }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_actual">Fecha Fin Contingencia</label>
+                                <input type="date" class="form-control" name="fecha_fin" >
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-body">
                     <div class="table-resposive">
@@ -56,7 +102,7 @@
                                 <th>Usuario </th>
                                 <th>Sucursal</th>
                                 <th>Estado</th>
-                                <th>Action</th>
+                                
                                 <th></th>
                             </thead>
                             <tbody>
@@ -75,9 +121,7 @@
                                     @else
                                     <td> <span class="badge badge-warning"> Anulado </span></td>
                                     @endif
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAnulacion" data-id="{{$venta->id}}"> Anular Factura</button>
-                                    </td>
+                                    
                                     <td>
                                         <div class="dropdown" style="position: absolute;">
                                         </div>
@@ -92,46 +136,12 @@
         </div>
     </div>
 </section>
-<!-- Form del Modal Anular Facturas-->
-<div class="modal fade" id="modalAnulacion" tabindex="-1" role="dialog" aria-labelledby="title_id" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form action="{{ route('anulacion_facturas.test_anulacion_factura') }}" method="POST" class="form-horizontal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="title_id"> <i class="fas fa-arrow-alt-circle-down icon" aria-hidden="true"></i> Anular Factura </h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <table class="table table-bordered">
-                        <tbody>
-                            <input type="hidden" id="venta_id" name="id" class="form-control">
-                            <label for="user_id"> Seleccione Motivo Anulacion <span class="required">*</span></label>
-                            <div class="selectric-hide-select">
-                                <select name="codigo_clasificador" id="codigo_clasificador" class="form-control selectric">
-                                    @foreach ($motivos_anulaciones as $motivo_anulacion)
-                                    <option value="{{$motivo_anulacion->codigo_clasificador}}">{{ $motivo_anulacion->descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </tbody>
-                    </table>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="anular" id="anular" class="btn btn-success"> Anular </button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 @endsection
 
+
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap4.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
@@ -139,35 +149,19 @@
 <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
 <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-
-<script>
+{{-- <script>
     $('#modalAnulacion').on('show.bs.modal', function(e) {
         let id = $(e.relatedTarget).data('id');
         var modal = $(this)
-        modal.find('.modal-header #title_id').html("Anular Factura " + " " + id)
+        console.log(modal)
+        //Guardamos el resultado en un input dentro del modal de nombre mnombre
+        modal.find('.modal-header #venta_id').html("Anular Factura " + " " + id)
         modal.find('.modal-body #venta_id').val(id)
+
     });
-</script>
-<script>
-    let codigo_clasificador = document.getElementById('codigo_clasificador');
-    let codigo_clasificador = document.getElementById('venta_id');
-    let ruta = "{{ route('anulacion_facturas.test_anulacion_factura') }}";
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: ruta,
-        type: 'POST',
-        data: {
-            codigo: $('#codigo').val()
-        },
-        success: function(response) {
-            $('#email').val(response[0]['email']);
-            $('#password').val(response[0]['password']);
-        }
-    });
-</script>
+</script> --}}
 
 @section('page_js')
 <script>
@@ -228,67 +222,9 @@
 
     });
 </script>
-<script type="application/javascript">
-    function deleteItem(e) {
-
-        let id = e.getAttribute('data-id');
 
 
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-            },
-            buttonsStyling: true
-        });
 
-        swalWithBootstrapButtons.fire({
-            title: 'Esta seguro de que desea eliminar este registro?',
-            text: "Este cambio no se puede revertir!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Si, Eliminar!',
-            cancelButtonText: 'No, Cancelar!',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                if (result.isConfirmed) {
-                    let id = e.getAttribute('data-id');
-                    $.ajax({
-                        type: 'DELETE',
-                        /*  url: '{{ route('sanciones.destroy', '') }}/' + id, */
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            if (data.success) {
-                                swalWithBootstrapButtons.fire(
-                                    'Eliminado!',
-                                    'El registro ha sido eliminado.',
-                                    "success",
-                                ).then(function() {
-                                    window.location = "sanciones";
-                                });
-                            }
-
-                        }
-                    });
-
-                }
-
-            } else if (
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons.fire(
-                    'Cancelado',
-                    'No se registro la eliminación',
-                    'error'
-                );
-            }
-        });
-
-    }
-</script>
 @endsection
 @endsection
 @section('page_css')

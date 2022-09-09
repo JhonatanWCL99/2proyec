@@ -188,5 +188,7 @@
 
 @endsection
 @section('page_css')
+
 <link href="{{ asset('assets/css/inventarios/edit.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection

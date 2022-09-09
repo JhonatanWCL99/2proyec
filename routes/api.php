@@ -17,6 +17,7 @@ use App\Models\Cliente;
 use App\Models\PlatoSucursal;
 use App\Models\Turno;
 use App\Models\ParteProduccion;
+use App\Models\Siat\EventoSignificativo;
 use Illuminate\Support\Facades\DB;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioFacturacionCodigos;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
@@ -132,6 +133,17 @@ Route::get('/getPlatos', function () {
     return response($response, 200)->header('Content-Type', 'application/json');
 });
 
+Route::get('/getSignifficantEvents',function(){
+    
+    $events = new EventoSignificativo();
+    $signifficant_events = $events->getSignifficantEvents();
+        $response= [
+            'success' =>true,
+            'events'=> $signifficant_events,
+
+        ];
+        return response($response, 200)->header('Content-Type', 'application/json');
+});
 
 
 Route::post('comprobeishon_turn', function (Request $request) {
@@ -142,8 +154,8 @@ Route::post('comprobeishon_turn', function (Request $request) {
     $response = [
         'success' => true,
         'turno_id' => $turno_am,
-
     ];
+
     return response($response, 200)->header('Content-Type', 'application/json');
 });
 
@@ -405,7 +417,7 @@ Route::get('ejecutar_pruebas_catalogos', [\App\Http\Controllers\Siat\Sincronizar
  Route::get('sincronizarFechaHora', [\App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'sincronizarFechaHora']);  
 
  /*ETAPA 4 EMISION INDIVIDUAL*/  
- Route::get('emisionIndividual', [\App\Http\Controllers\Siat\EmisionIndividualController::class, 'emisionIndividual']);  
+ Route::post('emisionIndividual', [\App\Http\Controllers\Siat\EmisionIndividualController::class, 'emisionIndividual']);  
 
  /* 5TA ETAPA EVENTOS SIGNIFICATIVOS */
 

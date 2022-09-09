@@ -5,6 +5,7 @@
  */
 namespace SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services;
 
+use App\Models\Venta;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\DocumentTypes;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Messages\SolicitudServicioRecepcionFactura;
 use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioSiat;
@@ -45,7 +46,8 @@ class ServicioFacturacion extends ServicioSiat
 		$factura->cabecera->razonSocialEmisor	= $this->razonSocial;
 		$factura->cabecera->nitEmisor 	= $this->nit;
 		$factura->cabecera->cufd		= $this->cufd;
-		$factura->buildCuf(0, $this->modalidad, $tipoEmision, $tipoFactura, $this->codigoControl);
+		 $factura->buildCuf(0, $this->modalidad, $tipoEmision, $tipoFactura, $this->codigoControl); 
+
 		//die($factura->cuf);
 		$factura->validate();
 		$facturaXml = $this->buildInvoiceXml($factura);
@@ -72,7 +74,9 @@ class ServicioFacturacion extends ServicioSiat
 		$solicitud->codigoPuntoVenta		= $factura->cabecera->codigoPuntoVenta;
 		//print_r($solicitud);die;
 		//print_r($facturaXml);die;
+		/* dd(MOD_SIAT_TEMP_DIR . SB_DS); */
 		$solicitud->setBuffer($facturaXml, true);
+		/* dd($solicitud->setBuffer($facturaXml, true)); */
 		/* dd($factura->cabecera); */
  		try
 		{
@@ -84,7 +88,7 @@ class ServicioFacturacion extends ServicioSiat
 			
 			$this->wsdl = $factura->getEndpoint($this->modalidad, $this->ambiente);
 			$res = $this->callAction('recepcionFactura', $data);
-			return $res;
+			return response()->json(["response_siat"=>$res,'factura'=>$factura]);
 		}
 		catch(\SoapFault $e)
 		{
@@ -207,7 +211,7 @@ class ServicioFacturacion extends ServicioSiat
 				$solicitud->toArray()
 			];
 
-		/* 	dd($data); */
+			/* 	dd($data); */
 			
 			$this->wsdl = $facturas[0]->getEndpoint($this->modalidad, $this->ambiente);
 			$res = $this->callAction('recepcionPaqueteFactura', $data);
@@ -322,9 +326,10 @@ class ServicioFacturacion extends ServicioSiat
 		$data = [
 			$solicitud->toArray()
 		];
+		/* dd($data); */
 		$this->wsdl = SiatInvoice::getWsdl($this->modalidad, $this->ambiente, $documentoSector);
 		$res = $this->callAction('anulacionFactura', $data);
-		
+		/* dd($res); */
 		return $res;
 		
 	}

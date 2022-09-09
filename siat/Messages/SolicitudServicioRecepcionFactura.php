@@ -37,6 +37,7 @@ class SolicitudServicioRecepcionFactura extends SolicitudRecepcion
 	public function setBufferFromFiles(array $files)
 	{
 		$package = MOD_SIAT_TEMP_DIR . SB_DS . 'invoices-'. time() .'.tar';
+		
 		$tar = new \PharData($package);
 		foreach($files as $file)
 		{

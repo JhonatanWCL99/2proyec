@@ -101,14 +101,18 @@
                     <thead class="table-info">                        
                         <th style="text-align: center;">Producto</th>
                         <th style="text-align: center;">Dia</th>
-                        <th style="text-align: center;">Cantidad Solicitada</th>                                                         
+                        <th style="text-align: center;">Cantidad Solicitada</th>       
+                        <th style="text-align: center;"></th>                                                         
                     </thead>
                     <tbody id="tbody2">
                         @foreach( $productos as $insumo)
                         <tr>
                             <td style="text-align: center;"> {{ $insumo->producto->nombre }} </td>
                             <td style="text-align: center;"> {{ $insumo->insumos_dias->dia }} </td>
-                            <td style="text-align: center;"> {{ $insumo->cantidad }} </td>                      
+                            <td style="text-align: center;"> {{ $insumo->cantidad }} </td>      
+                            <td style="text-align: center;">
+                            <a class="btn btn-danger" onclick="eliminar({{$insumo->id}})">ELIMINAR</a>
+                            </td>                      
                         </tr>
                         @endforeach
                     </tbody>
@@ -116,7 +120,6 @@
             </div>
         </div>
     </div>
-
 </section>
 
 @endsection
@@ -137,6 +140,8 @@
     let ruta_obtener_plato = "{{route('platos_sucursales.obtenerPlato')}}";
     let ruta_especial = "{{route('pedidos.pedido_especial')}}";
     let ruta_guardar_especial = "{{route('productosinsumos.store')}}";
+    let ruta_index ='{{route("productosinsumos.create")}}';
+    let ruta_eliminar="{{route('productosinsumos.destroy')}}";
 
     let producto =  document.getElementById('producto');
     let dia =  document.getElementById('dia');
@@ -210,6 +215,48 @@
 
     }
 
+
+    function eliminar(id){
+        console.log(id);
+        fetch(ruta_eliminar, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": csrfToken,
+            },
+            body: JSON.stringify({
+                id:id
+            }),
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            if (data.success == true) {
+                iziToast.success({
+                    title: "SUCCESS",
+                    message: "Eliminado",
+                    position: "topRight",
+                    timeout: 1000,
+                    onClosed: function () {
+                        window.location.href = ruta_index;
+                    },
+                });
+            }
+        })
+        .catch((error) => {
+            iziToast.warning({
+                title: "AVISO",
+                message: "Problemas al eliminar",
+                position: "topCenter",
+                timeout: 1500,
+                
+            });
+        });
+
+
+    }
 </script>
 
 @section('page_js')

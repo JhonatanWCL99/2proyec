@@ -16,7 +16,6 @@ class CreateVentasManosObrasTable extends Migration
         Schema::create('ventas_manos_obras', function (Blueprint $table) {
             $table->id();
             $table->decimal('ventas',18,4);
-
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->on('sucursals')->references('id');
 

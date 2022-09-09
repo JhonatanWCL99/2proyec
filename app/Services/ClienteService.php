@@ -18,10 +18,10 @@ class ClienteService
             if (is_null($cliente)) {
                 $cliente = new Cliente();
                 $cliente->nombre = $clienteData['cliente'];
-                $cliente->ci_nit = $clienteData['ci_nit;'];
+                $cliente->ci_nit = $clienteData['ci_nit'];
                 $cliente->empresa = $clienteData['empresa'];
-                $cliente->telefono = $clienteData['telefon'];
-                $cliente->contador_visitas = $clienteData['sucursa'] == 18 ? $clienteData['cantidad_visitas'] : 0; //17 PIRAI, sino sera 0 sus visitas
+                $cliente->telefono = $clienteData['telefono'];
+                $cliente->contador_visitas = $clienteData['sucursal'] == 18 ? $clienteData['cantidad_visitas'] : 0; //17 PIRAI, sino sera 0 sus visitas
                 return $cliente->save() ? $cliente : "";
             } else {
                 $cantidad_visitas = intval($cliente->contador_visitas) + 1;
@@ -36,7 +36,7 @@ class ClienteService
                 }
                 if ($cliente->nombre != $clienteData['cliente'] || $cliente['empresa'] != $clienteData['empresa'] || $cliente['telefono'] != $clienteData['telefono']) {
                 }
-                $cliente->contador_visitas = $clienteData->sucursal == 18 ? $cantidad_visitas : 0;
+                $cliente['contador_visitas'] = $clienteData['sucursal'] == 18 ? $cantidad_visitas : 0;
                 return $cliente->save() ? $cliente : "";
             }
         }

@@ -160,10 +160,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
 </section>
 <div class="modal hide fade in" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

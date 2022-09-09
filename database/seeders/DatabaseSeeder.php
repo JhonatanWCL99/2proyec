@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProveedorSeeder::class);
         $this->call(TareaSeeder::class);
         $this->call(CategoriaCajaChicaSeeder::class);
+        $this->call(DiasSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }

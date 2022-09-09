@@ -176,7 +176,7 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="{{ asset('assets/js/pedidos/edit.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/pedidos/editenviado.js') }}"></script>
 <script>
     let ruta_obtener_precios = "{{route('pedidos.obtenerPrecios')}}"
     let ruta_actualizar_pedido_enviado = "{{ route('pedidos.actualizarPedidoEnviado') }}";

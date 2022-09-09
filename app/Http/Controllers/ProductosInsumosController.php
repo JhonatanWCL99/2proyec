@@ -97,8 +97,12 @@ class ProductosInsumosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request) /* TAS EN BOLAS FERNANDIN */
     {
         //
+        $prod= ProductosInsumos::find($request->id); 
+        $prod->delete();
+        return response()->json([
+            'success' => true], 200);
     }
 }

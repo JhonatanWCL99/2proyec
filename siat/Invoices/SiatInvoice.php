@@ -31,7 +31,7 @@ abstract class SiatInvoice extends Message
 	protected	$nsData = [];
 	
 	public		$endpoint;
-	
+    
 	public function __construct()
 	{
 		$this->xmlAllFields = true;
@@ -45,7 +45,6 @@ abstract class SiatInvoice extends Message
 	public function validate()
 	{
 		$this->cabecera->validate();
-		
 	}
 	public function calculaDigitoMod11(string $cadena, int $numDig, int $limMult, bool $x10)
 	{

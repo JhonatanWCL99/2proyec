@@ -35,6 +35,7 @@
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\Auth;
     use App\Http\Controllers\MenuCalificacionController;
+use App\Http\Controllers\siat\AnulacionFacturaController;
 use App\Http\Controllers\Siat\RegistrarPuntoVentaController;
 use App\Http\Controllers\VentaController;
     /*
@@ -140,6 +141,8 @@ use App\Http\Controllers\VentaController;
         Route::post('/asignar_stock/registrar_Stock', [App\Http\Controllers\AsignarStockController::class, 'store'])->name('asignar_stock.registrar_Stock');
         Route::get('/asignar_stock/reporteCarnicos', [App\Http\Controllers\AsignarStockController::class, 'reporteCarnicos'])->name('asignar_stock.reporteCarnicos');
         Route::post('/asignar_stock/filtrarReporteCarnes', [AsignarStockController::class, 'filtrarReporteCarnes'])->name('asignar_stock.filtrarReporteCarnes');
+        Route::post('/asignar_stock/actualizarStock', [AsignarStockController::class, 'actualizarStock'])->name('asignar_stock.actualizarStock');
+    
     });
 
     /*Rutas Inventario*/
@@ -482,6 +485,7 @@ use App\Http\Controllers\VentaController;
 
         Route::get('/productosinsumos/create', [App\Http\Controllers\ProductosInsumosController::class, 'create'])->name('productosinsumos.create');
         Route::post('/productosinsumos/store', [App\Http\Controllers\ProductosInsumosController::class, 'store'])->name('productosinsumos.store');
+        Route::post('/productosinsumos/destroy', [App\Http\Controllers\ProductosInsumosController::class, 'destroy'])->name('productosinsumos.destroy');
         Route::post('/pedidos/filtrarPedidos', [PedidoController::class, 'filtrarPedidos'])->name('pedidos.filtrarPedidos');
 
     });
@@ -685,10 +689,17 @@ use App\Http\Controllers\VentaController;
     /* Sincronizar Catalogos */
     Route::get('/sincronizar_catalogos/ejecutar_pruebas_catalogos', [App\Http\Controllers\Siat\SincronizarCatalogosController::class, 'ejecutar_pruebas_catalogos'])->name('sincronizar_catalogos.ejecutar_pruebas_catalogos');
 
+    /* 5TA ETAPA EVENTOS SIGNIFICATIVOS */
+
+    Route::get('/eventos_significativos/index', [App\Http\Controllers\Siat\EventoSignificativoController::class, 'index'])->name('eventos_significativos.index');
+    Route::get('generar_evento_significativo', [\App\Http\Controllers\Siat\EventoSignificativoController::class, 'generar_evento_significativo']);  
+    Route::post('/eventos_significativos/filtrarEventosSignificativos', [\App\Http\Controllers\Siat\EventoSignificativoController::class, 'filtrarEventosSignificativos'])->name('eventos_significativos.filtrarEventosSignificativos');
+
+    
+
     /* Anular Facturas */
     Route::get('/anulacion_facturas/index', [App\Http\Controllers\Siat\AnulacionFacturaController::class, 'index'])->name('anulacion_facturas.index');
-    Route::get('/anulacion_facturas/test_anulacion_factura', [App\Http\Controllers\Siat\AnulacionFacturaController::class, 'test_anulacion_factura'])->name('anulacion_facturas.test_anulacion_factura');
-    Route::post('/anulacion_facturas/filtrar_facturas', [AsignarStockController::class, 'filtrar_facturas'])->name('anulacion_facturas.filtrar_facturas');
-    //filtrar_facturas
+    Route::post('/anulacion_facturas/filtrar_facturas', [AnulacionFacturaController::class, 'filtrar_facturas'])->name('anulacion_facturas.filtrar_facturas');
+    Route::post('/anulacion_facturas/test_anulacion_factura', [App\Http\Controllers\Siat\AnulacionFacturaController::class, 'test_anulacion_factura'])->name('anulacion_facturas.test_anulacion_factura');    //filtrar_facturas
 
 

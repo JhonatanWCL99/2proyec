@@ -70,8 +70,8 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" style="width: 100%;" id="table">
-                    <thead class="table-info">
-                       
+                    <thead class="table-info">                       
+                        <th>CAT</th>
                         <th style="text-align: center;">Producto</th>
                         <th style="text-align: center;">Cantidad Solicitada</th>
                         <th style="text-align: center;">Unidad Medida</th>
@@ -87,24 +87,27 @@
                         @foreach($productos_predefinidos as $item  )
 
                         <tr id="{{$item->id}}">
+                            <Td>{{$item->categoria_id}}</td>
                             <td style="text-align: center;" class="id_productos" id="{{$item->producto_id}}">{{$item->producto->nombre}} </td>
                             <td style="text-align: center;"><input type="number"  id="stock-{{$item->id}}" value="{{ $item->cantidad }}" class="form-control stock" /> </td>
                             <td style="text-align: center;">  {{ $item->producto->unidad_medida_compra->nombre }}</td>
                             @if( sizeof(  $item->producto->productos_proveedores)>0)
-                             @php 
-                                $subtotal= $item->producto->productos_proveedores[sizeof(  $item->producto->productos_proveedores)-1]->precio * $item->cantidad;
-                                $total+=$subtotal;
-                             @endphp
-                            <td style="text-align: center;" class="precios" id="precio-{{$item->id}}"> {{ $item->producto->productos_proveedores[sizeof(  $item->producto->productos_proveedores)-1]->precio  }}</td>
-                            <td style="text-align: center;" class="td_subtotal" id="td_subtotal-{{$item->id}}" > {{ $subtotal}} </td>
+                                @php 
+                                    $subtotal= $item->producto->productos_proveedores[sizeof(  $item->producto->productos_proveedores)-1]->precio * $item->cantidad;
+                                    $total+=$subtotal;
+                                @endphp
+                                <td style="text-align: center;" class="precios" id="precio-{{$item->id}}"> {{ $item->producto->productos_proveedores[sizeof(  $item->producto->productos_proveedores)-1]->precio  }}</td>
+                                <td style="text-align: center;" class="td_subtotal" id="td_subtotal-{{$item->id}}" > {{ $subtotal}} </td>
                             @else
-                            <td style="text-align: center;" class="precio" id="precio-{{$item-id}}"> 0</td>
-                            <td style="text-align: center;"  class="td_subtotal" id="td_subtotal-{{$item->id}}" >0 </td>
+                                <td style="text-align: center;" class="precio" id="precio-{{$item->id}}"> 0</td>
+                                <td style="text-align: center;"  class="td_subtotal" id="td_subtotal-{{$item->id}}" >0 </td>
                             @endif                                               
-                        </tr>     
-
+                        </tr>
                         @endforeach
-
+                        @php
+                            //dd($productos_predefinidos);
+                        @endphp
+                        
                         
                     </tbody>
                     <tfooter>
@@ -134,6 +137,7 @@
 @section('scripts')
  
 <script>
+
     let ruta_agregar_insumo = "{{ route('pedidos.agregarInsumo') }}";
     let ruta_obtener_precios = "{{route('pedidos.obtenerPrecios')}}"
     let ruta_eliminar_insumo = "{{ route('pedidos.eliminarInsumo') }}";
@@ -159,8 +163,7 @@
     let array_detalle_pedido_id_a_agregar= [];
     let precio_prod=[];
 
-    const csrfToken = document.head.querySelector(
-                                "[name~=csrf-token][content]").content;
+    const csrfToken = document.head.querySelector( "[name~=csrf-token][content]" ).content;
 
     let producto_id;
 
@@ -192,7 +195,6 @@
             td_total_pedido.innerHTML = total;
 
         });
-
 
         $("#producto")
         .select2({
@@ -269,7 +271,7 @@
             if (producto_id == 3) {
                 let filete_en_unidades = cantidad_solicitada.value / 0.18;
                 let precio_por_unidad_filete =
-                    subtotal_solicitado.value / filete_en_unidades;
+                    subtotal_solicitado / filete_en_unidades;
                 console.log("precio filete/unidad: ", precio_por_unidad_filete);
                 nuevo_precio = precio_por_unidad_filete;
                 nueva_cantidad = cantidad_solicitada.value;
@@ -280,7 +282,7 @@
             if (producto_id == 195 || producto_id == 240) {
                 let chorizo_en_unidades = 10 * cantidad_solicitada.value;
                 let precio_por_unidad_chorizo =
-                    subtotal_solicitado.value / chorizo_en_unidades;
+                    subtotal_solicitado / chorizo_en_unidades;
                 nuevo_precio = precio_por_unidad_chorizo;
                 nueva_cantidad = cantidad_solicitada.value;
                 nueva_subtotal = nuevo_precio * nueva_cantidad;
@@ -288,8 +290,12 @@
             /*ALITAS DE POLLO*/
             if (producto_id == 201) {
                 let pieza_en_unidades = cantidad_solicitada.value * 8;
+                console.log(cantidad_solicitada.value);
                 let precio_por_unidad_pieza =
-                    subtotal_solicitado.value / pieza_en_unidades;
+                    subtotal_solicitado / pieza_en_unidades;
+                console.log(subtotal_solicitado);
+                console.log(pieza_en_unidades);
+                    
                 console.log("precio alitas/unidad: ", precio_por_unidad_pieza);
                 nuevo_precio = precio_por_unidad_pieza+1.8;
                 nueva_cantidad = cantidad_solicitada.value;
@@ -301,7 +307,7 @@
             if (producto_id == 200) {
                 let pieza_en_unidades = cantidad_solicitada.value * 8;
                 let precio_por_unidad_pieza =
-                    subtotal_solicitado.value / pieza_en_unidades;
+                    subtotal_solicitado / pieza_en_unidades;
                 console.log("precio alitas/unidad: ", precio_por_unidad_pieza);
                 nuevo_precio = 26.49;
                 nueva_cantidad = cantidad_solicitada.value;
@@ -311,7 +317,7 @@
             if (producto_id == 21) {
                 let pieza_en_unidades = cantidad_solicitada.value / 0.200;
                 let precio_por_unidad_pieza =
-                    subtotal_solicitado.value / pieza_en_unidades;
+                    subtotal_solicitado / pieza_en_unidades;
                 console.log("precio alitas/unidad: ", precio_por_unidad_pieza);
                 nuevo_precio = precio_por_unidad_pieza;
                 nueva_cantidad = cantidad_solicitada.value;
@@ -322,7 +328,7 @@
             if (producto_id == 45) {
                 let pieza_en_unidades = cantidad_solicitada.value * 64;
                 let precio_por_unidad_pieza =
-                    subtotal_solicitado.value / pieza_en_unidades;
+                    subtotal_solicitado / pieza_en_unidades;
                 console.log("precio alitas/unidad: ", precio_por_unidad_pieza);
                 nuevo_precio = precio_por_unidad_pieza;
                 nueva_cantidad = cantidad_solicitada.value;
@@ -331,6 +337,7 @@
 
 
             let html='<tr id="'+stocks_input.length+'" >'+
+                        
                         '<td style="text-align: center;" class="id_productos" id="'+producto_id+'">'+ producto_nombre +'  </td>'+
                         '<td style="text-align: center;"><input type="number"  id="stock-'+stocks_input.length+'" value="'+nueva_cantidad+'" class="form-control stock" /> </td>'+
                         '<td style="text-align: center;">  '+um+'</td>'+

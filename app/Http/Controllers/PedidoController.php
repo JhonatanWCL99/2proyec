@@ -532,17 +532,24 @@ class PedidoController extends Controller
         $productos = Producto::all();
         $fecha_actual = Carbon::now()->addDay(1)->locale('es')->isoFormat('dddd');
         
-        //dd($fecha_actual); jhonatan ? 
+        //dd($fecha_actual);
 
         $dia = InsumosDias::where('dia',$fecha_actual)->first();
         
         //dd($dia->id);
         
-        $productos_predefinidos= ProductosInsumos::where('insumos_dias_id',1)
-        ->orWhere('insumos_dias_id',$dia->id)
-        ->get();
+        $productos_predefinidos= ProductosInsumos::selectRaw('productos.nombre,productos_insumos.*,productos.categoria_id')        
+        ->join('productos','productos.id','=','productos_insumos.producto_id')
+        ->where('productos_insumos.insumos_dias_id',1)
+        ->orWhere('productos_insumos.insumos_dias_id',$dia->id)
+        ->orderBy('productos.categoria_id','ASC')
+        ->get();    
         
-        /* dd($productos_predefinidos); */
+        //$prod=$productos_predefinidos->distinct()->get();
+        
+        //dd($productos_predefinidos);
+
+        //dd($productos_predefinidos  ); 
 
         /*where( 'insumos_dias_id',1 )
             ->where('insumos_dias_id',$dia->id )->get() */
@@ -553,7 +560,8 @@ class PedidoController extends Controller
         //echo $productos_predefinidos[0]->producto->unidad_medida_compra->nombre;
         //dd($productos_predefinidos[0]->producto->productos_proveedores[0]); 
         return view( 'pedidos.pedido_especial' , compact('categorias','productos','productos_predefinidos'));
-    
+
+
     }
 
     public function pedido_especial_store( Request $request )

@@ -81,6 +81,7 @@ class TurnoController extends Controller
                 'fecha_vigencia' => new Carbon($resCufd->RespuestaCufd->fechaVigencia),
                 'fecha_generado' => $fecha_generado_cufd,
                 'sucursal_id' => $user_id->sucursals[0]->id,
+                'numero_factura'=>0
             ]);
 
     

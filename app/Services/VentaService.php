@@ -44,7 +44,11 @@ class VentaService
 
         $turno->nro_transacciones++;
         $venta->nro_transaccion = $turno->nro_transacciones;
+        $venta->evento_significativo_id = $ventaData['evento_significativo_id'];
+        $venta->cuf = $ventaData['cuf'];
         $turno->save();
+
+        $venta->numero_factura = $ventaData['numero_factura'];
 
         $autorizacion =  Autorizacion::where('sucursal_id', $ventaData['sucursal'])->where('estado', 0)->first();
         if ($ventaData['tipo_pago'] != 'Comida Personal') {
@@ -53,7 +57,7 @@ class VentaService
                 $autorizacion->nro_factura = intval($autorizacion->nro_factura) + 1;
                 $autorizacion->save();
             }
-            $venta->numero_factura = $autorizacion->nro_factura;
+           /*  $venta->numero_factura = $autorizacion->nro_factura; */
             $venta->codigo_control = $ventaData['codigo_control'];
             $venta->qr = $ventaData['qr'];
             $venta->autorizacion_id = $autorizacion->id;

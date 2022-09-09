@@ -30,15 +30,15 @@ class EmisionIndividualController extends Controller
         $this->emisionIndividualService = new EmisionIndividualService();
     }
 
-    public function emisionIndividual()
+    public function emisionIndividual($dataFactura)
     {
        /*  return response()->json($dataFactura); */
         $fecha_actual = Carbon::now();
         $puntoventa = 0;
-        $sucursal_id = 12;
-        $sucursalcodigoFiscal = 0;
-       /*  $sucursal_id = $dataFactura['sucursal']['id'];
-        $sucursalcodigoFiscal = $dataFactura['sucursal']['codigo_fiscal']; */
+       /*  $sucursal_id = 12;
+        $sucursalcodigoFiscal = 0; */
+        $sucursal_id = $dataFactura['sucursal']['id'];
+        $sucursalcodigoFiscal = $dataFactura['sucursal']['codigo_fiscal'];
         $modalidad = $this->emisionIndividualService->configService->config->modalidad;
         $documentoSector = $this->emisionIndividualService->configService->documentoSector;
         $codigoActividad = $this->emisionIndividualService->configService->codigoActividad;
@@ -51,7 +51,7 @@ class EmisionIndividualController extends Controller
         $cufd = SiatCufd::where('sucursal_id',$sucursal_id)
             ->where('fecha_vigencia','<=',$fecha_actual)
             ->first();
-        $factura = $this->emisionIndividualService->construirFactura($puntoventa, $sucursalcodigoFiscal, $modalidad, $documentoSector, $codigoActividad, $codigoProductoSin);
+        $factura = $this->emisionIndividualService->construirFactura($puntoventa, $sucursalcodigoFiscal, $modalidad, $documentoSector, $codigoActividad, $codigoProductoSin,$dataFactura);
         /* dd($factura); */
         $res = $this->emisionIndividualService->testFactura($sucursalcodigoFiscal, $puntoventa, $factura, $tipoFactura);
         return $res;

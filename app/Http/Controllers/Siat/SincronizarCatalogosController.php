@@ -339,7 +339,7 @@ class SincronizarCatalogosController extends Controller
     function ejecutar_pruebas_catalogos()
     {
         $sucursal = 1;
-        $this->sincronizarFechaHora($sucursal);
+         $this->sincronizarFechaHora($sucursal);
         $this->sincronizarUnidadesMedidades($sucursal);
         $this->sincronizarTiposPuntosVentas($sucursal);
         $this->sincronizarTiposMonedas($sucursal);
@@ -351,12 +351,12 @@ class SincronizarCatalogosController extends Controller
         $this->sincronizarTiposDocumentoSector($sucursal);
         $this->sincronizarListaLeyendasFactura($sucursal);
         $this->sincronizarDocumentosIdentidades($sucursal);
-        $this->sincronizarEventosSignificativos($sucursal);
+        $this->sincronizarEventosSignificativos($sucursal); 
         $this->sincronizarListadoTotalActividades($sucursal);
         $this->sincronizarMetodosPagos($sucursal);
         $this->sincronizarProductosServicios($sucursal);
         $this->sincronizarTiposEmisiones($sucursal);
-        $this->sincronizarTiposHabitaciones($sucursal); 
+        $this->sincronizarTiposHabitaciones($sucursal);  
         $count = 0;
       
     }

@@ -9,6 +9,7 @@ use App\Models\DetalleInventario;
 use App\Models\Inventario;
 use App\Models\Producto;
 use App\Models\Sucursal;
+use App\Models\Categoria;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
@@ -104,12 +105,49 @@ class AsignarStockController extends Controller
         $asignar_stock = Asignar_Stock::find($id);
         return view('asignar_stock.show', compact('producto', 'asignar_stock',));
     }
-
+    
+    
     public function edit($id)
+    {
+        $categorias = Categoria::all();
+        $asignar_stock = Asignar_Stock::find($id);
+        return view('asignar_stock.edit', compact('asignar_stock', 'categorias'));
+    }
+     
+    public function actualizarStock(Request $request)
+    {
+        $asignar__stock_id = Asignar_Stock::find($request->asignar__stock_id);
+        $total_eliminado = 0;
+        if (sizeof($request->detallesAEditar_id) != 0) {
+            foreach ($request->detallesAEditar_id as $index => $detalleEditar) {
+                $detalle_pedido = DetalleAsignarStock::find($detalleEditar);
+                $detalle_pedido->cantidad_solicitada = $request->stocks[$index];
+                $detalle_pedido->save();
+            }
+        }
+        if (sizeof($request->detallesAEliminar_id) != 0) {
+            foreach ($request->detallesAEliminar_id as $index => $detalleEliminar) {
+                $detalle_pedido = DetalleAsignarStock::find($detalleEliminar);
+                if ($detalle_pedido != null) {
+                    $total_eliminado += $detalle_pedido->subtotal;
+                    $detalle_pedido->delete();
+                }
+            }
+        }
+        $asignar__stock_id->save();
+      
+        return response()->json(
+            [
+                'success' => true
+            ]
+        );
+    }
+
+  /*    public function edit($id)
     {
         $asignar_stock = DetalleAsignarStock::find($id);
         return view('asignar_stock.edit', compact('asignar_stock'));
-    }
+    } */
     public function update(Request $request, $id)
     {
         $producto_proveedor = DetalleAsignarStock::find($id);
@@ -194,9 +232,12 @@ class AsignarStockController extends Controller
 
         foreach ($invertido as $inventario_carne) {
             if ($inventario_carne->detalle_stock_producto_id === $inventario_carne->detalle_inventario_producto_id && !in_array(["sucursal_id" => $inventario_carne->sucursal_id, "producto_id" => $inventario_carne->producto_id], $array_search)) {
+
                 array_push($array_search, ["sucursal_id" => $inventario_carne->sucursal_id, "producto_id" => $inventario_carne->producto_id]);
                 $collection->push($inventario_carne);
+            
             }
+        
         }
 
 

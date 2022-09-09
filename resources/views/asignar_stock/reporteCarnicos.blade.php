@@ -77,26 +77,35 @@
                 @endphp
                 <td style="text-align:center;">{{$inventario->nombre}}</td>
                 <td style="text-align:center;">{{$hora_solicitud}}</td>
-                @for( $i = 0; $i < count($idZumos) ; $i++ ) 
+                @for( $i = 0; $i < count($idZumos) ; $i++ )
+                  @php
+                  $cantidad_subtotal=0;
+                  $stock_ideal=0;
+                  @endphp
                   @foreach($collection as $collect) 
                     @if($inventario->sucursal_id == $collect->sucursal_id && $idZumos[$i]==$collect->producto_id && $inventario->hora_solicitud==$collect->hora_solicitud)
                       @php
-                      $total=$collect->cantidad - $collect->stock;
                       $auxfila = true;
+                      $cantidad_subtotal += $collect->cantidad;
+                      $stock_ideal= $collect->stock;
                       @endphp
-                      @if($collect->cantidad > $collect->stock && $total >= 0)
-                        <td style="text-align:center;">{{ number_format($collect->cantidad)}} /{{number_format($collect->stock)}}= {{$total}}</td>
-                        @php
-                          $arrayTotales_stocks[$i][0]+=$collect->stock;
-                          $arrayTotales_cantidad[$i][0]+=$collect->cantidad;
-                        @endphp
-                      @else
-                        <td style="text-align:center;">{{ number_format($collect->cantidad)}} /{{number_format($collect->stock)}}= 0</td>
-                      @endif
                     @endif
                   @endforeach
                   @if($auxfila===false)
                     <td style="text-align:center ;"> 0 </td>
+                  @else
+                    @php
+                    $total=$cantidad_subtotal - $stock_ideal;
+                    @endphp
+                    @if($cantidad_subtotal > $stock_ideal && $total >= 0)
+                      <td style="text-align:center;">{{ number_format($cantidad_subtotal)}} /{{number_format($stock_ideal)}}= {{$total}}</td>
+                      @php
+                        $arrayTotales_stocks[$i][0]+=$stock_ideal;
+                        $arrayTotales_cantidad[$i][0]+=$cantidad_subtotal;
+                      @endphp
+                    @else
+                      <td style="text-align:center;">{{ number_format($cantidad_subtotal)}} /{{number_format($stock_ideal)}}= 0</td>
+                    @endif
                   @endif
                   @php 
                     $auxfila = false; 

@@ -180,7 +180,9 @@
                         <li class="nav-item"> <a href="{{ route('cuis.index') }}">Cuis</a> </li>
                         <li class="nav-item"> <a href="{{ route('cufd.index') }}">Cufd</a> </li>
                         <li class="nav-item"> <a href="{{ route('puntos_ventas.index') }}">Punto Venta</a> </li>
+                        <li class="nav-item"> <a href="{{ route('eventos_significativos.index') }}">Registro Contingencias</a> </li>
                         <li class="nav-item"> <a href="{{ route('anulacion_facturas.index') }}">Anular Facturas</a> </li>
+                       
                 </ul>
         </li>
         @endrole

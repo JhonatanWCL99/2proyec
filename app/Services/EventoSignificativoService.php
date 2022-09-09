@@ -13,7 +13,6 @@ use SinticBolivia\SBFramework\Modules\Invoices\Classes\Siat\Services\ServicioOpe
 
 class EventoSignificativoService
 {
-
 	public $configService;
 
 
@@ -54,7 +53,6 @@ class EventoSignificativoService
 	
 		return $resEvento;
 	}
-
 
 
 

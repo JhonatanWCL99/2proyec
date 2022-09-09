@@ -21,6 +21,7 @@ class CreateSiatCufdsTable extends Migration
             $table->string('codigo_control');
             $table->string('direccion');
             $table->char('estado');
+            $table->bigInteger('numero_factura');
 
             $table->unsignedBigInteger('sucursal_id');
             $table->foreign('sucursal_id')->on('sucursals')->references('id');
